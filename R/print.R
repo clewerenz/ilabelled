@@ -1,5 +1,7 @@
 
 
+#' Custom print method1
+#' @export
 print.i_labelled <- function(x, ...){
 
   n <- getOption("max.print")

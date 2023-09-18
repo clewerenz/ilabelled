@@ -1,8 +1,8 @@
 Package: ilabelled
 Type: Package
-Title: What the Package Does (Title Case)
+Title: methods for handling value labels
 Version: 0.1.0
-Author: Who wrote it
+Author: Christof Lewerenz
 Maintainer: The package maintainer <christof.lewerenz@gmx.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.

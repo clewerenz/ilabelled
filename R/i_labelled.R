@@ -1,4 +1,3 @@
-#' @importFrom methods is
 
 
 i_labelled <- function(x, ...){
@@ -12,6 +11,7 @@ i_labelled_origin <- function(x){
 }
 
 
+#' @importFrom methods is
 is.i_labelled <- function(x){
   is(x,'i_labelled') | is(x,'i_labelled')
 }
