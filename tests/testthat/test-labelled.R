@@ -1,5 +1,5 @@
 test_that(
-  "Test 'i_labelled", {
+  "Test i_labelled", {
 
     # Test class
     expect_s3_class(i_labelled(iris$Species), "i_labelled")
@@ -20,22 +20,22 @@ test_that(
     expect_vector(i_labelled(iris$Species))
 
     # Test class
-    expect_equal(class(i_labelled(LETTERS)), c("i_labelled", "character"))
-    expect_equal(class(i_labelled(1:5)), c("i_labelled", "integer"))
-    expect_equal(class(i_labelled(as.double(seq(1.10,5)))), c("i_labelled", "numeric"))
-    expect_equal(class(i_labelled(factor(LETTERS))), c("i_labelled", "factor"))
-    expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled", "logical"))
-    expect_equal(class(i_labelled(c(Sys.Date(), Sys.Date()-1, Sys.Date()-2, Sys.Date()-3))), c("i_labelled", "Date"))
+    expect_equal(class(i_labelled(LETTERS)), c("i_labelled"))
+    expect_equal(class(i_labelled(1:5)), c("i_labelled"))
+    expect_equal(class(i_labelled(as.double(seq(1.10,5)))), c("i_labelled"))
+    expect_equal(class(i_labelled(factor(LETTERS))), c("i_labelled"))
+    expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled"))
+    expect_equal(class(i_labelled(c(Sys.Date(), Sys.Date()-1, Sys.Date()-2, Sys.Date()-3))), c("i_labelled"))
 
     # Test subset
     x <- i_labelled(LETTERS)
     y <- i_labelled(factor(LETTERS))
     z <- i_labelled(i_labelled(LETTERS))
     k <- i_labelled(i_labelled(seq(0,10,.5)))
-    expect_equal(class(x[1:5]), c("i_labelled", "character"))
-    expect_equal(class(y[1:5]), c("i_labelled", "factor"))
-    expect_equal(class(z[1:5]), c("i_labelled", "character"))
-    expect_equal(class(k[1:5]), c("i_labelled", "numeric"))
+    expect_equal(class(x[1:5]), c("i_labelled"))
+    expect_equal(class(y[1:5]), c("i_labelled"))
+    expect_equal(class(z[1:5]), c("i_labelled"))
+    expect_equal(class(k[1:5]), c("i_labelled"))
 
     # Test attributes
     x <- i_labelled(LETTERS)
@@ -48,9 +48,17 @@ test_that(
     expect_contains(names(attributes(y$Species)), c("class", "levels"))
     expect_contains(names(attributes(y$Species[1:5])), c("class", "levels"))
 
+    x <- i_labelled(1:5, test_attr = "Test attribute")
+    expect_contains(names(attributes(x)), "test_attr")
+
+    # test recode values
+    x <- i_labelled(1:5, label = "Test label", labels = setNames(1:5, LETTERS[1:5]))
+    x[x %in% 2] <- 999
+    expect_equal(x[[2]], 999)
+    expect_equal(attr(x, "label", T), "Test label")
+    expect_equal(unname(attr(x, "labels", T)), 1:5)
+    expect_equal(names(attr(x, "labels", T)), LETTERS[1:5])
+
   }
 )
-
-
-
 

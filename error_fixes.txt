@@ -1,3 +1,0 @@
-Antowrt warum print method nicht funktioniert, wenn das package geladen wird:
-* https://stackoverflow.com/questions/63449779/rs-s3-method-dispatching-does-not-work-when-sourcing-package
-* https://cran.r-project.org/web/packages/roxygen2/vignettes/namespace.html

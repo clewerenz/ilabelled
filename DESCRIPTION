@@ -1,12 +1,12 @@
 Package: ilabelled
 Type: Package
-Title: methods for handling value labels
+Title: Smart handling of value labels
 Version: 0.1.0
 Author: Christof Lewerenz
 Maintainer: The package maintainer <christof.lewerenz@gmx.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 

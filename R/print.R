@@ -1,25 +1,24 @@
 
 
-#' Custom print method1
+#' custom print method
 #' @export
+#' @param x array of class i_labelled
+#' @param ... not used
 print.i_labelled <- function(x, ...){
 
-  n <- getOption("max.print")
-  if(n > length(x)){
-    n <- length(x)
+  cat("<", paste0(class(x), collapse = " - "), ">\n", sep = "")
+  print(`attributes<-`(x, NULL))
+  if(!is.null(attr(x, "na_values", T))){
+    cat(paste0("\nMissing values: [", paste0(attr(x, "na_values", T), collapse = ","), "]"))
   }
-
-  # cat("<", paste0(class(x), " (", attr(x, "class_origin", T), ")"), ">", sep = "")
-  cat("<", paste0(class(x), collapse = " - "), ">", sep = "")
-  cat("\n")
-  cat(x[1:n])
-
+  if(!is.null(attr(x, "na_range", T))){
+    cat(paste0("\nMissing range: [", min(attr(x, "na_range", T), na.rm = T), ":", max(attr(x, "na_range", T), na.rm = T), "]"))
+  }
   if(!is.null(attr(x, "label", T))){
-    cat("\n\nVariable label:", attr(x, "label", T), "")
+    cat("\nVariable label:", attr(x, "label", T), "")
   }
-
   if(!is.null(attr(x, "labels", T))){
-    cat("\n\nValue labels:")
+    cat("\nValue labels:")
     for (i in seq(attr(x, "labels", T))) {
       cat("\n\t", attr(x, "labels", T)[i], names(attr(x, "labels", T)[i]))
     }
@@ -29,5 +28,4 @@ print.i_labelled <- function(x, ...){
 
   invisible(x)
 }
-
 

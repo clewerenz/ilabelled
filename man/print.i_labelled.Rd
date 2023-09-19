@@ -2,10 +2,15 @@
 % Please edit documentation in R/print.R
 \name{print.i_labelled}
 \alias{print.i_labelled}
-\title{Custom print method1}
+\title{custom print method}
 \usage{
 \method{print}{i_labelled}(x, ...)
 }
+\arguments{
+\item{x}{array of class i_labelled}
+
+\item{...}{not used}
+}
 \description{
-Custom print method1
+custom print method
 }
