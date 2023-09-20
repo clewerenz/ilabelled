@@ -16,6 +16,10 @@ test_that(
     expect_no_error(i_labelled(factor(LETTERS)))
     expect_no_error(i_labelled(i_labelled(LETTERS)))
 
+    x <- i_labelled(c(1,2,3,1,2,3), labels = c(A = 1, NULL = 2, C = 3))
+    expect_equal(names(attr(x, "labels", T)), c("A", "C"))
+    expect_equal(unname(attr(x, "labels", T)), c(1, 3))
+
     # Test output
     expect_vector(i_labelled(iris$Species))
 

@@ -12,12 +12,13 @@ i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_rang
   stopifnot("Date" %in% class(x) || (is.vector(x) && is.atomic(x)) || is.factor(x) || "i_labelled" %in% class(x))
   if(is.null(labels) && is.factor(x)){
     labels <- stats::setNames(1:length(levels(x)), levels(x))
-    .valid_labels(labels)
+    stopifnot(.valid_labels(labels))
   }else if(!is.null(labels)){
-    .valid_labels(labels)
+    stopifnot(.valid_labels(labels))
+    labels <- .merge_labels(attr(x, "labels", T), labels)
   }
   if(!is.null(label)){
-    .valid_label(label)
+    stopifnot(.valid_label(label))
   }
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, ...))
 }
