@@ -100,7 +100,7 @@ i_valid_labels.default <- function(x){
 i_valid_labels.i_labelled <- function(x){
   y <- attr(x, "labels", T)
   (!is.null(y) && .valid_labels(y)) &&
-    length(unique(c(is.numeric(x), is.numeric(y)))) <= 1
+    all(unique(x[!is.na(x)]) %in% y)
 }
 
 
