@@ -42,7 +42,7 @@ i_data_to_numeric <- function(x){
 #' @param x vector
 i_data_to_double <- function(x){
   tmp_attr <- attributes(x)
-  x <- as.numeric(x)
+  x <- as.double(x)
   attributes(x) <- tmp_attr
   x
 }
@@ -72,6 +72,7 @@ i_data_to_integer <- function(x){
 #' @param x vector
 #' @param labels value labels as named vector or named list (e.g. list("A"=1, "B"=2) or c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
 i_as_factor <- function(x, labels = NULL){
+  stopifnot(is.atomic(x) && !is.null(x))
   if(is.null(labels)){
     val_labs <- attr(x, "labels", T)
   }else{
@@ -83,7 +84,7 @@ i_as_factor <- function(x, labels = NULL){
   u2 <- sort(unique(val_labs))
   u2 <- u2[!is.na(u2)]
   if(!all(u1 %in% u2))
-    stop("missing value labels")
+    stop("missing or invalid value labels")
   x <- factor(x, levels = unname(val_labs), labels = names(val_labs))
   attributes(x) <- c(attributes(x), tmp_attr)
   x

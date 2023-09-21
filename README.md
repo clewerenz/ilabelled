@@ -11,6 +11,16 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
 
 # To-Do
 
-  1. Test for class equality between data and labels 
-  2. i_as_factor behavior with single NA/NULL values
-  3. control for NA in labels
+  - apply missing values/range -> i_missing_values() / i_missing_range()
+  - set missing values NA -> i_missing_to_na()
+    - as function: should applicable on i_labelled and data.frame
+  - add i_missing_to_na() to i_as_factor()
+  - custom r_bind function for package
+    - checks if value labels (if present) match
+    - checks if classes match
+    - returns 'talking' output
+  - i_as_factor as method
+    - two options: 1. all i_labelled and character vars become factor; 2. only i_labelled vars become factor
+    - can be applied to data.frame and vars
+      
+
