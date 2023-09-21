@@ -10,5 +10,6 @@
 \item{x}{vector}
 }
 \description{
-returns boolean
+returns boolean when i_labelled
+returns NA when not i_labelled
 }

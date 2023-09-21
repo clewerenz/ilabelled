@@ -18,7 +18,7 @@ i_labelled(
 
 \item{label}{variable label}
 
-\item{labels}{value labels as named vector or named list (e.g. list("A"=1, "B"=2) or c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))}
+\item{labels}{value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))}
 
 \item{na_values}{missing values (e.g. c(888, 999))}
 

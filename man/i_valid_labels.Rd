@@ -7,8 +7,10 @@
 i_valid_labels(x)
 }
 \arguments{
-\item{x}{vector}
+\item{x}{vector ot data.frame}
 }
 \description{
-returns boolean
+returns boolean when i_labelled
+returns NA when not i_labelled
+returns a named list when applied to data.frame
 }

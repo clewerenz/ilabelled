@@ -10,5 +10,7 @@ i_valid_label(x)
 \item{x}{vector or data.frame}
 }
 \description{
-returns boolean
+returns boolean when i_labelled
+returns NA when not i_labelled
+returns a named list when applied to data.frame
 }
