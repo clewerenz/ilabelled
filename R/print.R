@@ -30,27 +30,3 @@ print.i_labelled <- function(x, ...){
 
 
 
-#' custom print method for Date
-#' @export
-#' @param x vector of class Date
-#' @param ... not used
-print.Date <- function(x, ...){
-
-  max <- getOption("max.print", 9999L)
-  if (max < length(x)) {
-    print(format(x[seq_len(max)]), max = max + 1, ...)
-    cat(" [ reached 'max' / getOption(\"max.print\") -- omitted",
-        length(x) - max, "entries ]\n")
-  }
-  else if (length(x))
-    print(format(x), max = max, ...)
-  else cat(class(x)[1L], "of length 0\n")
-
-  if(!is.null(attr(x, "label", T))){
-    cat("\nVariable label:", attr(x, "label", T), "")
-  }
-
-  invisible(x)
-}
-
-

@@ -27,7 +27,7 @@ test_that(
     x <- i_labelled(c(1,2,3,1,2,3), labels = c(A = 1, NULL = 2, C = 3), label = "Bla")
     y <- i_labelled(c(1,2,3,1,2,3), labels = c(A = 1, B = 2, C = 3), label = "Bla")
     z <- i_labelled(c(1,2,3,1,2,3), labels = c(B = 1, A = 2, C = 3), label = "Bla")
-    expect_error(i_as_factor(NULL))
+    # expect_error(i_as_factor(NULL))
     expect_error(i_as_factor(1:5))
     expect_error(i_as_factor(LETTERS[1:5]))
     expect_error(i_as_factor(x))

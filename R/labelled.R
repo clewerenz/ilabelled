@@ -4,18 +4,16 @@
 #' @export
 #' @param x vector
 #' @param label variable label
-#' @param labels value labels as named vector or named list (e.g. list("A"=1, "B"=2) or c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
+#' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
 #' @param na_values missing values (e.g. c(888, 999))
 #' @param na_range range of missing values (e.g. c(-9,-1))
 #' @param ... further attributes passed to class
 i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...){
-  stopifnot("Date" %in% class(x) || (is.vector(x) && is.atomic(x)) || is.factor(x) || "i_labelled" %in% class(x))
+  stopifnot(is.atomic(x))
   if(is.null(labels) && is.factor(x)){
     labels <- stats::setNames(1:length(levels(x)), levels(x))
-    stopifnot(.valid_labels(labels))
-  }else if(!is.null(labels)){
-    stopifnot(.valid_labels(labels))
-    labels <- .merge_labels(attr(x, "labels", T), labels)
+  }else if(!is.null(labels) || !is.null(attr(x, "labels", T))){
+    labels <- .merge_labels(as.list(attr(x, "labels", T)), as.list(labels))
   }
   if(!is.null(label)){
     stopifnot(.valid_label(label))
@@ -24,12 +22,21 @@ i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_rang
 }
 
 
+#' make all variables in data.frame i_labelled
+#' @export
+#' @param x data.frame
+i_labelled_df <- function(x){
+  x[] <- lapply(x, i_labelled)
+  x
+}
+
+
 #' check for class i_labelled
 #' @export
 #' @importFrom methods is
 #' @param x vector of class i_labelled
 is.i_labelled <- function(x){
-  is(x,'i_labelled') | is(x,'i_labelled')
+  is(x,'i_labelled')
 }
 
 

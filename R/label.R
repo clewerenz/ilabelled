@@ -15,7 +15,8 @@ i_label <- function(x, label){
 
 #' validate variable label - intern
 #' @description
-#' returns boolean
+#' returns boolean when i_labelled
+#' returns NA when not i_labelled
 #'
 #' @param x vector
 .valid_label <- function(x){
@@ -24,13 +25,32 @@ i_label <- function(x, label){
 
 
 #' validate variable labels
-#' @export
 #' @description
-#' returns boolean
+#' returns boolean when i_labelled
+#' returns NA when not i_labelled
+#' returns a named list when applied to data.frame
 #'
 #' @param x vector or data.frame
+#' @export
 i_valid_label <- function(x){
+  UseMethod("i_valid_label")
+}
+
+
+#' @export
+i_valid_label.default <- function(x){
+  NA
+}
+
+
+#' @export
+i_valid_label.i_labelled <- function(x){
   y <- attr(x, "label", T)
   .valid_label(y)
 }
 
+
+#' @export
+i_valid_label.data.frame <- function(x){
+  sapply(x, i_valid_label, USE.NAMES = T, simplify = F)
+}

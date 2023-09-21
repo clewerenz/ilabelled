@@ -20,6 +20,9 @@ test_that(
     expect_equal(names(attr(x, "labels", T)), c("A", "C"))
     expect_equal(unname(attr(x, "labels", T)), c(1, 3))
 
+    # make all vars in data.frame i_labelled
+    expect_true(all(unlist(lapply(i_labelled_df(iris), is.i_labelled))))
+
     # Test output
     expect_vector(i_labelled(iris$Species))
 
@@ -62,6 +65,27 @@ test_that(
     expect_equal(attr(x, "label", T), "Test label")
     expect_equal(unname(attr(x, "labels", T)), 1:5)
     expect_equal(names(attr(x, "labels", T)), LETTERS[1:5])
+
+    # test subsetting
+    x <- subset(i_labelled_df(iris), subset = Species %in% 1 & Sepal.Length < 5, select = c(Species, Sepal.Length))
+    expect_true(all(unlist(lapply(x, is.i_labelled))))
+    y <- x[1:5,1]
+    expect_true(is.i_labelled(y))
+    expect_equal(unname(attr(y, "labels", T)), 1:3)
+    expect_equal(names(attr(y, "labels", T)), c("setosa","versicolor","virginica"))
+
+    # apply class to vector which already has attr labels
+    x <- c(1,2,3,1,2,3)
+    attr(x, "labels") <- c(A=1,B=2,C=3)
+    y <- i_labelled(x)
+    expect_equal(unname(attr(y, "labels", T)), 1:3)
+    expect_equal(names(attr(y, "labels", T)), c("A","B","C"))
+    y <- i_labelled(x, labels = c(Bla = 3, Blubb = 4))
+    expect_equal(unname(attr(y, "labels", T)), 1:4)
+    expect_equal(names(attr(y, "labels", T)), c("A","B","Bla","Blubb"))
+    y <- i_labelled(x, labels = c(NULL = 3, Blubb = 4))
+    expect_equal(unname(attr(y, "labels", T)), c(1:2,4))
+    expect_equal(names(attr(y, "labels", T)), c("A","B","Blubb"))
 
   }
 )

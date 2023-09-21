@@ -7,9 +7,9 @@
 .merge_labels(old_labs, new_labs, sort_desc = F)
 }
 \arguments{
-\item{old_labs}{named vector or named list}
+\item{old_labs}{named vector}
 
-\item{new_labs}{named vector or named list}
+\item{new_labs}{named vector}
 
 \item{sort_desc}{sort value labels in descending order according to values}
 }
