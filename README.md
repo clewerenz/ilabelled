@@ -5,8 +5,7 @@ Providing a function library for working with labelled data in R.
 
 # Motivation
 
-Main goals to achieve: 
-  - <b>Data Consistency</b> 
+  - <b>Data consistency</b> 
     - Do not change numeric data when data is labelled (as factors do) - Allow labelling of values <= 0 
     - Do not loose attributes when recoding or subsetting data -
   - <b>Easy access</b> 
@@ -22,17 +21,15 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
 
 # To-Do
 
-  - apply missing values/range -> i_missing_values() / i_missing_range()
-    - set missing values NA -> i_missing_to_na()
-    - as method: should be applicable on i_labelled and data.frame
-  - add i_missing_to_na() to i_as_factor()
-  - custom r_bind function for package
+  - <code>i_missing_to_na()</code>: the recoding of values via <code>%in%</code> is very slow, but <code>==</code> does not work with na_values > 1. Hence, a solution is needed, which replaces the slow <code>%in%</code> function (C/C++ maybe).
+  - custom r_bind function
     - checks if value labels (if present) match
     - checks if classes match
     - returns 'talking' output
   - i_as_factor as method
     - two options: 1. all i_labelled and character vars become factor; 2. only i_labelled vars become factor (boolean)
     - can be applied to data.frame and vars
+    - add i_missing_to_na() to i_as_factor()
   - funciton for recoding data
     - <code>i_recode(x, args, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...)</code>
     - <code>structure(x = .rec(x), label = label, labels = labels, na_range = na_range, na_values = na_values, ...)</code>
