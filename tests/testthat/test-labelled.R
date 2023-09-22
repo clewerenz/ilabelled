@@ -52,8 +52,8 @@ test_that(
     y$Species <- i_labelled(y$Species)
     expect_contains(names(attributes(x)), c("test1", "test2", "class"))
     expect_contains(names(attributes(x[1:5])), c("test1", "test2", "class"))
-    expect_contains(names(attributes(y$Species)), c("class", "levels"))
-    expect_contains(names(attributes(y$Species[1:5])), c("class", "levels"))
+    expect_contains(names(attributes(y$Species)), c("class", "labels"))
+    expect_contains(names(attributes(y$Species[1:5])), c("class", "labels"))
 
     x <- i_labelled(1:5, test_attr = "Test attribute")
     expect_contains(names(attributes(x)), "test_attr")

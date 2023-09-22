@@ -17,33 +17,31 @@
 
 .init.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...) {
   # set class i_labelled
-  structure(
-    x,
-    class = "i_labelled",
-    label = label,
-    labels = labels,
-    na_values = na_values,
-    na_range = na_range,
-    ...
-  )
+  if(is.numeric(x) || is.factor(x)){
+    structure(
+      .Data = as.double(x),
+      class = "i_labelled",
+      label = label,
+      labels = labels,
+      na_values = na_values,
+      na_range = na_range,
+      ...
+    )
+  }else{
+    structure(
+      .Data = as.character(x),
+      class = "i_labelled",
+      label = label,
+      labels = labels,
+      na_values = na_values,
+      na_range = na_range,
+      ...
+    )
+  }
 }
 
 
 .init.i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...) {
   # do nothing
   x
-}
-
-
-.init.Date <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...) {
-  # date will become character to preserve format
-  structure(
-    as.character(x),
-    class = "i_labelled",
-    label = label,
-    labels = labels,
-    na_values = na_values,
-    na_range = na_range,
-    ...
-  )
 }

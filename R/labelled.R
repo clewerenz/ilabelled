@@ -10,13 +10,15 @@
 #' @param ... further attributes passed to class
 i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...){
   stopifnot(is.atomic(x))
+  stopifnot(.valid_label(label))
+  stopifnot(.valid_missing(na_values))
+  if(!is.null(na_range)){
+    stopifnot(.valid_missing(na_range) && .is_sequential(na_range))
+  }
   if(is.null(labels) && is.factor(x)){
     labels <- stats::setNames(1:length(levels(x)), levels(x))
   }else if(!is.null(labels) || !is.null(attr(x, "labels", T))){
     labels <- .merge_labels(as.list(attr(x, "labels", T)), as.list(labels))
-  }
-  if(!is.null(label)){
-    stopifnot(.valid_label(label))
   }
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, ...))
 }

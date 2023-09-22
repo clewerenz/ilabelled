@@ -5,7 +5,7 @@
 #' @param x vector
 #' @param label variable label as string or NULL (NULL will remove label)
 i_label <- function(x, label){
-  stopifnot(.valid_label(label) || is.null(label))
+  stopifnot(.valid_label(label)) #  || is.null(label)
   structure(
     x,
     label = label
@@ -15,19 +15,17 @@ i_label <- function(x, label){
 
 #' validate variable label - intern
 #' @description
-#' returns boolean when i_labelled
-#' returns NA when not i_labelled
+#' returns boolean
 #'
 #' @param x vector
 .valid_label <- function(x){
-  is.character(x) && length(x) == 1
+  is.null(x) || (is.character(x) && length(x) == 1 && !is.logical(x))
 }
 
 
 #' validate variable labels
 #' @description
-#' returns boolean when i_labelled
-#' returns NA when not i_labelled
+#' returns boolean
 #' returns a named list when applied to data.frame
 #'
 #' @param x vector or data.frame
@@ -39,14 +37,8 @@ i_valid_label <- function(x){
 
 #' @export
 i_valid_label.default <- function(x){
-  NA
-}
-
-
-#' @export
-i_valid_label.i_labelled <- function(x){
   y <- attr(x, "label", T)
-  .valid_label(y)
+  !is.null(y) && .valid_label(y)
 }
 
 
