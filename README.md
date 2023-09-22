@@ -28,7 +28,7 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
     - checks if classes match
     - returns 'talking' output
   - <code>i_data_to_*</code>: make use of structure(.Data = "what i want") to not take the extra step of copying attributes
-  - <code>i_as_factor()<code> as method
+  - <code>i_as_factor()</code> as method
     - two options: 1. all i_labelled and character vars become factor; 2. only i_labelled vars become factor (boolean)
     - can be applied to data.frame and vars
     - add i_missing_to_na() to i_as_factor()
