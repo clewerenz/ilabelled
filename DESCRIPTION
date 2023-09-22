@@ -1,6 +1,6 @@
 Package: ilabelled
 Type: Package
-Title: Smart handling of value labels
+Title: Simple handling of value labels
 Version: 0.1.0
 Author: Christof Lewerenz
 Maintainer: The package maintainer <christof.lewerenz@gmx.net>
