@@ -99,10 +99,10 @@ i_missing_to_na <- function(x, remove_missing_labels = F){
 #' @export
 i_missing_to_na.default <- function(x, remove_missing_labels = F){
   stopifnot(is.atomic(x) || is.null(x))
-  nas <- c(attr(x, "na_values", T), attr(x, "na_range", T))
+  nas <- unique(c(attr(x, "na_values", T), attr(x, "na_range", T)))
   labels <- attr(x, "labels", T)
   if(remove_missing_labels && !is.null(labels)){
-    labels <- labels[!labels == nas]
+    labels <- labels[!match(labels, nas, nomatch = F) > 0]
   }
   x[x %in% nas] <- NA
   structure(

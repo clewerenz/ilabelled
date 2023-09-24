@@ -23,6 +23,10 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
 # To-Do
 
   - <code>i_missing_to_na()</code>: the recoding of values via <code>%in%</code> is very slow, but <code>==</code> does not work with na_values > 1. Hence, a solution is needed, which replaces the slow <code>%in%</code> function (C/C++ maybe).
+    - added a new function <code>findMissing()</code> (helper.R) which calls C function via <code>.Call()</code>. Need further knowledge on how to use this in R package. Throws error <i>"findNaNumeric" not available for .Call() for package "i_labelled"</i> when calling function and <i>File ‘ilabelled/libs/ilabelled.so’: Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’</i> when devtools::check. Maybe functions must be compiled first.
+      - look at output devtools::check() suggestions
+      - https://www.r-bloggers.com/2014/02/three-ways-to-call-cc-from-r/
+      - https://www.r-bloggers.com/2021/07/using-r-callhello-2/
   - custom r_bind function
     - checks if value labels (if present) match
     - checks if classes match
