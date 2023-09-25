@@ -68,21 +68,6 @@ i_na_range.data.frame <- function(x, values, sort = T, desc = F){
 }
 
 
-#' validate missing values/range - intern
-#' @param x vector
-.valid_missing <- function(x){
-  is.atomic(x) && !any(is.na(x))
-}
-
-
-#' checks if vector is numeric sequence
-#' @param x vector
-.is_sequential <- function(x){
-  stopifnot(is.numeric(x))
-  all(diff(x) == diff(x)[1])
-}
-
-
 #' missing values to NA
 #' @description
 #' alle values declared as missing will be recoded as NA
@@ -99,12 +84,13 @@ i_missing_to_na <- function(x, remove_missing_labels = F){
 #' @export
 i_missing_to_na.default <- function(x, remove_missing_labels = F){
   stopifnot(is.atomic(x) || is.null(x))
-  nas <- c(attr(x, "na_values", T), attr(x, "na_range", T))
+  nas <- unique(c(attr(x, "na_values", T), attr(x, "na_range", T)))
   labels <- attr(x, "labels", T)
   if(remove_missing_labels && !is.null(labels)){
-    labels <- labels[!labels == nas]
+    labels <- labels[!match(labels, nas, nomatch = F) > 0]
   }
-  x[x %in% nas] <- NA
+  nas_ident <- .i_find_in(x, nas)
+  x[nas_ident] <- NA
   structure(
     x,
     labels = labels

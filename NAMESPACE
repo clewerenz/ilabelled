@@ -27,8 +27,18 @@ export(i_labels)
 export(i_missing_to_na)
 export(i_na_range)
 export(i_na_values)
+export(i_print_label)
+export(i_print_labels)
+export(i_print_na_range)
+export(i_print_na_values)
 export(i_remove_missing_labels)
 export(i_valid_label)
 export(i_valid_labels)
 export(is.i_labelled)
 importFrom(methods,is)
+useDynLib(ilabelled, .registration = TRUE)
+
+
+
+
+
