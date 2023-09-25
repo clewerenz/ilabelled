@@ -1,15 +1,48 @@
 
 
-#' clear global environment and restart r ression
-restartR <- function(){
+.restartR <- function(){
   rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
   rstudioapi::restartSession()
 }
 
 
+#' internal replacement of %in% for remove missing values (%in% is much slower but can handle more data classes)
+.i_find_in <- function(x, y){
+  stopifnot(is.logical(x) || is.numeric(x) || is.character(x) || is.factor(x))
+  stopifnot(is.logical(y) || is.numeric(y) || is.character(y))
+  if(is.numeric(x)){
+    .Call("iFindIn", as.numeric(x), as.numeric(y))
+  }else if(is.character(x)){
+    .Call("iFindIn", as.character(x), as.character(y))
+  }else if(is.logical(x)){
+    .Call("iFindIn", x, y)
+  }else if(is.factor(x) && is.numeric(y)){
+    .Call("iFindIn", as.numeric(x), as.numeric(y))
+  }else if(is.factor(x) && is.character(y)){
+    .Call("iFindIn", as.character(x), as.character(y))
+  }else{
+    NA
+  }
+}
 
-# find_nas_numeric <- inline::cfunction(
-#   sig = c(x = "numeric", y = "numeric"),
+
+#' validate missing values/range - intern
+#' @param x vector
+.valid_missing <- function(x){
+  is.atomic(x) && !any(is.na(x))
+}
+
+
+#' checks if vector is numeric sequence
+#' @param x vector
+.is_sequential <- function(x){
+  stopifnot(is.numeric(x))
+  all(diff(x) == diff(x)[1])
+}
+
+
+# i_find_in_test <- inline::cfunction(
+#   sig = c(x = "ANY", y = "ANY"),
 #   body = "
 #   int xn = length(x);
 #   int yn = length(y);
@@ -18,18 +51,34 @@ restartR <- function(){
 #
 #   SEXP out = PROTECT(allocVector(LGLSXP, xn));
 #
+#   if(TYPEOF(x) != TYPEOF(y)){
+#     SEXP err = PROTECT(allocVector(INTSXP, 1));
+#     INTEGER(err)[0] = NA_INTEGER;
+#     UNPROTECT(2);
+#     return err;
+#   }
+#
 #   for(int i = 0; i < xn; i++){
-#     int res = 0;
+#     bool res = !t;
 #     for(int j = 0; j < yn; j++){
-#       if(res < 1 & (REAL(x)[i] == REAL(y)[j])){
-#         res = one;
+#       if(TYPEOF(x) == REALSXP){
+#         if(REAL(x)[i] == REAL(y)[j]){
+#             res = t;
+#             break;
+#         }
+#       }else if(TYPEOF(x) == STRSXP){
+#         if(STRING_ELT(x, i) == STRING_ELT(y, j)){
+#           res = t;
+#           break;
+#         }
+#       }else if(TYPEOF(x) == LGLSXP){
+#         if(LOGICAL(x)[i] == LOGICAL(y)[j]){
+#           res = t;
+#           break;
+#         }
 #       }
 #     }
-#     if(res > 0){
-#       LOGICAL(out)[i] = t;
-#     }else{
-#       LOGICAL(out)[i] = !t;
-#     }
+#     LOGICAL(out)[i] = res;
 #   }
 #
 #   UNPROTECT(1);
@@ -37,21 +86,4 @@ restartR <- function(){
 #   return out;
 #   "
 # )
-
-
-#' @export
-findMissing <- function(x, y){
-  if(is.numeric(x) & is.numeric(y)){
-    .Call("findNaNumeric", as.numeric(x), as.numeric(y), PACKAGE = "i_labelled")
-  }else if(is.character(x) & is.character(y)){
-    stop("findNaCharacter for character still to do")
-  }else{
-    stop("class x does not match class y")
-  }
-}
-
-
-
-
-
 

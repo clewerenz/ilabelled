@@ -21,22 +21,19 @@ Providing a function library for working with labelled data in R.
 The inspiration for this package comes from the [Sticky](https://github.com/cran/sticky) package as well as the [labelled](https://github.com/larmarange/labelled) package.
 
 # To-Do
-
-  - <code>i_missing_to_na()</code>: the recoding of values via <code>%in%</code> is very slow, but <code>==</code> does not work with na_values > 1. Hence, a solution is needed, which replaces the slow <code>%in%</code> function (C/C++ maybe).
-    - added a new function <code>findMissing()</code> (helper.R) which calls C function via <code>.Call()</code>. Need further knowledge on how to use this in R package. Throws error <i>"findNaNumeric" not available for .Call() for package "i_labelled"</i> when calling function and <i>File ‘ilabelled/libs/ilabelled.so’: Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’</i> when devtools::check. Maybe functions must be compiled first.
-      - look at output devtools::check() suggestions
-      - https://www.r-bloggers.com/2014/02/three-ways-to-call-cc-from-r/
-      - https://www.r-bloggers.com/2021/07/using-r-callhello-2/
-  - custom r_bind function
+  
+  - tests for <code>i_missings_to_na()</code>
+  - code>i_valid_labels()</code> should work on all data classes
+  - custom r_bind function:
     - checks if value labels (if present) match
     - checks if classes match
     - returns 'talking' output
   - <code>i_data_to_*</code>: make use of structure(.Data = "what i want") to not take the extra step of copying attributes
-  - <code>i_as_factor()</code> as method
+  - <code>i_as_factor()</code> as method:
     - two options: 1. all i_labelled and character vars become factor; 2. only i_labelled vars become factor (boolean)
     - can be applied to data.frame and vars
     - add i_missing_to_na() to i_as_factor()
-  - funciton for recoding data
+  - funciton for recoding data:
     - <code>i_recode(x, args, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...)</code>
     - <code>structure(x = .rec(x), label = label, labels = labels, na_range = na_range, na_values = na_values, ...)</code>
     - inspiration from case_match from dplyr <https://github.com/tidyverse/dplyr/blob/main/R/case-match.R>
@@ -44,6 +41,23 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
     - process recoding in internal <code>.rec()</code> function
     - for each recode argument generate logical vector
     - loop over data <code>for( i in seq(logical-vectors)){}</code> and recode values according to input
-        - find solution to accelerate for loop (can i do it in C/C++?)
-            - <http://adv-r.had.co.nz/C-interface.html>
-            - <https://www.biostat.jhsph.edu/~rpeng/docs/interface.pdf>
+      - find solution to accelerate for loop (can i do it in C/C++?)
+
+# Memory
+## Use C code in R
+
+  - write code in \src\file.c
+  - collect functions in header file under \src
+  - when package is compiled or loaded via <code>devtools::load_all()</code>, C code get compiled as .so or .dll
+  - to use C functions in R functions via <code>.Call()</code> add line to NAMESPACE: <code>useDynLib(ilabelled, .registration = TRUE)</code>
+    - first argument is the name of the .so or .dll under \src you want to use in the package
+  - <http://adv-r.had.co.nz/C-interface.html>
+  - https://github.com/Rdatatable/data.table/tree/master
+  - https://cran.r-project.org/doc/manuals/R-exts.html#Portable-C-and-C_002b_002b-code
+  - https://stackoverflow.com/questions/1176455/portable-use-of-dyn-load-to-call-a-c-function-in-an-r-package
+  - in order to compile C code manually use: https://rdrr.io/r/utils/SHLIB.html; https://rdrr.io/github/richfitz/rcmdshlib/man/shlib.html
+
+## rund code when package is loaded
+
+  - https://stackoverflow.com/questions/20223601/r-how-to-run-some-code-on-load-of-package
+  - https://www.rdocumentation.org/packages/pkgmaker/versions/0.32.10/topics/onLoad
