@@ -116,6 +116,7 @@ test_that(
     expect_equal(names(attr(y, "labels", T)), c("setosa","versicolor","virginica"))
     expect_equal(unname(attr(y, "labels", T)), c(1,2,3))
 
+
     # remove missing labels
     x <- i_labelled(c(-9,1,2,3,1,2,3), na_values = -9, labels = c(setosa = 1, versicolor = 2, missing = -9, virginica = 3))
     y <- i_remove_missing_labels(x)

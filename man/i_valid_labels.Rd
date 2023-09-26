@@ -7,7 +7,7 @@
 i_valid_labels(x)
 }
 \arguments{
-\item{x}{vector ot data.frame}
+\item{x}{vector or data.frame}
 }
 \description{
 returns boolean when i_labelled
