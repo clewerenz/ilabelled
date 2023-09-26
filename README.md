@@ -22,9 +22,9 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
 
 # To-Do
   
-  - tests for <code>i_missings_to_na()</code>
-  - tests for <code>i_as_factor()</code>
-  - <code>i_valid_labels()</code> should work on all data classes
+  - tests for <code>i_missings_to_na()</code>: should work on all data classes and data.frame
+  - tests for <code>i_as_factor()</code>: should work on all data classes and data.frame
+  - tests for <code>i_valid_labels()</code>: should work on all data classes and data.frame
   - custom r_bind function:
     - checks if value labels (if present) match
     - checks if classes match
