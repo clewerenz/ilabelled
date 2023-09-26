@@ -7,19 +7,23 @@
 
 
 #' internal replacement of %in% for remove missing values (%in% is much slower but can handle more data classes)
+#' @param x vector
+#' @param y vector
 .i_find_in <- function(x, y){
-  stopifnot(is.logical(x) || is.numeric(x) || is.character(x) || is.factor(x))
-  stopifnot(is.logical(y) || is.numeric(y) || is.character(y))
+  stopifnot(is.logical(x) || is.numeric(x) || is.character(x) || is.factor(x) || "Date" %in% class(x))
+  stopifnot(is.logical(y) || is.numeric(y) || is.character(y) || "Date" %in% class(x))
   if(is.numeric(x)){
-    .Call("iFindIn", as.numeric(x), as.numeric(y))
+    .Call("iFindIn", as.numeric(x), as.numeric(y), PACKAGE = "ilabelled")
   }else if(is.character(x)){
-    .Call("iFindIn", as.character(x), as.character(y))
+    .Call("iFindIn", as.character(x), as.character(y), PACKAGE = "ilabelled")
   }else if(is.logical(x)){
-    .Call("iFindIn", x, y)
+    .Call("iFindIn", x, y, PACKAGE = "ilabelled")
   }else if(is.factor(x) && is.numeric(y)){
-    .Call("iFindIn", as.numeric(x), as.numeric(y))
+    .Call("iFindIn", as.numeric(x), as.numeric(y), PACKAGE = "ilabelled")
   }else if(is.factor(x) && is.character(y)){
-    .Call("iFindIn", as.character(x), as.character(y))
+    .Call("iFindIn", as.character(x), as.character(y), PACKAGE = "ilabelled")
+  }else if("Date" %in% class(x)){
+    .Call("iFindIn", as.character(x), as.character(y), PACKAGE = "ilabelled")
   }else{
     NA
   }

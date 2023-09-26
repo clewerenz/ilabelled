@@ -83,7 +83,7 @@ i_labels <- function(x, ..., sort_desc = F){
 #' returns NA when not i_labelled
 #' returns a named list when applied to data.frame
 #'
-#' @param x vector ot data.frame
+#' @param x vector or data.frame
 #' @export
 i_valid_labels <- function(x){
   UseMethod("i_valid_labels")
@@ -92,12 +92,6 @@ i_valid_labels <- function(x){
 
 #' @export
 i_valid_labels.default <- function(x){
-  NA
-}
-
-
-#' @export
-i_valid_labels.i_labelled <- function(x){
   y <- attr(x, "labels", T)
   (!is.null(y) && .valid_labels(y)) &&
     all(unique(x[!is.na(x)]) %in% y)
