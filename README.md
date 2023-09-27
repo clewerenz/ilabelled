@@ -22,6 +22,7 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
 
 # To-Do
   
+  - <code>i_labels()</code> needs an overwrite parameter (if T no merge with old labels)
   - tests for <code>i_missings_to_na()</code>: should work on all data classes and data.frame
   - tests for <code>i_as_factor()</code>: should work on all data classes and data.frame
   - method for sorting labels (by value or by label) - necessary?
