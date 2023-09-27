@@ -12,7 +12,6 @@ LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
 Imports:
-    vctrs (>= 0.6.3),
     methods
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3

@@ -102,3 +102,4 @@ i_valid_labels.default <- function(x){
 i_valid_labels.data.frame <- function(x){
   sapply(x, i_valid_labels, USE.NAMES = T, simplify = F)
 }
+
