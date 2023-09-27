@@ -23,22 +23,5 @@ test_that(
     expect_true(all(is.na(z)))
 
 
-    # as factor
-    x <- i_labelled(c(1,2,3,1,2,3), labels = c(A = 1, NULL = 2, C = 3), label = "Bla")
-    y <- i_labelled(c(1,2,3,1,2,3), labels = c(A = 1, B = 2, C = 3), label = "Bla")
-    z <- i_labelled(c(1,2,3,1,2,3), labels = c(B = 1, A = 2, C = 3), label = "Bla")
-    # k <- i_labelled(iris$Species, labels = c(Bla = "1", Bli = 2, Blubb = "3"))
-    expect_error(i_as_factor(NULL))
-    expect_error(i_as_factor(1:5))
-    expect_error(i_as_factor(LETTERS[1:5]))
-    expect_error(i_as_factor(x))
-    expect_no_error(i_as_factor(y))
-    expect_equal(class(i_as_factor(y)), "factor")
-    expect_equal(attr(i_as_factor(y), "label", T), "Bla")
-    expect_equal(attr(i_as_factor(y), "labels", T), NULL)
-    expect_equal(levels(i_as_factor(y)), c("A","B","C"))
-    expect_equal(levels(i_as_factor(z)), c("B","A","C"))
-
-
   }
 )

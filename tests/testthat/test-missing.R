@@ -18,6 +18,8 @@ test_that(
     expect_true(length(attr(x, "na_values", T)) == 3)
     expect_true(all(attr(x, "na_values", T) == c("Z","W","A")))
 
+    expect_error(i_labelled(1:5, na_values = c(NA,1)))
+
 
     # set NA values via method
     x <- i_labelled(iris$Species)
@@ -52,16 +54,15 @@ test_that(
     expect_true(all(res))
 
     # set NA range via class contructor
-    x <- i_labelled(iris$Species, na_range = -9:-1)
-    expect_true(length(attr(x, "na_range", T)) == 9)
-    expect_true(all(attr(x, "na_range", T) == -9:-1))
-    x <- i_labelled(iris$Species, na_range = c(-2,-1,0,1,2,3))
-    expect_true(length(attr(x, "na_range", T)) == 6)
-    expect_true(all(attr(x, "na_range", T) == c(-2,-1,0,1,2,3)))
-    x <- i_labelled(iris$Species, na_range = 3:-2)
-    expect_true(length(attr(x, "na_range", T)) == 6)
-    expect_true(all(attr(x, "na_range", T) == c(3,2,1,0,-1,-2)))
+    x <- i_labelled(iris$Species, na_range = c(-9,-1))
+    expect_true(length(attr(x, "na_range", T)) == 2)
+    expect_true(all(attr(x, "na_range", T) == c(-9,-1)))
+    x <- i_labelled(iris$Species, na_range = c(3,-2))
+    expect_true(length(attr(x, "na_range", T)) == 2)
+    expect_true(all(attr(x, "na_range", T) == c(3,-2)))
 
+    expect_error(i_labelled(1:5, na_range = c(NA,1)))
+    expect_error(i_labelled(iris$Species, na_range = c(-2,-1,0,1,2,3)))
     expect_error(i_labelled(iris$Species, na_range = c(-9:-4, -2:-1)))
     expect_error(i_labelled(iris$Species, na_range = c(1,2,3,5)))
     expect_error(i_labelled(iris$Species, na_range = LETTERS[1:3]))
@@ -69,16 +70,11 @@ test_that(
 
     # set NA range via method
     x <- i_labelled(iris$Species)
-    expect_no_error(i_na_range(x, 3:-2))
+    expect_no_error(i_na_range(x, c(3,-2)))
     expect_error(i_na_range(x, 1,4,2,3))
     expect_error(i_na_range(LETTERS[1:3]))
     expect_error(i_na_range(c(1,2,4)))
-    x <- i_na_range(x, 3:-2)
-    expect_true(length(attr(x, "na_range", T)) == 6)
-    expect_equal(attr(x, "na_range", T), -2:3)
-    x <- i_na_range(x, 3:-2, sort = T, desc = T)
-    expect_true(length(attr(x, "na_range", T)) == 6)
-    expect_equal(attr(x, "na_range", T), 3:-2)
+    expect_error(i_na_range(c(NA,2,4)))
 
     # remove missing values
     x <- i_labelled(c(1,2,3,-9,1,2,3,-8), na_range = -9:-8, labels = c(X = -9, Y = -8, A = 1, B = 2, C = 3))

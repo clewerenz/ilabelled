@@ -22,7 +22,7 @@ i_labelled(
 
 \item{na_values}{missing values (e.g. c(888, 999))}
 
-\item{na_range}{range of missing values (e.g. c(-9,-1))}
+\item{na_range}{range of missing values as vector length 2 (e.g. c(-9,-1))}
 
 \item{...}{further attributes passed to class}
 }

@@ -1,12 +1,15 @@
 
 
-.restartR <- function(){
-  rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
-  rstudioapi::restartSession()
-}
+# .restartR <- function(){
+#   rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
+#   rstudioapi::restartSession()
+# }
 
 
 #' internal replacement of %in% for remove missing values (%in% is much slower but can handle more data classes)
+#' @description
+#' description description
+#'
 #' @param x vector
 #' @param y vector
 .i_find_in <- function(x, y){
@@ -28,14 +31,6 @@
     NA
   }
 }
-
-
-#' validate missing values/range - intern
-#' @param x vector
-.valid_missing <- function(x){
-  is.atomic(x) && !any(is.na(x))
-}
-
 
 #' checks if vector is numeric sequence
 #' @param x vector

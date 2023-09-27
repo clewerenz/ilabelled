@@ -16,7 +16,7 @@ Providing a function library for working with labelled data in R.
     - incorrect labels 
   - <b>Easy recoding</b> 
   - <b>Reduce dependencies</b> 
-    - The most possible minimum. Right now it depends on: cli, glue, lifecycle, methods, rlang, utils, vctrs
+    - The most possible minimum. Right now it depends on no third party libraries.
 
 The inspiration for this package comes from the [Sticky](https://github.com/cran/sticky) package as well as the [labelled](https://github.com/larmarange/labelled) package.
 
@@ -24,21 +24,13 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
   
   - tests for <code>i_missings_to_na()</code>: should work on all data classes and data.frame
   - tests for <code>i_as_factor()</code>: should work on all data classes and data.frame
-  - tests for <code>i_valid_labels()</code>: should work on all data classes and data.frame
+  - method for sorting labels (by value or by label) - necessary?
+  - get methods for label attributes
   - custom r_bind function:
     - checks if value labels (if present) match
     - checks if classes match
     - returns 'talking' output
-  - function for recoding data:
-    - <code>i_recode(x, args, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...)</code>
-    - <code>structure(x = .rec(x), label = label, labels = labels, na_range = na_range, na_values = na_values, ...)</code>
-    - inspiration from case_match from dplyr <https://github.com/tidyverse/dplyr/blob/main/R/case-match.R>
-    - args as list input - e.g. <code>list(1 = c(1,2), 2 = c(3,4,5))</code>
-    - process recoding in internal <code>.rec()</code> function
-    - for each recode argument generate logical vector
-    - loop over data <code>for( i in seq(logical-vectors)){}</code> and recode values according to input
-      - find solution to accelerate for loop (can i do it in C/C++?)
-
+  
 # Memory
 ## Use C code in R
 

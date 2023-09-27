@@ -16,7 +16,7 @@ i_na_values <- function(x, values, sort = T, desc = F){
 
 #' @export
 i_na_values.default <- function(x, values, sort = T, desc = F){
-  stopifnot(.valid_missing(values))
+  stopifnot(.valid_na_values(values))
   if(sort){
     values <- sort(values, desc)
   }
@@ -40,20 +40,15 @@ i_na_values.data.frame <- function(x, values, sort = T, desc = F){
 #'
 #' @param x vector
 #' @param values vector with missing range e.g. c(-9:-1) or NULL (NULL will remove all missing values)
-#' @param sort sort values
-#' @param desc sort values in descending order
 #' @export
-i_na_range <- function(x, values, sort = T, desc = F){
+i_na_range <- function(x, values){
   UseMethod("i_na_range")
 }
 
 
 #' @export
-i_na_range.default <- function(x, values, sort = T, desc = F){
-  stopifnot(is.null(x) || (.valid_missing(values) && .is_sequential(values)))
-  if(sort){
-    values <- sort(values, desc)
-  }
+i_na_range.default <- function(x, values){
+  stopifnot(.valid_na_range(values))
   structure(
     x,
     na_range = values
@@ -62,8 +57,8 @@ i_na_range.default <- function(x, values, sort = T, desc = F){
 
 
 #' @export
-i_na_range.data.frame <- function(x, values, sort = T, desc = F){
-  x[] <- lapply(x, function(y) i_na_range(y, values, sort, desc))
+i_na_range.data.frame <- function(x, values){
+  x[] <- lapply(x, function(y) i_na_range(y, values))
   x
 }
 
@@ -84,12 +79,21 @@ i_missing_to_na <- function(x, remove_missing_labels = F){
 #' @export
 i_missing_to_na.default <- function(x, remove_missing_labels = F){
   stopifnot(is.atomic(x) || is.null(x))
-  nas <- unique(c(attr(x, "na_values", T), attr(x, "na_range", T)))
+
+  na_vals <- attr(x, "na_values", T)
+  na_range <- attr(x, "na_range", T)
+  stopifnot(.valid_na_values(na_vals) || .valid_na_range(na_range))
+  if(!is.null(na_range)){
+    na_range <- seq(min(na_range), max(na_range), 1)
+  }
+  na_all <- unique(c(na_vals, na_range))
+
   labels <- attr(x, "labels", T)
   if(remove_missing_labels && !is.null(labels)){
-    labels <- labels[!match(labels, nas, nomatch = F) > 0]
+    labels <- labels[!match(labels, na_all, nomatch = F) > 0]
   }
-  nas_ident <- .i_find_in(x, nas)
+
+  nas_ident <- .i_find_in(x, na_all)
   x[nas_ident] <- NA
   structure(
     x,
@@ -137,3 +141,20 @@ i_remove_missing_labels.data.frame <- function(x){
 }
 
 
+#' @export
+.valid_na_values <- function(x){
+  (is.null(x) || !any(is.na(x)))
+}
+
+
+#' @export
+.valid_na_range <- function(x){
+  (is.null(x) || (!any(is.na(x)) && length(x) <= 2))
+}
+
+
+#' validate missing values/range - intern
+#' @param x vector
+.valid_missing <- function(x){
+  is.atomic(x) && !any(is.na(x))
+}

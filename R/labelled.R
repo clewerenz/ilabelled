@@ -6,20 +6,20 @@
 #' @param label variable label
 #' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
 #' @param na_values missing values (e.g. c(888, 999))
-#' @param na_range range of missing values (e.g. c(-9,-1))
+#' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
 #' @param ... further attributes passed to class
 i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...){
   stopifnot(is.atomic(x))
   stopifnot(.valid_label(label))
-  stopifnot(.valid_missing(na_values))
-  if(!is.null(na_range)){
-    stopifnot(.valid_missing(na_range) && .is_sequential(na_range))
-  }
+  stopifnot(.valid_na_values(na_values))
+  stopifnot(.valid_na_range(na_range))
+
   if(is.null(labels) && is.factor(x)){
     labels <- stats::setNames(1:length(levels(x)), levels(x))
   }else if(!is.null(labels) || !is.null(attr(x, "labels", T))){
     labels <- .merge_labels(as.list(attr(x, "labels", T)), as.list(labels))
   }
+
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, ...))
 }
 
@@ -35,10 +35,9 @@ i_labelled_df <- function(x){
 
 #' check for class i_labelled
 #' @export
-#' @importFrom methods is
 #' @param x vector of class i_labelled
 is.i_labelled <- function(x){
-  is(x,'i_labelled')
+  methods::is(x,'i_labelled')
 }
 
 
@@ -47,6 +46,13 @@ is.i_labelled <- function(x){
 #' @param x vector of class i_labelled
 #' @param ... not used
 `[.i_labelled` <- function(x, ...){
-  vctrs::vec_restore(NextMethod("["), x)
+  r <- NextMethod("[")
+  mostattributes(r) <- attributes(x)
+  r
 }
+
+# old version with vctrs package
+# `[.i_labelled` <- function(x, ...){
+#   vctrs::vec_restore(NextMethod("["), x)
+# }
 
