@@ -22,6 +22,7 @@ The inspiration for this package comes from the [Sticky](https://github.com/cran
 
 # To-Do
   
+  - add argument "only_labelled = T" to <code>i_as_factor()</code>: var becomes factor, only when labels are applied. Otherwise it becomes numeric/character.
   - tests for <code>i_missings_to_na()</code>: should work on all data classes and data.frame
   - tests for <code>i_as_factor()</code>: should work on all data classes and data.frame
   - tests for <code>i_valid_labels()</code>: should work on all data classes and data.frame
