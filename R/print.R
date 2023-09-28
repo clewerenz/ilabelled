@@ -16,33 +16,66 @@ print.i_labelled <- function(x, ...){
 
   print(`attributes<-`(x, NULL))
 
-  i_print_na_values(x)
-  i_print_na_range(x)
-  i_print_label(x)
-  i_print_labels(x)
+  i_get_na_values(x)
+  i_get_na_range(x)
+  i_get_label(x)
+  i_get_labels(x)
 
   invisible(x)
 }
 
 
-#' print value labels
-#' @param x vector
+#' get value labels
+#' #' @description
+#' print variable labels when applied to vector
+#' return list when applied to data.frame
+#'
+#' @param x vector or data.frame
 #' @export
-i_print_labels <- function(x){
+i_get_labels <- function(x){
+  UseMethod("i_get_labels")
+}
+
+
+#' @export
+i_get_labels.default <- function(x){
   labels <- attr(x, "labels", T)
   if(is.null(labels)){
     return(invisible(labels))
   }
   cat("\nValue labels:\n")
-  labels <- data.frame(value = labels, label = names(labels))
+  labels <- data.frame(value = labels, label = names(labels), row.names = NULL, stringsAsFactors = F)
   print(labels, row.names = F)
 }
 
 
-#' print variable label
-#' @param x vector
 #' @export
-i_print_label <- function(x){
+i_get_labels.data.frame <- function(x){
+  sapply(x, function(y){
+    labels <- attr(y, "labels", T)
+    if(is.null(labels)){
+      NULL
+    }else{
+      data.frame(value = labels, label = names(labels), row.names = NULL, stringsAsFactors = F)
+    }
+  })
+}
+
+
+#' get variable label
+#' @description
+#' print variable label when applied to vector
+#' return list when applied to data.frame
+#'
+#' @param x vector or data.frame
+#' @export
+i_get_label <- function(x){
+  UseMethod("i_get_label")
+}
+
+
+#' @export
+i_get_label.default <- function(x){
   label <- attr(x, "label", T)
   if(is.null(label)){
     return(invisible(label))
@@ -51,25 +84,84 @@ i_print_label <- function(x){
 }
 
 
-#' print missing values
-#' @param x vector
 #' @export
-i_print_na_values <- function(x){
+i_get_label.data.frame <- function(x){
+  sapply(x, function(x){
+    label <- attr(x, "label", T)
+    if(is.null(label)){
+      NULL
+    }else{
+      label
+    }
+  })
+}
+
+
+#' print missing values
+#' @description
+#' print missing values when applied to vector
+#' return list when applied to data.frame
+#'
+#' @param x vector or data.frame
+#' @export
+i_get_na_values <- function(x){
+  UseMethod("i_get_na_values")
+}
+
+
+#' @export
+i_get_na_values.default <- function(x){
   na_values <- attr(x, "na_values", T)
   if(is.null(na_values)){
     return(invisible(na_values))
   }
-  cat(paste0("\nMissing values: [", paste0(na_values, collapse = ","), "]", "\n"))
+  cat(paste0("\nMissing values: [", paste0(sort(na_values), collapse = ","), "]", "\n"))
+}
+
+
+#' @export
+i_get_na_values.data.frame <- function(x){
+  sapply(x, function(y){
+    na_values <- attr(y, "na_values", T)
+    if(is.null(na_values)){
+      NULL
+    }else{
+      sort(na_values)
+    }
+  })
 }
 
 
 #' print missing range
-#' @param x vector
+#' @description
+#' print missing range when applied to vector
+#' return list when applied to data.frame
+#'
+#' @param x vector or data.frame
 #' @export
-i_print_na_range <- function(x){
+i_get_na_range <- function(x){
+  UseMethod("i_get_na_range")
+}
+
+
+#' @export
+i_get_na_range.default <- function(x){
   na_range <- attr(x, "na_range", T)
   if(is.null(na_range)){
     return(invisible(na_range))
   }
   cat(paste0("\nMissing range: [", min(na_range, na.rm = T), ":", max(na_range, na.rm = T), "]"), "\n")
+}
+
+
+#' @export
+i_get_na_range.data.frame <- function(x){
+  sapply(x, function(y){
+    na_range <- attr(y, "na_range", T)
+    if(is.null(na_range)){
+      NULL
+    }else{
+      sort(na_range)
+    }
+  })
 }
