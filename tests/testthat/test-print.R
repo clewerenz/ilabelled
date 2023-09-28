@@ -14,10 +14,10 @@ test_that(
     expect_output(i_get_labels(x))
     expect_true(is.list(yLabs))
     expect_true(is.data.frame(yLabs$Species))
-    expect_null(yLabs$Sepal.Length)
-    expect_null(yLabs$Sepal.Width)
-    expect_null(yLabs$Petal.Length)
-    expect_null(yLabs$Petal.Width)
+    expect_true(is.na(yLabs$Sepal.Length))
+    expect_true(is.na(yLabs$Sepal.Width))
+    expect_true(is.na(yLabs$Petal.Length))
+    expect_true(is.na(yLabs$Petal.Width))
 
     # i_get_label
     ## print output when vector; return list when data.frame
@@ -25,10 +25,10 @@ test_that(
     expect_output(i_get_labels(x))
     expect_true(is.list(yLabs))
     expect_equal(yLabs$Species, "Species")
-    expect_null(yLabs$Sepal.Length)
-    expect_null(yLabs$Sepal.Width)
-    expect_null(yLabs$Petal.Length)
-    expect_null(yLabs$Petal.Width)
+    expect_true(is.na(yLabs$Sepal.Length))
+    expect_true(is.na(yLabs$Sepal.Width))
+    expect_true(is.na(yLabs$Petal.Length))
+    expect_true(is.na(yLabs$Petal.Width))
 
     # i_get_na_values
     ## print output when vector; return list when data.frame
@@ -36,10 +36,10 @@ test_that(
     expect_output(i_get_na_values(x))
     expect_true(is.list(yNa))
     expect_equal(yNa$Species, 999)
-    expect_null(yNa$Sepal.Length)
-    expect_null(yNa$Sepal.Width)
-    expect_null(yNa$Petal.Length)
-    expect_null(yNa$Petal.Width)
+    expect_true(is.na(yNa$Sepal.Length))
+    expect_true(is.na(yNa$Sepal.Width))
+    expect_true(is.na(yNa$Petal.Length))
+    expect_true(is.na(yNa$Petal.Width))
 
     # i_get_na_range
     ## print output when vector; return list when data.frame
@@ -47,10 +47,10 @@ test_that(
     expect_output(i_get_na_range(x))
     expect_true(is.list(yNa))
     expect_equal(yNa$Species, c(-9,-1))
-    expect_null(yNa$Sepal.Length)
-    expect_null(yNa$Sepal.Width)
-    expect_null(yNa$Petal.Length)
-    expect_null(yNa$Petal.Width)
+    expect_true(is.na(yNa$Sepal.Length))
+    expect_true(is.na(yNa$Sepal.Width))
+    expect_true(is.na(yNa$Petal.Length))
+    expect_true(is.na(yNa$Petal.Width))
 
   }
 )
