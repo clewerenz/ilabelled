@@ -4,14 +4,14 @@
 \alias{i_labels}
 \title{set value labels}
 \usage{
-i_labels(x, ..., sort_desc = F)
+i_labels(x, ..., overwrite = F)
 }
 \arguments{
 \item{x}{vector}
 
 \item{...}{set labels for values (e.g. label_of_choice = 1 or "Label of Choice" = 1); remove single label with NULL = value (e.g. NULL = 1); removes all value labels when only NULL (e.g. i_label(x, NULL))}
 
-\item{sort_desc}{sort value labels in descending order according to values}
+\item{overwrite}{should new labels be merged with existing labels or remove existing labels}
 }
 \description{
 set value labels

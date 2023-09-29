@@ -51,7 +51,7 @@ is.i_labelled <- function(x){
   r
 }
 
-# old version with vctrs package
+# old version using vctrs package
 # `[.i_labelled` <- function(x, ...){
 #   vctrs::vec_restore(NextMethod("["), x)
 # }

@@ -141,13 +141,11 @@ i_remove_missing_labels.data.frame <- function(x){
 }
 
 
-#' @export
 .valid_na_values <- function(x){
   (is.null(x) || !any(is.na(x)))
 }
 
 
-#' @export
 .valid_na_range <- function(x){
   (is.null(x) || (!any(is.na(x)) && length(x) <= 2))
 }

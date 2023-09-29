@@ -42,16 +42,6 @@ test_that(
     expect_equal(names(attr(y, "labels")), c("A","B","C","test"))
     expect_equal(unname(attr(y, "labels")), c(1:3,999))
 
-    # sort values
-    y <- i_labels(x, "test" = 999, sort_desc = T)
-    expect_equal(names(attr(y, "labels")), c("test","C","B","A"))
-    expect_equal(unname(attr(y, "labels")), c(999,3:1))
-
-    # add value, replace value, remove, and sort value labels at the same time
-    y <- i_labels(x, add_val = 4, NULL = 1, repl_val = 2, sort_desc = T)
-    expect_equal(names(attr(y, "labels")), c("add_val","C","repl_val"))
-    expect_equal(unname(attr(y, "labels")), c(4:2))
-
     # errors
     expect_error(i_labels(x, 1234))
     expect_error(i_labels(x, 1:5))
@@ -88,6 +78,57 @@ test_that(
     expect_false(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = "1", NULL = 2, Blubb = "3"))))
     expect_false(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = "1", "AAA" = "BBB", Blubb = "3"))))
 
+    # overwrite parameter - overwrite existing labels
+    x <- i_labelled(iris$Species)
+    x <- i_labels(x, test = 999, overwrite = F)
+    expect_equal(unname(attr(x, "labels", T)), c(1,2,3,999))
+    expect_equal(names(attr(x, "labels", T)), c("setosa","versicolor","virginica","test"))
+    x <- i_labels(x, test = 999, overwrite = T)
+    expect_equal(unname(attr(x, "labels", T)), c(999))
+    expect_equal(names(attr(x, "labels", T)), "test")
+
+    # sort value labels on vector
+    x <- i_labelled(c(1,2,3,1,2,3,-9), labels = c(A = 1, B = 2, C = 3, X = -9))
+    ## sort increasing by values (default)
+    y <- i_sort_labels(x, by = "values", decreasing = F)
+    expect_equal(unname(attr(y, "labels", T)), c(-9,1,2,3))
+    expect_equal(names(attr(y, "labels", T)), c("X","A","B","C"))
+    ## sort decreasing by values
+    y <- i_sort_labels(x, by = "values", decreasing = T)
+    expect_equal(unname(attr(y, "labels", T)), c(3,2,1,-9))
+    expect_equal(names(attr(y, "labels", T)), c("C","B","A","X"))
+    ## sort increasing by labels
+    y <- i_sort_labels(x, by = "labels", decreasing = F)
+    expect_equal(unname(attr(y, "labels", T)), c(1,2,3,-9))
+    expect_equal(names(attr(y, "labels", T)), c("A","B","C","X"))
+    ## sort decreasing by labels
+    y <- i_sort_labels(x, by = "labels", decreasing = T)
+    expect_equal(unname(attr(y, "labels", T)), c(-9,3,2,1))
+    expect_equal(names(attr(y, "labels", T)), c("X","C","B","A"))
+
+    # sort value labels on data.frame
+    x <- data.frame(
+      V1 = i_labelled(c(1,2,3,1,2,3,-9), labels = c(A = 1, B = 2, C = 3, X = -9)),
+      V2 = i_labelled(c("A","B","C","A","B","C","X"), labels = c("Eins" = "A", "Zwei" = "B", "Drei" = "C", "Null" = "X"))
+    )
+    ## sort decreasing by values - all variables
+    y <- i_sort_labels(x, by = "values", decreasing = T)
+    expect_equal(unname(attr(y$V1, "labels", T)), c(3,2,1,-9))
+    expect_equal(names(attr(y$V1, "labels", T)), c("C","B","A","X"))
+    expect_equal(unname(attr(y$V2, "labels", T)), c("X","C","B","A"))
+    expect_equal(names(attr(y$V2, "labels", T)), c("Null","Drei","Zwei","Eins"))
+    ## sort decreasing by labels - all variables
+    y <- i_sort_labels(x, by = "labels", decreasing = T)
+    expect_equal(unname(attr(y$V1, "labels", T)), c(-9,3,2,1))
+    expect_equal(names(attr(y$V1, "labels", T)), c("X","C","B","A"))
+    expect_equal(unname(attr(y$V2, "labels", T)), c("B","X","A","C"))
+    expect_equal(names(attr(y$V2, "labels", T)), c("Zwei","Null","Eins","Drei"))
+    ## sort increasing by labels - all variables
+    y <- i_sort_labels(x, by = "labels", decreasing = F)
+    expect_equal(unname(attr(y$V1, "labels", T)), c(1,2,3,-9))
+    expect_equal(names(attr(y$V1, "labels", T)), c("A","B","C","X"))
+    expect_equal(unname(attr(y$V2, "labels", T)), c("C","A","X","B"))
+    expect_equal(names(attr(y$V2, "labels", T)), c("Drei","Eins","Null","Zwei"))
 
   }
 )
