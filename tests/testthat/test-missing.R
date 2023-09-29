@@ -100,24 +100,53 @@ test_that(
     expect_true(is.na(x$V2[1]))
     expect_true(is.na(x$V3[3]))
 
-    # missings to NA
+    # missings to NA - method
+
     x <- i_labelled(c(-9,1,2,3,1,2,3), na_values = -9, labels = c(setosa = 1, versicolor = 2, missing = -9, virginica = 3))
+
+    ## numeric vectors
+    ### keep missing labels
     y <- i_missing_to_na(x, remove_missing_labels = F)
     expect_true(is.na(y[1]))
     expect_false(is.na(y[2]))
     expect_true(y[2] == 1)
     expect_true(y[3] == 2)
     expect_equal(names(attr(y, "labels", T)), c("missing","setosa","versicolor","virginica"))
+    ### remove missing labels
     y <- i_missing_to_na(x, remove_missing_labels = T)
     expect_equal(names(attr(y, "labels", T)), c("setosa","versicolor","virginica"))
     expect_equal(unname(attr(y, "labels", T)), c(1,2,3))
 
+    ## character vector
+    x <- i_labelled(c("A","B","C","X"), na_values = "X", labels = c("Eins" = "A", "Zwei" = "B", "Drei" = "C", "Null" = "X"))
+    ### keep missing labels
+    y <- i_missing_to_na(x, remove_missing_labels = F)
+    expect_true(is.na(y[4]))
+    expect_equal(unname(attr(y, "labels", T)), c("A","B","C","X"))
+    ### remove missing labels
+    y <- i_missing_to_na(x, remove_missing_labels = T)
+    expect_equal(unname(attr(y, "labels", T)), c("A","B","C"))
+    ### missing label not in vector
+    x <- i_labelled(c("A","B","C","X"), na_values = "X", labels = c("Eins" = "A", "Zwei" = "B", "Drei" = "C", "Null" = "ZZZ"))
+    y <- i_missing_to_na(x, remove_missing_labels = T)
+    expect_true(is.na(y[4]))
+    expect_equal(unname(attr(y, "labels", T)), c("A","B","C","ZZZ"))
+    expect_equal(names(attr(y, "labels", T)), c("Eins","Zwei","Drei","Null"))
 
-    # remove missing labels
-    x <- i_labelled(c(-9,1,2,3,1,2,3), na_values = -9, labels = c(setosa = 1, versicolor = 2, missing = -9, virginica = 3))
+    # remove missing labels - method
+
+    ## numeric vector
+    x <- i_labelled(c(-9,1,2,3,1,2,3), na_values = -9, labels = c(A = 1, B = 2, X = -9, C = 3))
     y <- i_remove_missing_labels(x)
-    expect_equal(names(attr(y, "labels", T)), c("setosa","versicolor","virginica"))
+    expect_true(!is.na(y[1])) # remove only label not value
+    expect_equal(names(attr(y, "labels", T)), c("A","B","C"))
     expect_equal(unname(attr(y, "labels", T)), c(1,2,3))
+    ## character vector
+    x <- i_labelled(c("X","A","B","C","A","B","C"), na_values = "X", labels = c("Eins" = "A", "Zwei" = "B", "Null" = "X", "Drei" = "C"))
+    y <- i_remove_missing_labels(x)
+    expect_true(!is.na(y[1])) # remove only label not value
+    expect_equal(names(attr(y, "labels", T)), c("Eins","Zwei","Drei"))
+    expect_equal(unname(attr(y, "labels", T)), c("A","B","C"))
 
   }
 )

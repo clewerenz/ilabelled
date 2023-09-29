@@ -1,9 +1,11 @@
 Package: ilabelled
 Type: Package
-Title: Simple handling of value labels
+Title: Simple handling of labelled data
 Version: 0.1.0
-Author: Christof Lewerenz
-Maintainer: The package maintainer <christof.lewerenz@gmx.net>
+Authors@R: c(
+  person("Christof", "Lewerenz", email = "christof.lewerenz@gmx.net", role = c("aut", "cre"))
+  )
+Maintainer: Christof Lewerenz <christof.lewerenz@gmx.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
@@ -13,5 +15,8 @@ Suggests:
     testthat (>= 3.0.0)
 Imports:
     methods
+URL: https://github.com/clewerenz/ilabelled
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
+Depends: 
+    R (>= 2.10)

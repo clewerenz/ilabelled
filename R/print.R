@@ -54,11 +54,11 @@ i_get_labels.data.frame <- function(x){
   sapply(x, function(y){
     labels <- attr(y, "labels", T)
     if(is.null(labels)){
-      NULL
+      NA
     }else{
       data.frame(value = labels, label = names(labels), row.names = NULL, stringsAsFactors = F)
     }
-  })
+  }, simplify = F)
 }
 
 
@@ -89,11 +89,11 @@ i_get_label.data.frame <- function(x){
   sapply(x, function(x){
     label <- attr(x, "label", T)
     if(is.null(label)){
-      NULL
+      NA
     }else{
       label
     }
-  })
+  }, simplify = F)
 }
 
 
@@ -124,11 +124,11 @@ i_get_na_values.data.frame <- function(x){
   sapply(x, function(y){
     na_values <- attr(y, "na_values", T)
     if(is.null(na_values)){
-      NULL
+      NA
     }else{
       sort(na_values)
     }
-  })
+  }, simplify = F)
 }
 
 
@@ -159,9 +159,9 @@ i_get_na_range.data.frame <- function(x){
   sapply(x, function(y){
     na_range <- attr(y, "na_range", T)
     if(is.null(na_range)){
-      NULL
+      NA
     }else{
       sort(na_range)
     }
-  })
+  }, simplify = F)
 }

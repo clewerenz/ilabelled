@@ -46,9 +46,14 @@ i_as_factor.default <- function(x, labels = NULL, require_all_labels = F, missin
     labels <- c(labels, stats::setNames(missing_values, missing_values))
   }
 
-  # if(ordered){
+  if(any(duplicated(names(labels)))){
+    stop("cannot convert to factor: duplicate labels in value labels")
+  }
+  if(any(duplicated(labels))){
+    stop("cannot convert to factor: duplicate values in value labels")
+  }
+
   labels <- sort(labels)
-  # }
 
   x <- factor(x, levels = unname(labels), labels = names(labels))
   attributes(x) <- c(attributes(x), tmp_attr)

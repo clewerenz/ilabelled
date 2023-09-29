@@ -12,6 +12,6 @@ i_missing_to_na(x, remove_missing_labels = F)
 \item{remove_missing_labels}{remove values labels from values which are declared as missing}
 }
 \description{
-alle values declared as missing will be recoded as NA
+all values declared as missing will be recoded as NA
 set missing values via i_labelled(), i_na_values() or i_na_range()
 }

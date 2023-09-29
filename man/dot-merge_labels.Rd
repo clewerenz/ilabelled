@@ -4,14 +4,12 @@
 \alias{.merge_labels}
 \title{combine old value labels with new value labels}
 \usage{
-.merge_labels(old_labs, new_labs, sort_desc = F)
+.merge_labels(old_labs, new_labs)
 }
 \arguments{
 \item{old_labs}{named vector}
 
 \item{new_labs}{named vector}
-
-\item{sort_desc}{sort value labels in descending order according to values}
 }
 \description{
 return named vector
