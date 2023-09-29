@@ -23,8 +23,7 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
-  - <code>.valid_labels()</code>: no duplicate labels/values allowed + tests
-  - tests for <code>i_as_factor()</code>: should work on all data classes and data.frame
+  - tests for <code>i_as_factor()</code>: append tests for parameters
   - documentation: rmarkdown html with examples of all features
   - custom r_bind function (maybe):
     - checks if value labels (if present) match

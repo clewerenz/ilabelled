@@ -69,9 +69,13 @@ i_labels <- function(x, ..., overwrite = F){
   }else if(is.list(x)){
     length(names(x)) == length(x) &&
       length(unique(unlist(lapply(x, function(x) class(x))))) == 1 &&
-      length(x) > 0
+      length(x) > 0 &&
+      !any(duplicated(names(x)[!names(x) == "NULL"])) &&
+      !any(duplicated(unlist(x)))
   }else{
-    length(names(x)) == length(x) && length(x) > 0
+    length(names(x)) == length(x) && length(x) > 0 &&
+      !any(duplicated(names(x)[!names(x) == "NULL"])) &&
+      !any(duplicated(x))
   }
 }
 

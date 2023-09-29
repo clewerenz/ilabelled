@@ -87,6 +87,17 @@ test_that(
     expect_equal(unname(attr(y, "labels", T)), c(1:2,4))
     expect_equal(names(attr(y, "labels", T)), c("A","B","Blubb"))
 
+    ################################################
+
+    # Error handling
+
+    ## value labels
+    ### no duplicate values in value labels
+    expect_error(i_labelled(1:3, labels = c(A = 1, B = 1)))
+    ### no duplicate labels in value labels
+    expect_error(i_labelled(1:3, labels = c(A = 1, A = 2)))
+
+
   }
 )
 

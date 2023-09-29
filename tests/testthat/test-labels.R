@@ -54,6 +54,11 @@ test_that(
     expect_error(i_labels(x, A = 1, B = 2, C))
     expect_error(i_labels(x, A = 1, B = 2, C = "bla"))
     expect_error(i_labels(i_labelled(1:3), list(A = 1, NULL = 2, C = 3)))
+    ## no duplicate labels in value labels
+    expect_error(i_labels(x, c(A = 1, A = 2)))
+    ## no duplicate values in value labels
+    expect_error(i_labels(x, c(A = 1, B = 1)))
+
 
     # valudate value labels
     x <- i_labelled(iris$Species)
