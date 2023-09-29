@@ -13,6 +13,10 @@ Encoding: UTF-8
 LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
+Imports:
+    methods
 URL: https://github.com/clewerenz/ilabelled
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
+Depends: 
+    R (>= 2.10)

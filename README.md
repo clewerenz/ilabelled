@@ -29,8 +29,13 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
     - checks if value labels (if present) match
     - checks if classes match
     - returns 'talking' output
+  - example data: add correctly to or remove from package
   
-# Memory
+# Rescources
+
+## General
+
+  - How to write R packages: https://r-pkgs.org/
 
 ## Use C code in R
 

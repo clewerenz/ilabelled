@@ -34,8 +34,9 @@ i_labelled_df <- function(x){
 
 
 #' check for class i_labelled
-#' @export
 #' @param x vector of class i_labelled
+#' @importFrom methods is
+#' @export
 is.i_labelled <- function(x){
   methods::is(x,'i_labelled')
 }
