@@ -6,28 +6,22 @@
 \usage{
 i_as_factor(
   x,
-  labels = NULL,
-  require_all_labels = F,
   missing_to_na = F,
   remove_missing_labels = F,
-  ordered = T,
+  require_all_labels = F,
   only_labelled = F
 )
 }
 \arguments{
 \item{x}{vector}
 
-\item{labels}{value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))}
-
-\item{require_all_labels}{process will be interrupted, when not all values have valid labels}
-
 \item{missing_to_na}{as missing declared values will become NA}
 
 \item{remove_missing_labels}{as missing declared values will be removed from levels (ignored when 'missing_to_na = F')}
 
-\item{ordered}{order labels by the underlying values}
+\item{require_all_labels}{process will be interrupted, when not all values have valid labels}
 
-\item{only_labelled}{only variables of class 'i_labelled' will become factor}
+\item{only_labelled}{convert only variables with valid value labels to factor}
 }
 \description{
 make factor from i_labelled

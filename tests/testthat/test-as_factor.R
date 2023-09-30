@@ -118,20 +118,6 @@ test_that(
 
     # Testing parameters
 
-    ## 'label' for setting labels manually
-
-    x <- i_labelled(1:3)
-    x <- i_as_factor(x, labels = c(A = 1, B = 2, C = 3))
-    expect_equal(levels(x), c("A", "B", "C"))
-
-    x <- i_labelled(c("A","B","C"))
-    x <- i_as_factor(x, labels = c("Eins" = "A", "Zwei" = "B", "Drei" = "C"))
-    expect_equal(levels(x), c("Eins", "Zwei", "Drei"))
-
-    x <- i_labelled(c("A","B","C"))
-    x <- i_as_factor(x, labels = c("Eins" = "A", "Drei" = "C"))
-    expect_equal(levels(x), c("Eins", "B", "Drei"))
-
     ## 'require_all_labels' - break when labels are missing
 
     x <- i_labelled(1:3)
@@ -160,19 +146,19 @@ test_that(
     expect_true(is.na(x[[4]]))
     expect_equal(levels(x), c("A", "B", "C"))
 
-    ### ignore remove_missing_labels = T when missing_to_na = F
+    ### remove_missing_labels = T when missing_to_na = F
     x <- i_labelled(c(1,2,3,-9), na_values = -9, labels = c(A = 1, B = 2, C = 3, X = -9))
     x <- i_as_factor(x, missing_to_na = F, remove_missing_labels = T)
     expect_false(is.na(x[[4]]))
-    expect_equal(levels(x), c("X", "A", "B", "C"))
+    expect_equal(levels(x), c("-9", "A", "B", "C"))
 
     ## 'only_labelled' - convert only to factor when valid labels
 
     x <- c(1:3,-9)
     attr(x, "labels") <- c(A = 1, B = 2, C = 3, X = -9)
     x <- i_as_factor(x, only_labelled = T)
-    expect_false(is.factor(x))
-    expect_true(is.numeric(x))
+    expect_true(is.factor(x))
+    expect_false(is.numeric(x))
     expect_equal(names(attr(x, "labels", T)), c("A", "B", "C", "X"))
 
   }

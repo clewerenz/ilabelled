@@ -102,9 +102,16 @@ test_that(
 
     # missings to NA - method
 
-    x <- i_labelled(c(-9,1,2,3,1,2,3), na_values = -9, labels = c(setosa = 1, versicolor = 2, missing = -9, virginica = 3))
+    ## no missings declared: do nothing
+    x <- i_labelled(c(1,2,3,-9), labels = c(X = -9))
+    expect_no_error(i_missing_to_na(x))
+    y <- i_missing_to_na(x)
+    expect_equal(y, x)
 
     ## numeric vectors
+
+    x <- i_labelled(c(-9,1,2,3,1,2,3), na_values = -9, labels = c(setosa = 1, versicolor = 2, missing = -9, virginica = 3))
+
     ### keep missing labels
     y <- i_missing_to_na(x, remove_missing_labels = F)
     expect_true(is.na(y[1]))
