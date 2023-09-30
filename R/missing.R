@@ -88,9 +88,16 @@ i_missing_to_na.default <- function(x, remove_missing_labels = F){
   }
   na_all <- unique(c(na_vals, na_range))
 
+  if(is.null(na_all)){
+    return(x)
+  }
+
   labels <- attr(x, "labels", T)
   if(remove_missing_labels && !is.null(labels)){
     labels <- labels[!match(labels, na_all, nomatch = F) > 0]
+    if(length(labels) < 1){
+      labels <- NULL
+    }
   }
 
   nas_ident <- .i_find_in(x, na_all)
@@ -127,6 +134,9 @@ i_remove_missing_labels.default <- function(x){
   labels <- attr(x, "labels", T)
   if(!is.null(labels)){
     labels <- labels[!labels %in% nas]
+    if(length(labels) < 1){
+      labels <- NULL
+    }
     return(structure(x, labels = labels))
   }else{
     return(x)
