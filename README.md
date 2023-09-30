@@ -19,7 +19,7 @@ A function library for working with labelled data in R.
   - <b>Reduce dependencies</b> 
     - The most possible minimum of third party dependencies. Right now the package depends on no third party libraries.
 
-The inspiration for this package was drawn from the [Sticky](https://github.com/cran/sticky) package as well as the [labelled](https://github.com/larmarange/labelled) package with the aim to bring dependencies on bloated third party libraries to zero. The self-understanding of this package is not to be better than comparable libraries, but be a lightweight alternative.
+The inspiration for this package was drawn from the [Sticky](https://github.com/cran/sticky) package and the [labelled](https://github.com/larmarange/labelled) package with the aim to bring dependencies on bloated third party libraries to zero. The self-understanding of this package is not to be better than comparable libraries, but be a lightweight alternative.
 
 # To-Do
   

@@ -29,7 +29,7 @@ i_to_base_class.default <- function(x){
   if(all(.i_find_in(values, labels))){
     i_as_factor(x)
   }else{
-    unclass(x)
+    i_unclass(x)
   }
 }
 

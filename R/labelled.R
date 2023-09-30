@@ -57,3 +57,22 @@ is.i_labelled <- function(x){
 #   vctrs::vec_restore(NextMethod("["), x)
 # }
 
+
+#' custom unclass function
+#' @param x vector of class i_labelled
+#' @export
+i_unclass <- function(x){
+  UseMethod("i_unclass")
+}
+
+
+#' @export
+i_unclass.default <- function(x){
+  unclass(`attributes<-`(x, NULL))
+}
+
+
+#' @export
+i_unclass.data.frame <- function(x){
+  x[] <- lapply(x, i_unclass)
+}
