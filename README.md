@@ -23,7 +23,9 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
-  - tests for <code>i_as_factor()</code>: append tests for parameters
+  - <code>i_as_factor()</code>:
+    - error: when missing to na and no na values left: assure that na_values/na_range alway becomes NULL when nothing left in vector, due to ANY operation
+    - append tests for parameters
   - documentation: rmarkdown html with examples of all features
   - custom r_bind function (maybe):
     - checks if value labels (if present) match
