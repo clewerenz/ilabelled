@@ -9,7 +9,8 @@ i_as_factor(
   missing_to_na = F,
   remove_missing_labels = F,
   require_all_labels = F,
-  only_labelled = F
+  only_labelled = F,
+  keep_attributes = F
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ i_as_factor(
 \item{require_all_labels}{process will be interrupted, when not all values have valid labels}
 
 \item{only_labelled}{convert only variables with valid value labels to factor}
+
+\item{keep_attributes}{should attributes be preserved}
 }
 \description{
 make factor from i_labelled

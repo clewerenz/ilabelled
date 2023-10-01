@@ -8,14 +8,15 @@
 #' @param remove_missing_labels as missing declared values will be removed from levels (ignored when 'missing_to_na = F')
 #' @param require_all_labels process will be interrupted, when not all values have valid labels
 #' @param only_labelled convert only variables with valid value labels to factor
+#' @param keep_attributes should attributes be preserved
 #' @export
-i_as_factor <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F){
+i_as_factor <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
   UseMethod("i_as_factor")
 }
 
 
 #' @export
-i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F){
+i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
   stopifnot(is.atomic(x) || is.null(x))
 
   labels <- attr(x, "labels", T)
@@ -57,8 +58,13 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
   labels <- sort(labels)
 
   tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
+
   x <- factor(x, levels = unname(labels), labels = names(labels))
-  attributes(x) <- c(attributes(x), tmp_attr)
+
+  if(keep_attributes){
+    attributes(x) <- c(attributes(x), tmp_attr)
+  }
+
   x
 }
 
@@ -71,11 +77,11 @@ i_as_factor.factor <- function(x, ...){
 
 
 #' @export
-i_as_factor.data.frame <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F){
+i_as_factor.data.frame <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
   x[] <- lapply(x, function(y){
     i_as_factor(
       y, missing_to_na = missing_to_na, remove_missing_labels = remove_missing_labels,
-      require_all_labels = require_all_labels, only_labelled = only_labelled
+      require_all_labels = require_all_labels, only_labelled = only_labelled, keep_attributes = keep_attributes
     )
   })
   x

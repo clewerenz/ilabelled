@@ -60,19 +60,25 @@ is.i_labelled <- function(x){
 
 #' custom unclass function
 #' @param x vector of class i_labelled
+#' @param keep_attributes should attributes be preserved
 #' @export
-i_unclass <- function(x){
+i_unclass <- function(x, keep_attributes = F){
   UseMethod("i_unclass")
 }
 
 
 #' @export
-i_unclass.default <- function(x){
-  unclass(`attributes<-`(x, NULL))
+i_unclass.default <- function(x, keep_attributes = F){
+  tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
+  x <- unclass(`attributes<-`(x, NULL))
+  if(keep_attributes){
+    attributes(x) <- c(attributes(x), tmp_attr)
+  }
+  x
 }
 
 
 #' @export
-i_unclass.data.frame <- function(x){
+i_unclass.data.frame <- function(x, keep_attributes = F){
   x[] <- lapply(x, i_unclass)
 }

@@ -153,13 +153,27 @@ test_that(
     expect_equal(levels(x), c("-9", "A", "B", "C"))
 
     ## 'only_labelled' - convert only to factor when valid labels
-
     x <- c(1:3,-9)
     attr(x, "labels") <- c(A = 1, B = 2, C = 3, X = -9)
     x <- i_as_factor(x, only_labelled = T)
     expect_true(is.factor(x))
     expect_false(is.numeric(x))
-    expect_equal(names(attr(x, "labels", T)), c("A", "B", "C", "X"))
+    ## tbc
+
+    ## keep attributes
+    x <- i_labelled(c(1:3,-9), labels = c(A = 1, B = 2, C = 3, X = -9), label = "Test1")
+    attr(x, "Test2") <- "Test2"
+    ### remove attributes
+    expect_no_error(i_as_factor(x, keep_attributes = F))
+    y <- i_as_factor(x, keep_attributes = F)
+    expect_true(length(attributes(y)) == 2)
+    expect_true(all(c("class","levels") %in% names(attributes(y))))
+    ### keep attributes
+    expect_no_error(i_as_factor(x, keep_attributes = F))
+    y <- i_as_factor(x, keep_attributes = T)
+    expect_true(length(attributes(y)) == 5)
+    expect_true(all(c("class","levels","labels","label","Test2") %in% names(attributes(y))))
+
 
   }
 )

@@ -4,10 +4,12 @@
 \alias{i_unclass}
 \title{custom unclass function}
 \usage{
-i_unclass(x)
+i_unclass(x, keep_attributes = F)
 }
 \arguments{
 \item{x}{vector of class i_labelled}
+
+\item{keep_attributes}{should attributes be preserved}
 }
 \description{
 custom unclass function

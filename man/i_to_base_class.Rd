@@ -4,13 +4,17 @@
 \alias{i_to_base_class}
 \title{remove class i_labelled and return base R class}
 \usage{
-i_to_base_class(x)
+i_to_base_class(x, as_factor = T, keep_attributes = F)
 }
 \arguments{
 \item{x}{vector or data.frame}
+
+\item{as_factor}{convert to factor, when all value labels are available}
+
+\item{keep_attributes}{should attributes be preserved}
 }
 \description{
-- remove class i_labelled and return variable as base R class
 - when value labels for all values are available will return factor
 - when value labels are missing will unclass i_labelled
+- remove class i_labelled and return variable as base R class
 }
