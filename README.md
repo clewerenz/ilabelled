@@ -25,7 +25,6 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
   
   - <code>i_to_base_class()</code>: tests + additional parameters (remove_*)
   - <code>i_as_factor()</code>: append tests for parameters
-  - methods for removing labels (i_remove_*)
   - documentation: rmarkdown html with examples of all features
   - custom r_bind function (maybe):
     - checks if value labels (if present) match
