@@ -139,7 +139,7 @@ test_that(
     expect_true(is.na(x[[4]]))
     expect_equal(levels(x), c("X", "A", "B", "C"))
 
-    ## 'remove_missing_labels' - remove label for as missing desclared values - will not become factor levels
+    ## 'remove_missing_labels' - remove label for as missing declared values - will not become factor levels
 
     x <- i_labelled(c(1,2,3,-9), na_values = -9, labels = c(A = 1, B = 2, C = 3, X = -9))
     x <- i_as_factor(x, missing_to_na = T, remove_missing_labels = T)
@@ -150,7 +150,7 @@ test_that(
     x <- i_labelled(c(1,2,3,-9), na_values = -9, labels = c(A = 1, B = 2, C = 3, X = -9))
     x <- i_as_factor(x, missing_to_na = F, remove_missing_labels = T)
     expect_false(is.na(x[[4]]))
-    expect_equal(levels(x), c("-9", "A", "B", "C"))
+    expect_equal(levels(x), c("-9","A", "B", "C"))
 
     ## 'only_labelled' - convert only to factor when valid labels
     x <- c(1:3,-9)
@@ -160,7 +160,7 @@ test_that(
     expect_false(is.numeric(x))
     ## tbc
 
-    ## keep attributes
+    ## keep/remove attributes
     x <- i_labelled(c(1:3,-9), labels = c(A = 1, B = 2, C = 3, X = -9), label = "Test1")
     attr(x, "Test2") <- "Test2"
     ### remove attributes
@@ -168,8 +168,9 @@ test_that(
     y <- i_as_factor(x, keep_attributes = F)
     expect_true(length(attributes(y)) == 2)
     expect_true(all(c("class","levels") %in% names(attributes(y))))
+    expect_null(attr(y, "Test2"))
     ### keep attributes
-    expect_no_error(i_as_factor(x, keep_attributes = F))
+    expect_no_error(i_as_factor(x, keep_attributes = T))
     y <- i_as_factor(x, keep_attributes = T)
     expect_true(length(attributes(y)) == 5)
     expect_true(all(c("class","levels","labels","label","Test2") %in% names(attributes(y))))

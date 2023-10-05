@@ -23,8 +23,8 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
-  - <code>i_to_base_class()</code>: tests + additional parameters (remove_*)
-  - <code>i_as_factor()</code>: append tests for parameters
+  - <code>i_as_factor()</code>: remove value sorting, append tests
+  - <code>i_to_base_class()</code>: tests
   - documentation: rmarkdown html with examples of all features
   - custom r_bind function (maybe):
     - checks if value labels (if present) match
