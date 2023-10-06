@@ -60,7 +60,7 @@ test_that(
     expect_error(i_labels(x, c(A = 1, B = 1)))
 
 
-    # valudate value labels
+    # validate value labels
     x <- i_labelled(iris$Species)
     expect_true(i_valid_labels(i_labelled(iris$Species)))
     attr(x, "labels") <- NA

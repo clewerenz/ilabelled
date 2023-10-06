@@ -23,7 +23,8 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
-  - <code>i_as_factor()</code>: remove value sorting, append tests
+  - better messages for run-time-tests
+  - <code>i_as_factor()</code>: more tests
   - <code>i_to_base_class()</code>: tests
   - documentation: rmarkdown html with examples of all features
   - custom r_bind function (maybe):

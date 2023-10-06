@@ -5,7 +5,7 @@
 #' @param x vector
 #' @param label variable label as string or NULL (NULL will remove label)
 i_label <- function(x, label){
-  stopifnot(.valid_label(label)) #  || is.null(label)
+  .valid_label(label)
   structure(
     x,
     label = label
@@ -15,11 +15,17 @@ i_label <- function(x, label){
 
 #' validate variable label - intern
 #' @description
-#' returns boolean
+#' run-time-tests for variable label
+#' runs internally
 #'
 #' @param x vector
 .valid_label <- function(x){
-  is.null(x) || (is.character(x) && length(x) == 1 && !is.logical(x))
+  if(is.null(x)){
+    return(invisible(NULL))
+  }
+  if(!(is.character(x) && length(x) == 1 && !is.logical(x))){
+    stop("label must be character vector of length 1")
+  }
 }
 
 
@@ -38,7 +44,8 @@ i_valid_label <- function(x){
 #' @export
 i_valid_label.default <- function(x){
   y <- attr(x, "label", T)
-  !is.null(y) && .valid_label(y)
+  is_valid <- !"try-error" %in% class(try(.valid_label(y), silent = T))
+  !is.null(y) && is_valid
 }
 
 
