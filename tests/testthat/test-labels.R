@@ -30,17 +30,17 @@ test_that(
     y <- i_labels(x, "test" = 1)
     expect_equal(names(attr(y, "labels")), c("test","B","C"))
     y <- i_labels(x, "test" = 2)
-    expect_equal(names(attr(y, "labels")), c("A","test","C"))
+    expect_equal(names(attr(y, "labels")), c("test","A","C"))
     y <- i_labels(x, "test" = 3)
-    expect_equal(names(attr(y, "labels")), c("A","B","test"))
+    expect_equal(names(attr(y, "labels")), c("test","A","B"))
 
     # add values
     y <- i_labels(x, "test" = 4)
-    expect_equal(names(attr(y, "labels")), c("A","B","C","test"))
-    expect_equal(unname(attr(y, "labels")), 1:4)
+    expect_equal(names(attr(y, "labels")), c("test","A","B","C"))
+    expect_equal(unname(attr(y, "labels")), c(4,1:3))
     y <- i_labels(x, "test" = 999)
-    expect_equal(names(attr(y, "labels")), c("A","B","C","test"))
-    expect_equal(unname(attr(y, "labels")), c(1:3,999))
+    expect_equal(names(attr(y, "labels")), c("test","A","B","C"))
+    expect_equal(unname(attr(y, "labels")), c(999,1:3))
 
     # errors
     expect_error(i_labels(x, 1234))
@@ -86,8 +86,8 @@ test_that(
     # overwrite parameter - overwrite existing labels
     x <- i_labelled(iris$Species)
     x <- i_labels(x, test = 999, overwrite = F)
-    expect_equal(unname(attr(x, "labels", T)), c(1,2,3,999))
-    expect_equal(names(attr(x, "labels", T)), c("setosa","versicolor","virginica","test"))
+    expect_equal(unname(attr(x, "labels", T)), c(999,1,2,3))
+    expect_equal(names(attr(x, "labels", T)), c("test","setosa","versicolor","virginica"))
     x <- i_labels(x, test = 999, overwrite = T)
     expect_equal(unname(attr(x, "labels", T)), c(999))
     expect_equal(names(attr(x, "labels", T)), "test")

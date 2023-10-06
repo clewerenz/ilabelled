@@ -47,7 +47,7 @@ i_labels <- function(x, ..., overwrite = F){
   all_labs <- append(new_labs, old_labs)
   all_labs <- unlist(all_labs)
   all_labs <- all_labs[!duplicated(all_labs)]
-  all_labs <- sort(all_labs)
+  # all_labs <- sort(all_labs)
   all_labs <- all_labs[!names(all_labs) %in% "NULL"]
   if(length(all_labs) < 1){
     all_labs <- NULL
