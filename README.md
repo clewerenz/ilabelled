@@ -19,13 +19,12 @@ A function library for working with labelled data in R.
   - <b>Reduce dependencies</b> 
     - The most possible minimum of third party dependencies. Right now the package depends on no third party libraries.
 
-The inspiration for this package was drawn from the [Sticky](https://github.com/cran/sticky) package as well as the [labelled](https://github.com/larmarange/labelled) package with the aim to bring dependencies on bloated third party libraries to zero. The self-understanding of this package is not to be better than comparable libraries, but be a lightweight alternative.
+The inspiration for this package was drawn from the [Sticky](https://github.com/cran/sticky) package and the [labelled](https://github.com/larmarange/labelled) package with the aim to bring dependencies on bloated third party libraries to zero. The self-understanding of this package is not to be better than comparable libraries, but be a lightweight alternative.
 
 # To-Do
   
-  - <code>i_to_base_class()</code>: tests + additional parameters (remove_*)
-  - <code>i_as_factor()</code>: append tests for parameters
-  - methods for removing labels (i_remove_*)
+  - <code>i_as_factor()</code>: remove value sorting, append tests
+  - <code>i_to_base_class()</code>: tests
   - documentation: rmarkdown html with examples of all features
   - custom r_bind function (maybe):
     - checks if value labels (if present) match
