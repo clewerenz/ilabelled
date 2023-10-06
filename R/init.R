@@ -17,7 +17,7 @@
 
 .init.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...) {
   # set class i_labelled
-  if(is.numeric(x) || is.factor(x) || is.logical(x)){
+  if(is.numeric(x) || is.factor(x)){
     structure(
       .Data = as.double(x),
       class = "i_labelled",
