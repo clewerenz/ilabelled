@@ -2,15 +2,14 @@
 % Please edit documentation in R/recode.R
 \name{i_recode}
 \alias{i_recode}
-\title{Function for recoding new variable from origin vairiable.
-Does not copy old variable, but creates new variable.}
+\title{Function for recoding new variable from origin variable(s).}
 \usage{
 i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL)
 }
 \arguments{
 \item{x}{vector}
 
-\item{...}{formular for recoding of values as follows: newValueLabel = newValue ~ c(oldValues)}
+\item{...}{formula for recoding of values. When function is applied to a single vector, go "NewValueLabel = NewValue ~ c(OriginValues)". When function is apllied to data.frame, go "NewValueLabel = NewValue ~ Variable logical expr. OriginValues". See examples.}
 
 \item{label}{variable label}
 
@@ -19,10 +18,22 @@ i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL)
 \item{na_rage}{a vector for missing range}
 }
 \description{
-Function for recoding new variable from origin vairiable.
-Does not copy old variable, but creates new variable.
+Returns a vector object of class i_labelled
+}
+\details{
+Can be applied to either vector or data.frame. When x is data.frame the formula passed to ... is different than when it is applied to single vector.
+When function is applied to a data.frame, multiple conditions on multiple variables are possible (e.g when variable X is equal to this, do that; when variable Y is not equal to this, do that, etc.). See examples for further clarification.
 }
 \examples{
-i_recode(i_labelled(1:4, labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4)), "AB" = 1 ~ c("A", "B"), "CD" = 2 ~ c(3, 4))
+# When applied to a single vector:
+myVector <- i_labelled(1:4, labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4))
+i_recode(myVector, "AB" = 1 ~ c("A", "B"), "CD" = 2 ~ c(3, 4))
+
+# When applied to data.frame (multiple conditions)
+myData <- data.frame(
+   V1 = i_labelled(1:3, labels = c("A" = 1, "B" = 2, "C" = 3)),
+   V2 = i_labelled(c(2:3,-9))
+)
+i_recode(myData, A = 1 ~ V1 \%in\% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
 
 }
