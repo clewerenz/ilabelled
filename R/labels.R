@@ -189,3 +189,38 @@ i_sort_labels.data.frame <- function(x, by = "values", decreasing = F){
   x
 }
 
+
+#' Check for required value labels in set of variables
+#'
+#' @param x data.frame
+#' @param variables character vector
+#' @param labels character vector
+#' @export
+i_assert_labels <- function(x, variables, labels, info, verbose){
+  if(!is.null(info)){
+    info <- paste0(info, ": ")
+  }
+  # all variables must be in data
+  missingVars <- variables[!variables %in% names(x)]
+  if(length(missingVars) > 0){
+    stop(paste0(info, "missing variables ", paste0(missingVars, collapse = " & ")))
+  }
+  # all variables must be factor or i_labelled
+  wrongVariableClass <- unlist(lapply(x[variables], function(y) !any(c("factor", "i_labelled") %in% class(y))))
+  wrongVariableClass <- names(wrongVariableClass)[wrongVariableClass]
+  if(length(wrongVariableClass) > 0){
+    stop(paste0(info, "variables are not factor or i_labelled ", paste0(wrongVariableClass, collapse = " & ")))
+  }
+  # all levels must be in levels
+  # labelsMissing <- sapply(variables, function(y){
+  #   !all(labels %in% levels(x[[y]]))
+  # }, simplify = F)
+  # labelsMissing <- names(labelsMissing)[unlist(labelsMissing)]
+  # if(length(labelsMissing) > 0){
+  #   stop(paste0(info, "wrong labels at ", paste0(labelsMissing, collapse = " & ")))
+  # }
+  # if(verbose){
+  #   T
+  # }
+}
+
