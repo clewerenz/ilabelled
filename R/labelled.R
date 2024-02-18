@@ -84,3 +84,9 @@ i_unclass.default <- function(x, keep_attributes = F){
 i_unclass.data.frame <- function(x, keep_attributes = F){
   x[] <- lapply(x, i_unclass)
 }
+
+
+
+
+
+

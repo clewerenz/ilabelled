@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper.R
 \name{.i_find_in}
 \alias{.i_find_in}
-\title{internal replacement of %in% for remove missing values (%in% is much slower but can handle more data classes)}
+\title{internal replacement of match function for remove missing values (match is much slower but can handle more data classes)}
 \usage{
 .i_find_in(x, y)
 }

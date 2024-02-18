@@ -6,7 +6,7 @@
 # }
 
 
-#' internal replacement of %in% for remove missing values (%in% is much slower but can handle more data classes)
+#' internal replacement of match function for remove missing values (match is much slower but can handle more data classes)
 #' @description
 #' description description
 #'
@@ -32,11 +32,22 @@
   }
 }
 
+
 #' checks if vector is numeric sequence
 #' @param x vector
 .is_sequential <- function(x){
   stopifnot(is.numeric(x))
   all(diff(x) == diff(x)[1])
+}
+
+
+#'@export
+"%in%" <- function(x, table){
+  if(is.i_labelled(x) & is.character(table)){
+    match(i_to_base_class(x), table, nomatch = 0) > 0
+  }else{
+    match(x, table, nomatch = 0) > 0
+  }
 }
 
 
