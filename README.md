@@ -23,11 +23,10 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
-  - finish function <code>i_assert_labels()</code>: must work on vector and data.frame
-  - <code>i_recode()</code>: tests
+  - tests for <code>i_recode()</code> on data.frame
   - better messages for run-time-tests
   - <code>i_as_factor()</code>: more tests
-  - <code>i_to_base_class()</code>: tests
+  - <code>i_to_base_class()</code>: more tests
   - documentation: rmarkdown html with examples of all features
   - custom r_bind function (maybe):
     - checks if value labels (if present) match
