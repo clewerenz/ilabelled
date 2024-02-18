@@ -3,14 +3,14 @@
 \name{i_recode}
 \alias{i_recode}
 \title{Function for recoding new variable from origin vairiable.
-Does not copy old variablen, but creates new variable.}
+Does not copy old variable, but creates new variable.}
 \usage{
 i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL)
 }
 \arguments{
 \item{x}{vector}
 
-\item{...}{formular for recoding of values}
+\item{...}{formular for recoding of values as follows: newValueLabel = newValue ~ c(oldValues)}
 
 \item{label}{variable label}
 
@@ -20,9 +20,9 @@ i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL)
 }
 \description{
 Function for recoding new variable from origin vairiable.
-Does not copy old variablen, but creates new variable.
+Does not copy old variable, but creates new variable.
 }
 \examples{
-# i_recode(myData$oldVar, "newLab1" = 1 = c("oldLab1", "oldLab2"))
+i_recode(i_labelled(1:4, labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4)), "AB" = 1 ~ c("A", "B"), "CD" = 2 ~ c(3, 4))
 
 }

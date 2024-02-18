@@ -196,31 +196,64 @@ i_sort_labels.data.frame <- function(x, by = "values", decreasing = F){
 #' @param variables character vector
 #' @param labels character vector
 #' @export
-i_assert_labels <- function(x, variables, labels, info, verbose){
+i_assert_labels <- function(x, variables, labels, info = NULL, verbose = T){
+  UseMethod("i_assert_labels")
+}
+
+
+#' @export
+i_assert_labels.default <- function(x, labels, info = NULL, verbose = T){
+  # prepare info message
   if(!is.null(info)){
     info <- paste0(info, ": ")
   }
-  # all variables must be in data
-  missingVars <- variables[!variables %in% names(x)]
-  if(length(missingVars) > 0){
-    stop(paste0(info, "missing variables ", paste0(missingVars, collapse = " & ")))
-  }
   # all variables must be factor or i_labelled
-  wrongVariableClass <- unlist(lapply(x[variables], function(y) !any(c("factor", "i_labelled") %in% class(y))))
-  wrongVariableClass <- names(wrongVariableClass)[wrongVariableClass]
-  if(length(wrongVariableClass) > 0){
-    stop(paste0(info, "variables are not factor or i_labelled ", paste0(wrongVariableClass, collapse = " & ")))
+  wrongVariableClass <- !any(c("factor", "i_labelled") %in% class(x))
+  if(wrongVariableClass){
+    stop(paste0(info, "variable is not factor or i_labelled"))
   }
-  # all levels must be in levels
-  # labelsMissing <- sapply(variables, function(y){
-  #   !all(labels %in% levels(x[[y]]))
-  # }, simplify = F)
-  # labelsMissing <- names(labelsMissing)[unlist(labelsMissing)]
-  # if(length(labelsMissing) > 0){
-  #   stop(paste0(info, "wrong labels at ", paste0(labelsMissing, collapse = " & ")))
-  # }
-  # if(verbose){
-  #   T
-  # }
+  # get value labels
+  if("i_labelled" %in% class(x)){
+    varLabels <- names(attr(x, "labels"))
+  }else if("factor" %in% class(x)){
+    varLabels <- levels(x)
+  }else{
+    stop(paste0(info, "variable is not factor or i_labelled"))
+  }
+  # all required labels must be in value labels
+  if(!all(labels %in% varLabels)){
+    stop(paste0(info, "variable does not have the required labels"))
+  }
+
+  if(verbose){
+    T
+  }
 }
+
+
+#' @export
+i_assert_labels.data.frame <- function(x, labels, info = NULL, verbose = T){
+  myVars <- names(x)
+  # run assert labels for all vars
+  res <- sapply(myVars, function(y){
+    tryCatch({
+      i_assert_labels(x[[y]], labels = labels, info = NULL, verbose = T)
+    }, error = function(e){
+      return(e$message)
+    })
+  }, simplify = F)
+  # print error messages, when error occurred
+  res <- res[unlist(lapply(res, function(y) y != "TRUE"))]
+  if(length(res) > 0){
+    res <- unlist(lapply(names(res), function(y) paste0(y, " - ", res[[y]])))
+    if(!is.null(info)){
+      res <- c(paste0(info, ":"), res)
+    }
+    stop(message(strwrap(res, prefix = "\n", initial = "")))
+  }
+  if(verbose){
+    T
+  }
+}
+
 
