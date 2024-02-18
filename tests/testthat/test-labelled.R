@@ -2,7 +2,7 @@ test_that(
   "Test i_labelled", {
 
     # Test class
-    expect_s3_class(i_labelled(iris$Species), "i_labelled")
+    expect_s3_class(i_labelled(iris$Species), c("i_labelled", "double"))
 
     # Test is.i_labelled
     expect_true(is.i_labelled(i_labelled(iris$Species)))
@@ -27,22 +27,22 @@ test_that(
     expect_vector(i_labelled(iris$Species))
 
     # Test class
-    expect_equal(class(i_labelled(LETTERS)), c("i_labelled"))
-    expect_equal(class(i_labelled(1:5)), c("i_labelled"))
-    expect_equal(class(i_labelled(as.double(seq(1.10,5)))), c("i_labelled"))
-    expect_equal(class(i_labelled(factor(LETTERS))), c("i_labelled"))
-    expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled"))
-    expect_equal(class(i_labelled(c(Sys.Date(), Sys.Date()-1, Sys.Date()-2, Sys.Date()-3))), c("i_labelled"))
+    expect_equal(class(i_labelled(LETTERS)), c("i_labelled", "character"))
+    expect_equal(class(i_labelled(1:5)), c("i_labelled", "double"))
+    expect_equal(class(i_labelled(as.double(seq(1.10,5)))), c("i_labelled", "double"))
+    expect_equal(class(i_labelled(factor(LETTERS))), c("i_labelled", "double"))
+    expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled", "character"))
+    expect_equal(class(i_labelled(c(Sys.Date(), Sys.Date()-1, Sys.Date()-2, Sys.Date()-3))), c("i_labelled", "character"))
 
     # Test subset
     x <- i_labelled(LETTERS)
     y <- i_labelled(factor(LETTERS))
     z <- i_labelled(i_labelled(LETTERS))
     k <- i_labelled(i_labelled(seq(0,10,.5)))
-    expect_equal(class(x[1:5]), c("i_labelled"))
-    expect_equal(class(y[1:5]), c("i_labelled"))
-    expect_equal(class(z[1:5]), c("i_labelled"))
-    expect_equal(class(k[1:5]), c("i_labelled"))
+    expect_equal(class(x[1:5]), c("i_labelled", "character"))
+    expect_equal(class(y[1:5]), c("i_labelled", "double"))
+    expect_equal(class(z[1:5]), c("i_labelled", "character"))
+    expect_equal(class(k[1:5]), c("i_labelled", "double"))
 
     # Test attributes
     x <- i_labelled(LETTERS)
