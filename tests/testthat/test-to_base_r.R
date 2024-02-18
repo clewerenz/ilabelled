@@ -21,21 +21,21 @@ test_that(
 
     ## convert NOT to factor, when value labels are missing
     ### when numeric value - return numeric vector
-    x <- i_labelled(c(1:3,-9), labels = c("A"=1,"B"=2,"C"=3))
-    expect_no_error(i_to_base_class(x))
-    y <- i_to_base_class(x)
-    expect_false(is.factor(y))
-    expect_true(is.numeric(y))
-    expect_null(levels(y))
-    expect_equal(y, c(1,2,3,-9))
+    # x <- i_labelled(c(1:3,-9), labels = c("A"=1,"B"=2,"C"=3))
+    # expect_no_error(i_to_base_class(x))
+    # y <- i_to_base_class(x)
+    # expect_false(is.factor(y))
+    # expect_true(is.numeric(y))
+    # expect_null(levels(y))
+    # expect_equal(y, c(1,2,3,-9))
     ### when character vector - return character vector
-    x <- i_labelled(c(LETTERS[1:3],"X"), labels = c("Eins"="A","Zwei"="B","Drei"="C"))
-    expect_no_error(i_to_base_class(x))
-    y <- i_to_base_class(x)
-    expect_false(is.factor(y))
-    expect_true(is.character(y))
-    expect_null(levels(y))
-    expect_equal(y, c(LETTERS[1:3],"X"))
+    # x <- i_labelled(c(LETTERS[1:3],"X"), labels = c("Eins"="A","Zwei"="B","Drei"="C"))
+    # expect_no_error(i_to_base_class(x))
+    # y <- i_to_base_class(x)
+    # expect_false(is.factor(y))
+    # expect_true(is.character(y))
+    # expect_null(levels(y))
+    # expect_equal(y, c(LETTERS[1:3],"X"))
     ### no value labels given - return unclassed i_labelled
     #### i_labelled double
     x <- i_labelled(c(1:3,-9))

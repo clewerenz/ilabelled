@@ -24,15 +24,15 @@ i_to_base_class.default <- function(x, as_factor = T, keep_attributes = F){
     return(x)
   }
 
-  x <- i_missing_to_na(x)
-  x <- i_remove_missing_labels(x)
+  # x <- i_missing_to_na(x)
+  # x <- i_remove_missing_labels(x)
 
   labels <- attr(x, "labels", T)
   labels <- unique(labels)
   values <- unique(x)
   values <- values[!is.na(values)]
 
-  if(as_factor && length(labels) > 0 && all(.i_find_in(values, labels))){
+  if(as_factor && length(labels) > 0){ #  && all(.i_find_in(values, labels))
     i_as_factor(x, keep_attributes = keep_attributes)
   }else{
     i_unclass(x, keep_attributes = keep_attributes)
