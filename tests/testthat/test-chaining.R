@@ -10,7 +10,7 @@ test_that(
       i_labels(A = 1, B = 2, C = 3) |>
       i_labels(test = 1, NULL = 3)
 
-    expect_equal(class(x), "i_labelled")
+    expect_equal(class(x), c("i_labelled", "double"))
     expect_equal(attr(x, "label", T), "AlleMeineEntchen")
     expect_equal(attr(x, "na_values", T), 1:3)
     expect_equal(attr(x, "na_range", T), NULL)

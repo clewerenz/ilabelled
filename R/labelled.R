@@ -9,8 +9,10 @@
 #' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
 #' @param ... further attributes passed to class
 i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...){
-  stopifnot(is.atomic(x))
-  stopifnot(.valid_label(label))
+  if(!is.atomic(x)){
+    stop("x must be vector")
+  }
+  .valid_label(label)
   stopifnot(.valid_na_values(na_values))
   stopifnot(.valid_na_range(na_range))
 
@@ -82,3 +84,9 @@ i_unclass.default <- function(x, keep_attributes = F){
 i_unclass.data.frame <- function(x, keep_attributes = F){
   x[] <- lapply(x, i_unclass)
 }
+
+
+
+
+
+

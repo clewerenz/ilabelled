@@ -21,7 +21,7 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
 
   labels <- attr(x, "labels", T)
 
-  stopifnot(.valid_labels(labels))
+  .valid_labels(labels)
 
   if(only_labelled & is.null(labels)){
     return(x)

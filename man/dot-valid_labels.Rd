@@ -10,5 +10,6 @@
 \item{x}{named vector (label = value)}
 }
 \description{
-returns boolean
+contains several run-time-tests for value labels
+runs internally
 }

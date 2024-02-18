@@ -20,7 +20,7 @@
   if(is.numeric(x) || is.factor(x)){
     structure(
       .Data = as.double(x),
-      class = "i_labelled",
+      class = c("i_labelled", "double"),
       label = label,
       labels = labels,
       na_values = na_values,
@@ -30,7 +30,7 @@
   }else{
     structure(
       .Data = as.character(x),
-      class = "i_labelled",
+      class = c("i_labelled", "character"),
       label = label,
       labels = labels,
       na_values = na_values,

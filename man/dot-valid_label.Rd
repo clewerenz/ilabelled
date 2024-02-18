@@ -10,5 +10,6 @@
 \item{x}{vector}
 }
 \description{
-returns boolean
+run-time-tests for variable label
+runs internally
 }
