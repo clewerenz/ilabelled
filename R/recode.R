@@ -3,12 +3,13 @@
 #'
 #' Returns a vector object of class i_labelled
 #'
-#' Can be applied to either vector or data.frame. When x is data.frame the formula passed to ... is different than when it is applied to single vector.
+#' Can be applied to either vector or data.frame. When x is data.frame the formula passed to ... is different from when it is applied to single vector.
 #' When function is applied to a data.frame, multiple conditions on multiple variables are possible (e.g when variable X is equal to this, do that; when variable Y is not equal to this, do that, etc.). See examples for further clarification.
 #' @examples
 #' # When applied to a single vector:
+#' # keep in mind that when function is applied to vector, instead of a column use x
 #' myVector <- i_labelled(1:4, labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4))
-#' i_recode(myVector, "AB" = 1 ~ c("A", "B"), "CD" = 2 ~ c(3, 4))
+#' i_recode(x = myVector, "AB" = 1 ~ x %in% c("A", "B"), "CD" = 2 ~ x == c(3, 4))
 #'
 #' # When applied to data.frame (multiple conditions)
 #' myData <- data.frame(
@@ -18,7 +19,7 @@
 #' i_recode(myData, A = 1 ~ V1 %in% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
 #'
 #' @param x vector
-#' @param ... formula for recoding of values. When function is applied to a single vector, go "NewValueLabel = NewValue ~ c(OriginValues)". When function is apllied to data.frame, go "NewValueLabel = NewValue ~ Variable logical expr. OriginValues". See examples.
+#' @param ... formula for recoding of values. See examples.
 #' @param label variable label
 #' @param na_values a vector with missing values
 #' @param na_rage a vector for missing range
@@ -30,38 +31,25 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL){
 
   stopifnot(is_atomic | is_data_frame)
 
+  if(is_atomic){
+    x <- data.frame(x = x, stringsAsFactors = F)
+  }
+
   recode_map <- list(...)
 
   if(!all(unlist(lapply(recode_map, rlang::is_formula)))){
     stop("... must be formular")
   }
 
-  if(is_data_frame){
-    recode_map <- lapply(seq(recode_map), function(y){
-      y <- list(
-        new_lab = names(recode_map)[[y]],
-        new_val = eval(recode_map[[y]][[2]]),
-        formula = paste0("x$", deparse(recode_map[[y]][[3]]))
-      )
-      y$which_val <- eval(parse(text = y$formula))
-      y
-    })
-  }else{
-    recode_map <- lapply(seq(recode_map), function(y){
-      y <- list(
-        new_lab = names(recode_map)[[y]],
-        new_val = eval(recode_map[[y]][[2]]),
-        ori_val = recode_map[[y]][[3]]
-      )
-      if(length(y$ori_val) > 2){
-        y$ori_val <- unlist(lapply(2:length(y$ori_val), function(z){ eval(y$ori_val[[z]]) }))
-      }else{
-        y$ori_val <- eval(y$ori_val)
-      }
-      y$which_val <- which(x %in% y$ori_val)
-      y
-    })
-  }
+  recode_map <- lapply(seq(recode_map), function(y){
+    y <- list(
+      new_lab = names(recode_map)[[y]],
+      new_val = eval(recode_map[[y]][[2]]),
+      formula = recode_map[[y]][[3]]
+    )
+    y$which_val <- with(x, eval(y$formula))
+    y
+  })
 
   new_labels <- setNames(
     unlist(lapply(recode_map, function(x){ x$new_val })),

@@ -9,7 +9,7 @@ i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL)
 \arguments{
 \item{x}{vector}
 
-\item{...}{formula for recoding of values. When function is applied to a single vector, go "NewValueLabel = NewValue ~ c(OriginValues)". When function is apllied to data.frame, go "NewValueLabel = NewValue ~ Variable logical expr. OriginValues". See examples.}
+\item{...}{formula for recoding of values. See examples.}
 
 \item{label}{variable label}
 
@@ -21,13 +21,14 @@ i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL)
 Returns a vector object of class i_labelled
 }
 \details{
-Can be applied to either vector or data.frame. When x is data.frame the formula passed to ... is different than when it is applied to single vector.
+Can be applied to either vector or data.frame. When x is data.frame the formula passed to ... is different from when it is applied to single vector.
 When function is applied to a data.frame, multiple conditions on multiple variables are possible (e.g when variable X is equal to this, do that; when variable Y is not equal to this, do that, etc.). See examples for further clarification.
 }
 \examples{
 # When applied to a single vector:
+# keep in mind that when function is applied to vector, instead of a column use x
 myVector <- i_labelled(1:4, labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4))
-i_recode(myVector, "AB" = 1 ~ c("A", "B"), "CD" = 2 ~ c(3, 4))
+i_recode(x = myVector, "AB" = 1 ~ x \%in\% c("A", "B"), "CD" = 2 ~ x == c(3, 4))
 
 # When applied to data.frame (multiple conditions)
 myData <- data.frame(
