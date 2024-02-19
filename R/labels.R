@@ -193,10 +193,11 @@ i_sort_labels.data.frame <- function(x, by = "values", decreasing = F){
 #' Check for required value labels in set of variables
 #'
 #' @param x data.frame
-#' @param variables character vector
 #' @param labels character vector
+#' @param info string with info message (purpose of assertion) - optional
+#' @param verbose return TRUE when assertion is successful
 #' @export
-i_assert_labels <- function(x, variables, labels, info = NULL, verbose = T){
+i_assert_labels <- function(x, labels, info = NULL, verbose = T){
   UseMethod("i_assert_labels")
 }
 

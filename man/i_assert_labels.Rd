@@ -4,14 +4,16 @@
 \alias{i_assert_labels}
 \title{Check for required value labels in set of variables}
 \usage{
-i_assert_labels(x, variables, labels, info = NULL, verbose = T)
+i_assert_labels(x, labels, info = NULL, verbose = T)
 }
 \arguments{
 \item{x}{data.frame}
 
-\item{variables}{character vector}
-
 \item{labels}{character vector}
+
+\item{info}{string with info message (purpose of assertion) - optional}
+
+\item{verbose}{return TRUE when assertion is successful}
 }
 \description{
 Check for required value labels in set of variables
