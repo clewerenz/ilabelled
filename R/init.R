@@ -9,13 +9,14 @@
 #' @param labels value labels as named vector
 #' @param na_values missing values (e.g. c(888, 999))
 #' @param na_range range of missing values (e.g. c(-9,-1))
+#' @param scale scale level (nominal, ordinal, scale)
 #' @param ... further attributes passed to class
-.init <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...) {
+.init <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...) {
   UseMethod(".init")
 }
 
 
-.init.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...) {
+.init.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...) {
   # set class i_labelled
   if(is.numeric(x) || is.factor(x)){
     structure(
@@ -25,6 +26,7 @@
       labels = labels,
       na_values = na_values,
       na_range = na_range,
+      scale = scale,
       ...
     )
   }else{
@@ -35,13 +37,14 @@
       labels = labels,
       na_values = na_values,
       na_range = na_range,
+      scale = scale,
       ...
     )
   }
 }
 
 
-.init.i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...) {
+.init.i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...) {
   # do nothing
   x
 }

@@ -16,7 +16,7 @@
 #'    V1 = i_labelled(1:3, labels = c("A" = 1, "B" = 2, "C" = 3)),
 #'    V2 = i_labelled(c(2:3,-9))
 #' )
-#' i_recode(myData, A = 1 ~ V1 %in% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
+#' i_recode(x = myData, A = 1 ~ V1 %in% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
 #'
 #' @param x vector
 #' @param ... formula for recoding of values. See examples.

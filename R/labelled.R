@@ -7,8 +7,9 @@
 #' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
 #' @param na_values missing values (e.g. c(888, 999))
 #' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
+#' @param scale scale level (nominal, ordinal, scale)
 #' @param ... further attributes passed to class
-i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...){
+i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
   if(!is.atomic(x)){
     stop("x must be vector")
   }
@@ -22,7 +23,12 @@ i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_rang
     labels <- .merge_labels(as.list(attr(x, "labels", T)), as.list(labels))
   }
 
-  return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, ...))
+  if(!is.null(scale)){
+    scale <- tolower(scale)
+    .valid_scale(scale)
+  }
+
+  return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, ...))
 }
 
 
