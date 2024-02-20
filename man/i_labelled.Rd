@@ -10,6 +10,7 @@ i_labelled(
   labels = NULL,
   na_values = NULL,
   na_range = NULL,
+  scale = NULL,
   ...
 )
 }
@@ -23,6 +24,8 @@ i_labelled(
 \item{na_values}{missing values (e.g. c(888, 999))}
 
 \item{na_range}{range of missing values as vector length 2 (e.g. c(-9,-1))}
+
+\item{scale}{scale level (nominal, ordinal, scale)}
 
 \item{...}{further attributes passed to class}
 }

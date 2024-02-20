@@ -4,7 +4,15 @@
 \alias{.init}
 \title{backend for i_labelled}
 \usage{
-.init(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, ...)
+.init(
+  x,
+  label = NULL,
+  labels = NULL,
+  na_values = NULL,
+  na_range = NULL,
+  scale = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{vector}
@@ -16,6 +24,8 @@
 \item{na_values}{missing values (e.g. c(888, 999))}
 
 \item{na_range}{range of missing values (e.g. c(-9,-1))}
+
+\item{scale}{scale level (nominal, ordinal, scale)}
 
 \item{...}{further attributes passed to class}
 }

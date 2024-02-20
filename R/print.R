@@ -1,5 +1,4 @@
 
-
 #' custom print method for i_labelled
 #' @export
 #' @param x vector of class i_labelled
@@ -18,6 +17,7 @@ print.i_labelled <- function(x, ...){
 
   i_get_na_values(x)
   i_get_na_range(x)
+  i_get_scale(x)
   i_get_label(x)
   i_get_labels(x)
 
@@ -162,6 +162,39 @@ i_get_na_range.data.frame <- function(x){
       NA
     }else{
       sort(na_range)
+    }
+  }, simplify = F)
+}
+
+
+#' print scale level
+#' @description
+#' print scale level when applied to vector
+#' return list when applied to data.frame
+#'
+#' @param x vector or data.frame
+#' @export
+i_get_scale <- function(x){
+  UseMethod("i_get_scale")
+}
+
+#' @export
+i_get_scale.default <- function(x){
+  scale <- attr(x, "scale", T)
+  if(is.null(scale)){
+    return(invisible(scale))
+  }
+  cat(paste0("\nScale level: ", scale), "\n")
+}
+
+#' @export
+i_get_scale.data.frame <- function(x){
+  sapply(x, function(y){
+    scale <- attr(y, "scale", T)
+    if(is.null(scale)){
+      NA
+    }else{
+      scale
     }
   }, simplify = F)
 }
