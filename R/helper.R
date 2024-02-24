@@ -15,6 +15,7 @@
 .i_find_in <- function(x, y){
   stopifnot(is.logical(x) || is.numeric(x) || is.character(x) || is.factor(x) || "Date" %in% class(x))
   stopifnot(is.logical(y) || is.numeric(y) || is.character(y) || "Date" %in% class(x))
+
   if(is.numeric(x)){
     .Call("iFindIn", as.numeric(x), as.numeric(y), PACKAGE = "ilabelled")
   }else if(is.character(x)){
@@ -41,14 +42,41 @@
 }
 
 
-#'@export
+#' @export
 "%in%" <- function(x, table){
-  if(is.i_labelled(x) & is.character(table)){
-    match(i_to_base_class(x), table, nomatch = 0) > 0
+  if(is.i_labelled(x)){
+    if(is.character(table)){
+      match(as.character(x), table, nomatch = 0) > 0
+    }else{
+      match(unclass(x), table, nomatch = 0) > 0
+    }
   }else{
     match(x, table, nomatch = 0) > 0
   }
 }
+
+
+# mtfrm.i_labelled <- function(x){
+#   x
+# }
+
+#' match <- function(x, table, nomatch = NA_integer_, incomparables = NULL){
+#'   UseMethod("match")
+#' }
+
+#' match.default <- function(x, table, nomatch = NA_integer_, incomparables = NULL){
+#'   browser()
+#'   .Internal(match(x, table, nomatch, incomparables))
+#' }
+
+#' match.i_labelled <- function(x, table, nomatch = NA_integer_, incomparables = NULL){
+#'   browser()
+#'   if(is.character(table)){
+#'     .Internal(match(as.character(x), table, nomatch, incomparables))
+#'   }else{
+#'     .Internal(match(as.numeric(x), table, nomatch, incomparables))
+#'   }
+#' }
 
 
 # i_find_in_test <- inline::cfunction(

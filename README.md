@@ -50,6 +50,7 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
   - in order to call C functions from within R functions use <code>.Call()</code>
   - https://stat.ethz.ch/pipermail/r-devel/attachments/20120323/a13f948a/attachment.pdf
   - http://adv-r.had.co.nz/C-interface.html
+  - https://marlin-na.github.io/r-api/
   - https://rstudio.github.io/r-manuals/r-exts/The-R-API.html
   - https://marlin-na.github.io/r-api/
   - https://github.com/hadley/r-internals

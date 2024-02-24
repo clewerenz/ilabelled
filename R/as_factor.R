@@ -59,7 +59,7 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
 
   tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
 
-  x <- factor(x, levels = unname(labels), labels = names(labels))
+  x <- factor(unclass(x), levels = unname(labels), labels = names(labels))
 
   if(keep_attributes){
     attributes(x) <- c(attributes(x), tmp_attr)
