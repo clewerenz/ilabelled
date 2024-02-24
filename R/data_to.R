@@ -10,7 +10,7 @@
 #' @param x vector
 i_data_to_character <- function(x){
   tmp_attr <- attributes(x)
-  x <- as.character(x)
+  x <- as.character(unclass(x))
   attributes(x) <- tmp_attr
   x
 }

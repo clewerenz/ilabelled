@@ -49,6 +49,7 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
   - add line to NAMESPACE: <code>useDynLib(ilabelled, .registration = TRUE)</code> (ilabelled in this case is the filename of the .so). Caution, when roxygen2 is used to create NAMEPACE file, this line will be deleted each time <code>devtools::document()</code> is called and has to be added again. In order to avoid deleting useDynLib from NAMESPACE the arguments from the document function can be specified (i.e. <code>devtools::document(roclets = c("collate", "rd"))</code>).
   - in order to call C functions from within R functions use <code>.Call()</code>
   - http://adv-r.had.co.nz/C-interface.html
+  - https://marlin-na.github.io/r-api/
   - https://github.com/Rdatatable/data.table/tree/master
   - https://cran.r-project.org/doc/manuals/R-exts.html#Portable-C-and-C_002b_002b-code
   - https://stackoverflow.com/questions/1176455/portable-use-of-dyn-load-to-call-a-c-function-in-an-r-package
