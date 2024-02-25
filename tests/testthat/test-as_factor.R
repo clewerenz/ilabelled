@@ -139,27 +139,6 @@ test_that(
     expect_true(is.na(x[[4]]))
     expect_equal(levels(x), c("A", "B", "C"))
 
-    ## 'remove_missing_labels' - remove label for as missing declared values - will not become factor levels
-
-    x <- i_labelled(c(1,2,3,-9), na_values = -9, labels = c(A = 1, B = 2, C = 3, X = -9))
-    x <- i_as_factor(x, missing_to_na = T, remove_missing_labels = T)
-    expect_true(is.na(x[[4]]))
-    expect_equal(levels(x), c("A", "B", "C"))
-
-    ### remove_missing_labels = T when missing_to_na = F
-    x <- i_labelled(c(1,2,3,-9), na_values = -9, labels = c(A = 1, B = 2, C = 3, X = -9))
-    x <- i_as_factor(x, missing_to_na = F, remove_missing_labels = T)
-    expect_false(is.na(x[[4]]))
-    expect_equal(levels(x), c("-9","A", "B", "C"))
-
-    ## 'only_labelled' - convert only to factor when valid labels
-    x <- c(1:3,-9)
-    attr(x, "labels") <- c(A = 1, B = 2, C = 3, X = -9)
-    x <- i_as_factor(x, only_labelled = T)
-    expect_true(is.factor(x))
-    expect_false(is.numeric(x))
-    ## tbc
-
     ## keep/remove attributes
     x <- i_labelled(c(1:3,-9), labels = c(A = 1, B = 2, C = 3, X = -9), label = "Test1")
     attr(x, "Test2") <- "Test2"

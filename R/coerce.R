@@ -11,13 +11,17 @@ as.character.i_labelled <- function(x, ...){
 
 #' @export
 as.i_labelled <- function(x, ...){
+  arguments <- list()
   keepAttr <- setdiff(names(attributes(x)), names(list(...)))
   if(length(keepAttr) > 0){
     attributes(x) <- attributes(x)[keepAttr]
   }else{
     attributes(x) <- NULL
   }
-  i_labelled(x, ...)
+  for(i in c("label", "labels", "scale")){
+    arguments[[i]] <- attr(x, i, T)
+  }
+  i_labelled(x, label = eval(arguments[["label"]]), na_values = eval(arguments[["na_values"]]), eval(arguments[["na_range"]]), scale = eval(arguments[["scale"]]), ...)
 }
 
 
@@ -36,7 +40,7 @@ i_as_factor <- function(x, missing_to_na = F, remove_missing_labels = F, require
 }
 
 #' @export
-i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, keep_attributes = F){
+i_as_factor.default <- function(x, missing_to_na = F, require_all_labels = F, keep_attributes = F){
   stopifnot(is.atomic(x) || is.null(x))
 
   labels <- attr(x, "labels", T)
@@ -45,9 +49,6 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
 
   if(missing_to_na){
     x <- i_missing_to_na(x)
-  }
-
-  if(remove_missing_labels | missing_to_na){
     x <- i_remove_missing_labels(x)
     labels <- attr(x, "labels", T)
   }
@@ -75,13 +76,14 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
 
   tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
 
-  x <- factor(unclass(x), levels = unname(labels), labels = names(labels))
-
   if(keep_attributes){
-    attributes(x) <- c(attributes(x), tmp_attr)
+    x <- factor(unclass(x), levels = unname(labels), labels = names(labels))
+    mostattributes(x) <- c(attributes(x), tmp_attr)
+    x
+  }else{
+    factor(unclass(x), levels = unname(labels), labels = names(labels))
   }
 
-  x
 }
 
 #' @export
