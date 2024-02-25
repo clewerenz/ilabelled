@@ -31,7 +31,7 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
     x <- i_missing_to_na(x)
   }
 
-  if(remove_missing_labels){
+  if(remove_missing_labels | missing_to_na){
     x <- i_remove_missing_labels(x)
     labels <- attr(x, "labels", T)
   }
