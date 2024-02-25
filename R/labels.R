@@ -21,6 +21,11 @@ i_labels <- function(x, ..., overwrite = F){
     .valid_labels(new_labs)
     all_labs <- .merge_labels(old_labs, new_labs)
   }
+  if(is.character(x) && !is.null(labels) && !is.character(labels)){
+    all_labs <- setNames(as.character(all_labs), names(all_labs))
+    warning("applying numeric labels values to non numeric x values")
+  }
+
   structure(
     x,
     labels = all_labs
@@ -44,7 +49,8 @@ i_labels <- function(x, ..., overwrite = F){
   }
   .valid_labels(old_labs)
   .valid_labels(new_labs)
-  stopifnot(length(unique(c(lapply(old_labs, is.numeric), lapply(new_labs, is.numeric)))) <= 1)
+
+  # stopifnot(length(unique(c(lapply(old_labs, is.numeric), lapply(new_labs, is.numeric)))) <= 1)
 
   all_labs <- append(new_labs, old_labs)
   all_labs <- unlist(all_labs)
