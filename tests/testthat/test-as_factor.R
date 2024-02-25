@@ -101,7 +101,7 @@ test_that(
     ## duplicate labels in value labels: no duplicate labels allowed
     x <- c(LETTERS[1:3], "X")
     attr(x, "labels") <- c(A = 123, B = 345, C = 567, X = 789)
-    expect_error(i_as_factor(x))
+    expect_error(suppressWarnings(i_as_factor(x)))
 
     ## duplicate values in value labels: no duplicate values allowed
     x <- i_labelled(c(1:3))

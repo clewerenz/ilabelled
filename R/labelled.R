@@ -42,6 +42,11 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     stop("decimal numbers cannot be labelled")
   }
 
+  if(is.character(x) && !is.null(labels) && !is.character(labels)){
+    labels <- setNames(as.character(labels), names(labels))
+    warning("applying numeric labels values to non numeric x values")
+  }
+
   if(!is.null(scale)){
     scale <- tolower(scale)
     .valid_scale(scale)
