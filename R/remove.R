@@ -12,10 +12,11 @@ i_remove_missing_labels <- function(x){
 #' @export
 i_remove_missing_labels.default <- function(x){
   stopifnot(is.atomic(x))
-  nas <- c(attr(x, "na_values", T), attr(x, "na_range", T))
+
+  nas <- c(attr(x, "na_values", T), names(attr(x, "na_values", T)), attr(x, "na_range", T))
   labels <- attr(x, "labels", T)
   if(!is.null(labels)){
-    labels <- labels[!labels %in% nas]
+    labels <- labels[!(labels %in% nas | names(labels) %in% nas)]
     if(length(labels) < 1){
       labels <- NULL
     }

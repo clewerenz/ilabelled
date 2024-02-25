@@ -27,6 +27,7 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
   if(!is.atomic(x)){
     stop("x must be vector")
   }
+
   .valid_label(label)
   stopifnot(.valid_na_values(na_values))
   stopifnot(.valid_na_range(na_range))
@@ -35,6 +36,10 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     labels <- stats::setNames(1:length(levels(x)), levels(x))
   }else if(!is.null(labels) || !is.null(attr(x, "labels", T))){
     labels <- .merge_labels(as.list(attr(x, "labels", T)), as.list(labels))
+  }
+
+  if(is.numeric(x) && !is.null(labels) && any(na.omit(x%%1 > 0))){
+    stop("decimal numbers cannot be labelled")
   }
 
   if(!is.null(scale)){

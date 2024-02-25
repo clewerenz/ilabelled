@@ -120,12 +120,28 @@ i_missing_to_na.data.frame <- function(x, remove_missing_labels = F){
 
 
 .valid_na_values <- function(x){
-  (is.null(x) || !any(is.na(x)))
+  if(is.null(x)){
+    T
+  }else if(is.character(x)){
+    !any(is.na(x))
+  }else if(is.numeric(x)){
+    !any(is.na(x)) && !any(x%%1 > 0)
+  }else{
+    F
+  }
 }
 
 
 .valid_na_range <- function(x){
-  (is.null(x) || (!any(is.na(x)) && length(x) <= 2))
+  if(is.null(x)){
+    T
+  }else if(is.character(x)){
+    (!any(is.na(x)) && length(x) <= 2)
+  }else if(is.numeric(x)){
+    (!any(is.na(x)) && length(x) <= 2) && !any(x%%1 > 0)
+  }else{
+    F
+  }
 }
 
 

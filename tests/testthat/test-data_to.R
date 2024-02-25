@@ -11,13 +11,11 @@ test_that(
     expect_equal(unname(attr(y, "labels", T)), c(1,2,3))
 
     # data to integer
-    x <- i_labelled(seq(1,5,.5), label = "Species", labels = c("bla" = 1, "bli" = 2, "blubb" = 3))
+    x <- i_labelled(seq(1,5,.5), label = "Species")
     y <- i_data_to_integer(x)
     expect_equal(class(y), c("i_labelled", "double"))
     expect_equal(`attributes<-`(y, NULL)[1:5], c(1,1,2,2,3))
     expect_equal(attr(y, "label", T), "Species")
-    expect_equal(names(attr(y, "labels", T)), c("bla","bli", "blubb"))
-    expect_equal(unname(attr(y, "labels", T)), c(1,2,3))
     expect_warning(i_data_to_integer(i_labelled(as.character(iris$Species))))
     z <- suppressWarnings(i_data_to_integer(i_labelled(as.character(iris$Species))))
     expect_true(all(is.na(z)))
