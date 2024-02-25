@@ -2,7 +2,7 @@
 % Please edit documentation in R/labelled.R
 \name{i_labelled_df}
 \alias{i_labelled_df}
-\title{make all variables in data.frame i_labelled}
+\title{make all variables in data.frame i_labelled (dedicated function)}
 \usage{
 i_labelled_df(x)
 }
@@ -10,5 +10,5 @@ i_labelled_df(x)
 \item{x}{data.frame}
 }
 \description{
-make all variables in data.frame i_labelled
+make all variables in data.frame i_labelled (dedicated function)
 }

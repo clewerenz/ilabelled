@@ -8,3 +8,15 @@ as.character.i_labelled <- function(x, ...){
   }
 }
 
+
+#' @export
+as.i_labelled <- function(x, ...){
+  keepAttr <- setdiff(names(attributes(x)), names(list(...)))
+  if(length(keepAttr) > 0){
+    attributes(x) <- attributes(x)[keepAttr]
+  }else{
+    attributes(x) <- NULL
+  }
+  i_labelled(x, ...)
+}
+

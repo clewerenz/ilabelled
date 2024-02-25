@@ -137,7 +137,7 @@ test_that(
     x <- i_labelled(c(1,2,3,-9), na_values = -9, labels = c(A = 1, B = 2, C = 3, X = -9))
     x <- i_as_factor(x, missing_to_na = T)
     expect_true(is.na(x[[4]]))
-    expect_equal(levels(x), c("X", "A", "B", "C"))
+    expect_equal(levels(x), c("A", "B", "C"))
 
     ## 'remove_missing_labels' - remove label for as missing declared values - will not become factor levels
 

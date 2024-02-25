@@ -9,7 +9,6 @@ test_that(
 
     # Test data input
     expect_error(i_labelled(list(LETTERS, letters)))
-    expect_error(i_labelled(iris))
     expect_error(i_labelled(list(factor(LETTERS), factor(letters))))
     expect_no_error(i_labelled(1:5))
     expect_no_error(i_labelled(LETTERS))

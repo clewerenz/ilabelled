@@ -10,6 +10,20 @@
 #' @param scale scale level (nominal, ordinal, scale)
 #' @param ... further attributes passed to class
 i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
+  UseMethod("i_labelled")
+}
+
+
+#' class constructor
+#' @export
+#' @param x vector
+#' @param label variable label
+#' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
+#' @param na_values missing values (e.g. c(888, 999))
+#' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
+#' @param scale scale level (nominal, ordinal, scale)
+#' @param ... further attributes passed to class
+i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
   if(!is.atomic(x)){
     stop("x must be vector")
   }
@@ -32,7 +46,15 @@ i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_rang
 }
 
 
-#' make all variables in data.frame i_labelled
+#' make all variables in data.frame i_labelled (S3 method)
+#' @export
+#' @param x data.frame
+i_labelled.data.frame <- function(x){
+  x[] <- lapply(x, i_labelled)
+  x
+}
+
+#' make all variables in data.frame i_labelled (dedicated function)
 #' @export
 #' @param x data.frame
 i_labelled_df <- function(x){
@@ -90,9 +112,6 @@ i_unclass.default <- function(x, keep_attributes = F){
 i_unclass.data.frame <- function(x, keep_attributes = F){
   x[] <- lapply(x, i_unclass)
 }
-
-
-
 
 
 
