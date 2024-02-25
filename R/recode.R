@@ -57,15 +57,20 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
     stop("... must be formula")
   }
 
-  recode_map <- lapply(seq(recode_map), function(y){
-    y <- list(
-      new_lab = names(recode_map)[[y]],
-      new_val = eval(recode_map[[y]][[2]]),
-      formula = recode_map[[y]][[3]]
-    )
-    y$which_val <- with(x, eval(y$formula))
-    y
+  tryCatch({
+    recode_map <- lapply(seq(recode_map), function(y){
+      y <- list(
+        new_lab = names(recode_map)[[y]],
+        new_val = eval(recode_map[[y]][[2]]),
+        formula = recode_map[[y]][[3]]
+      )
+      y$which_val <- with(x, eval(y$formula))
+      y
+    })
+  }, error = function(e){
+    stop("invalid ... formula")
   })
+
 
   new_labels <- setNames(
     unlist(lapply(recode_map, function(x){ x$new_val })),
