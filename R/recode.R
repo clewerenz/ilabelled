@@ -24,7 +24,7 @@
 #' @param na_values a vector with missing values
 #' @param na_rage a vector for missing range
 #' @export
-i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL){
+i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL){
 
   is_atomic <- is.atomic(x)
   is_data_frame <- is.data.frame(x)
@@ -62,5 +62,5 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL){
     x[recode_map[[i]]$which_val] <- recode_map[[i]]$new_val
   }
 
-  i_labelled(x, labels = new_labels, label = label, na_values = na_values, na_range = na_range)
+  i_labelled(x, labels = new_labels, label = label, na_values = na_values, na_range = na_range, scale = scale)
 }
