@@ -5,6 +5,9 @@
 #'
 #' Can be applied to either vector or data.frame. When x is data.frame the formula passed to ... is different from when it is applied to single vector.
 #' When function is applied to a data.frame, multiple conditions on multiple variables are possible (e.g when variable X is equal to this, do that; when variable Y is not equal to this, do that, etc.). See examples for further clarification.
+#'
+#' You can recode directly via value labels by using %in%.
+#'
 #' @examples
 #' # When applied to a single vector:
 #' # keep in mind that when function is applied to vector, instead of a column use x
@@ -23,13 +26,26 @@
 #' @param label variable label
 #' @param na_values a vector with missing values
 #' @param na_rage a vector for missing range
+#' @param copy a variable from x. Copy the values of an existing variable before recode values according to ...
 #' @export
-i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL){
+i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, copy = NULL){
 
   is_atomic <- is.atomic(x)
   is_data_frame <- is.data.frame(x)
 
   stopifnot(is_atomic | is_data_frame)
+
+  if(!is.null(copy) && !is.atomic(copy) && length(copy) != 1){
+    stop("'copy from' must be variable name of length 1")
+  }
+  if(!is.null(copy) && !is_data_frame){
+    stop("'copy' can only be used on data.frame")
+  }
+  if(!is.null(copy) && is_data_frame){
+    if(!copy %in% names(x)){
+      stop("'copy' can not be found in x")
+    }
+  }
 
   if(is_atomic){
     x <- data.frame(x = x, stringsAsFactors = F)
@@ -38,7 +54,7 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
   recode_map <- list(...)
 
   if(!all(unlist(lapply(recode_map, rlang::is_formula)))){
-    stop("... must be formular")
+    stop("... must be formula")
   }
 
   recode_map <- lapply(seq(recode_map), function(y){
@@ -57,7 +73,12 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
   )
   new_labels <- new_labels[!names(new_labels) %in% ""]
 
-  x <- rep(NA, length(x))
+  if(!is.null(copy)){
+    x <- i_unclass(x[[copy]])
+  }else{
+    x <- rep(NA, length(x))
+  }
+
   for(i in seq(recode_map)){
     x[recode_map[[i]]$which_val] <- recode_map[[i]]$new_val
   }

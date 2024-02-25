@@ -4,7 +4,15 @@
 \alias{i_recode}
 \title{Function for recoding new variable from origin variable(s).}
 \usage{
-i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL)
+i_recode(
+  x,
+  ...,
+  label = NULL,
+  na_values = NULL,
+  na_range = NULL,
+  scale = NULL,
+  copy = NULL
+)
 }
 \arguments{
 \item{x}{vector}
@@ -15,6 +23,8 @@ i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL)
 
 \item{na_values}{a vector with missing values}
 
+\item{copy}{a variable from x. Copy the values of an existing variable before recode values according to ...}
+
 \item{na_rage}{a vector for missing range}
 }
 \description{
@@ -23,6 +33,8 @@ Returns a vector object of class i_labelled
 \details{
 Can be applied to either vector or data.frame. When x is data.frame the formula passed to ... is different from when it is applied to single vector.
 When function is applied to a data.frame, multiple conditions on multiple variables are possible (e.g when variable X is equal to this, do that; when variable Y is not equal to this, do that, etc.). See examples for further clarification.
+
+You can recode directly via value labels by using %in%.
 }
 \examples{
 # When applied to a single vector:
