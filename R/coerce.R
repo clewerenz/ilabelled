@@ -29,24 +29,19 @@ as.i_labelled <- function(x, ...){
 #' @param missing_to_na as missing declared values will become NA
 #' @param remove_missing_labels as missing declared values will be removed from levels (ignored when 'missing_to_na = F')
 #' @param require_all_labels process will be interrupted, when not all values have valid labels
-#' @param only_labelled convert only variables with valid value labels to factor
 #' @param keep_attributes should attributes be preserved
 #' @export
-i_as_factor <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
+i_as_factor <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, keep_attributes = F){
   UseMethod("i_as_factor")
 }
 
 #' @export
-i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
+i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, keep_attributes = F){
   stopifnot(is.atomic(x) || is.null(x))
 
   labels <- attr(x, "labels", T)
 
   .valid_labels(labels)
-
-  if(only_labelled & is.null(labels)){
-    return(x)
-  }
 
   if(missing_to_na){
     x <- i_missing_to_na(x)
@@ -92,17 +87,6 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
 #' @export
 i_as_factor.factor <- function(x, ...){
   # do nothing
-  x
-}
-
-#' @export
-i_as_factor.data.frame <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
-  x[] <- lapply(x, function(y){
-    i_as_factor(
-      y, missing_to_na = missing_to_na, remove_missing_labels = remove_missing_labels,
-      require_all_labels = require_all_labels, only_labelled = only_labelled, keep_attributes = keep_attributes
-    )
-  })
   x
 }
 
