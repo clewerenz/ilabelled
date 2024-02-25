@@ -107,21 +107,27 @@ i_as_factor.factor <- function(x, ...){
 #' - remove class i_labelled and return variable as base R class
 #'
 #' @param x vector or data.frame
-#' @param as_factor convert to factor, when all value labels are available
+#' @param missing_to_na missing values will become regular NA
+#' @param as_factor convert to factor when value labels are available
 #' @param keep_attributes should attributes be preserved
 #' @export
-i_to_base_class <- function(x, as_factor = T, keep_attributes = F){
+i_to_base_class <- function(x, missing_to_na = T, as_factor = T, keep_attributes = F){
   UseMethod("i_to_base_class")
 }
 
 #' @export
-i_to_base_class.default <- function(x, as_factor = T, keep_attributes = F){
+i_to_base_class.default <- function(x, missing_to_na = T, as_factor = T, keep_attributes = F){
   stopifnot(is.atomic(x))
   stopifnot(is.logical(as_factor) && length(as_factor) == 1)
   stopifnot(is.logical(keep_attributes) && length(keep_attributes) == 1)
+  stopifnot(is.logical(missing_to_na) && length(missing_to_na) == 1)
 
   if(!is.i_labelled(x)){
     return(x)
+  }
+
+  if(missing_to_na){
+    x <- i_missing_to_na(x, remove_missing_labels = T)
   }
 
   labels <- attr(x, "labels", T)
@@ -137,7 +143,7 @@ i_to_base_class.default <- function(x, as_factor = T, keep_attributes = F){
 }
 
 #' @export
-i_to_base_class.data.frame <- function(x, as_factor = T, keep_attributes = F){
-  x[] <- lapply(x, function(y) i_to_base_class(y, as_factor = as_factor, keep_attributes = keep_attributes))
+i_to_base_class.data.frame <- function(x, missing_to_na = T, as_factor = T, keep_attributes = F){
+  x[] <- lapply(x, function(y) i_to_base_class(y, missing_to_na = missing_to_na, as_factor = as_factor, keep_attributes = keep_attributes))
   x
 }

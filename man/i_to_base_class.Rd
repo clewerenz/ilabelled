@@ -4,12 +4,14 @@
 \alias{i_to_base_class}
 \title{remove class i_labelled and return base R class}
 \usage{
-i_to_base_class(x, as_factor = T, keep_attributes = F)
+i_to_base_class(x, missing_to_na = T, as_factor = T, keep_attributes = F)
 }
 \arguments{
 \item{x}{vector or data.frame}
 
-\item{as_factor}{convert to factor, when all value labels are available}
+\item{missing_to_na}{missing values will become regular NA}
+
+\item{as_factor}{convert to factor when value labels are available}
 
 \item{keep_attributes}{should attributes be preserved}
 }
