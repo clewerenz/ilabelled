@@ -4,7 +4,7 @@
 \alias{i_recode}
 \title{Function for recoding new variable from origin variable(s).}
 \usage{
-i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL)
+i_recode(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL)
 }
 \arguments{
 \item{x}{vector}

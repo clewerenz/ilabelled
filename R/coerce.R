@@ -11,13 +11,17 @@ as.character.i_labelled <- function(x, ...){
 
 #' @export
 as.i_labelled <- function(x, ...){
+  arguments <- list()
   keepAttr <- setdiff(names(attributes(x)), names(list(...)))
   if(length(keepAttr) > 0){
     attributes(x) <- attributes(x)[keepAttr]
   }else{
     attributes(x) <- NULL
   }
-  i_labelled(x, ...)
+  for(i in c("label", "labels", "scale")){
+    arguments[[i]] <- attr(x, i, T)
+  }
+  i_labelled(x, label = eval(arguments[["label"]]), na_values = eval(arguments[["na_values"]]), eval(arguments[["na_range"]]), scale = eval(arguments[["scale"]]), ...)
 }
 
 
@@ -27,48 +31,46 @@ as.i_labelled <- function(x, ...){
 #'
 #' @param x vector
 #' @param missing_to_na as missing declared values will become NA
-#' @param remove_missing_labels as missing declared values will be removed from levels (ignored when 'missing_to_na = F')
 #' @param require_all_labels process will be interrupted, when not all values have valid labels
-#' @param only_labelled convert only variables with valid value labels to factor
 #' @param keep_attributes should attributes be preserved
 #' @export
-i_as_factor <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
+i_as_factor <- function(x, missing_to_na = F, require_all_labels = F, keep_attributes = F){
   UseMethod("i_as_factor")
 }
 
 #' @export
-i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
+i_as_factor.default <- function(x, missing_to_na = F, require_all_labels = F, keep_attributes = F){
   stopifnot(is.atomic(x) || is.null(x))
 
+  if(!is.i_labelled(x)){
+    x <- i_labelled(x)
+  }
+
   labels <- attr(x, "labels", T)
+  na_vals <- c(attr(x, "na_values", T))
 
   .valid_labels(labels)
 
-  if(only_labelled & is.null(labels)){
-    return(x)
-  }
-
   if(missing_to_na){
     x <- i_missing_to_na(x)
-  }
-
-  if(remove_missing_labels | missing_to_na){
     x <- i_remove_missing_labels(x)
     labels <- attr(x, "labels", T)
   }
 
-  variable_values <- unique(x)
-  variable_values <- variable_values[!is.na(variable_values)]
-  labels_values <- unique(labels)
-  labels_values <- labels_values[!is.na(labels_values)]
-  missing_values <- variable_values[!variable_values %in% labels_values]
+  missing_values <- unique(unclass(x[!match(unclass(x), labels, nomatch = F) > 0]))
+  missing_values <- missing_values[!is.na(missing_values)]
+
+  # variable_values <- unique(x)
+  # variable_values <- variable_values[!is.na(variable_values)]
+  # labels_values <- unique(labels)
+  # labels_values <- labels_values[!is.na(labels_values)]
+  # missing_values <- variable_values[!variable_values %in% labels_values]
 
   if(require_all_labels && length(missing_values) > 0){
     stop("missing or invalid value labels")
   }else if(length(missing_values) > 0){
     labels <- c(labels, stats::setNames(missing_values, missing_values))
   }
-
   if(any(duplicated(names(labels)))){
     stop("cannot convert to factor: duplicate labels in value labels")
   }
@@ -76,15 +78,17 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
     stop("cannot convert to factor: duplicate values in value labels")
   }
 
-  labels <- sort(labels)
+  labels <- names(sort(labels))
 
   tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
 
-  x <- factor(unclass(x), levels = unname(labels), labels = names(labels))
-
+  x <- as.character(x)
+  x <- match(x, labels)
   if(keep_attributes){
-    attributes(x) <- c(attributes(x), tmp_attr)
+    attributes(x) <- tmp_attr
   }
+  attr(x, "levels") <- labels
+  class(x) <- "factor"
 
   x
 }
@@ -92,17 +96,6 @@ i_as_factor.default <- function(x, missing_to_na = F, remove_missing_labels = F,
 #' @export
 i_as_factor.factor <- function(x, ...){
   # do nothing
-  x
-}
-
-#' @export
-i_as_factor.data.frame <- function(x, missing_to_na = F, remove_missing_labels = F, require_all_labels = F, only_labelled = F, keep_attributes = F){
-  x[] <- lapply(x, function(y){
-    i_as_factor(
-      y, missing_to_na = missing_to_na, remove_missing_labels = remove_missing_labels,
-      require_all_labels = require_all_labels, only_labelled = only_labelled, keep_attributes = keep_attributes
-    )
-  })
   x
 }
 
