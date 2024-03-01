@@ -38,7 +38,7 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 ## General
 
-  - How to write R packages: https://r-pkgs.org/
+  - How to write R packages: https://r-pkgs.org/; https://cran.r-project.org/doc/manuals/R-exts.html
   - How to deploy R packages: https://cran.r-project.org/web/packages/policies.html
 
 ## Use C code in R
