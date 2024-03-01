@@ -42,6 +42,9 @@
 }
 
 
+#' find matches in vector (return T/F)
+#' @param x vector or NULL: the values to be matched. Long vectors are supported.
+#' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @export
 "%in%" <- function(x, table){
   if(is.i_labelled(x)){

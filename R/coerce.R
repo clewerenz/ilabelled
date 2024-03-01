@@ -9,6 +9,13 @@ as.character.i_labelled <- function(x, ...){
 }
 
 
+#' as.i_labelled
+#' @description
+#' coerce to i_labelled class
+#'
+#' applicable to vector or data.frame objects
+#' @param x vector or data.frame
+#' @param ... attributes passed to class
 #' @export
 as.i_labelled <- function(x, ...){
   arguments <- list()
@@ -33,6 +40,7 @@ as.i_labelled <- function(x, ...){
 #' @param missing_to_na as missing declared values will become NA
 #' @param require_all_labels process will be interrupted, when not all values have valid labels
 #' @param keep_attributes should attributes be preserved
+#' @importFrom stats setNames
 #' @export
 i_as_factor <- function(x, missing_to_na = F, require_all_labels = F, keep_attributes = F){
   UseMethod("i_as_factor")

@@ -22,6 +22,7 @@ i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_rang
 #' @param na_values missing values (e.g. c(888, 999))
 #' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
 #' @param scale scale level (nominal, ordinal, scale)
+#' @importFrom stats setNames
 #' @param ... further attributes passed to class
 i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
   if(!is.atomic(x)){
@@ -38,12 +39,12 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     labels <- .merge_labels(as.list(attr(x, "labels", T)), as.list(labels))
   }
 
-  if(is.numeric(x) && !is.null(labels) && any(na.omit(x%%1 > 0))){
+  if(is.numeric(x) && !is.null(labels) && any(stats::na.omit(x%%1 > 0))){
     stop("decimal numbers cannot be labelled")
   }
 
   if(is.character(x) && !is.null(labels) && !is.character(labels)){
-    labels <- setNames(as.character(labels), names(labels))
+    labels <- stats::setNames(as.character(labels), names(labels))
     warning("applying numeric labels values to non numeric x values")
   }
 
@@ -55,14 +56,6 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, ...))
 }
 
-
-#' make all variables in data.frame i_labelled (S3 method)
-#' @export
-#' @param x data.frame
-i_labelled.data.frame <- function(x){
-  x[] <- lapply(x, i_labelled)
-  x
-}
 
 #' make all variables in data.frame i_labelled (dedicated function)
 #' @export

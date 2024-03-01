@@ -2,7 +2,8 @@
 % Please edit documentation in R/recode.R
 \name{i_recode}
 \alias{i_recode}
-\title{Function for recoding new variable from origin variable(s).}
+\title{i_recode
+Function for recoding new variable from origin variable(s).}
 \usage{
 i_recode(
   x,
@@ -23,9 +24,11 @@ i_recode(
 
 \item{na_values}{a vector with missing values}
 
-\item{copy}{a variable from x. Copy the values of an existing variable before recode values according to ...}
+\item{na_range}{a vector for missing range}
 
-\item{na_rage}{a vector for missing range}
+\item{scale}{scale level (nominal, ordinal, metric)}
+
+\item{copy}{a variable from x. Copy the values of an existing variable before recode values according to ...}
 }
 \description{
 Returns a vector object of class i_labelled

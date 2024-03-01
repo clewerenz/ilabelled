@@ -1,20 +1,20 @@
 Package: ilabelled
 Type: Package
-Title: Simple handling of labelled data
+Title: Simple Handling of Labelled Data
 Version: 0.1.0
 Authors@R: c(
   person("Christof", "Lewerenz", email = "christof.lewerenz@gmx.net", role = c("aut", "cre"))
   )
 Maintainer: Christof Lewerenz <christof.lewerenz@gmx.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Simple handling of survey data.    Add labels to data values. Use value labels for subsetting and recoding of data. Add meta-information like variable labels and scale level to data. Easy access of meta-information. Validation of meta-information.
 License: MIT + file LICENSE
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
 Imports:
-    methods
+    methods, rlang, stats
 URL: https://github.com/clewerenz/ilabelled
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3

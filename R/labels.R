@@ -5,6 +5,7 @@
 #' @param x vector
 #' @param ... set labels for values (e.g. label_of_choice = 1 or "Label of Choice" = 1); remove single label with NULL = value (e.g. NULL = 1); removes all value labels when only NULL (e.g. i_label(x, NULL))
 #' @param overwrite should new labels be merged with existing labels or remove existing labels
+#' @importFrom stats setNames
 i_labels <- function(x, ..., overwrite = F){
   if(!is.null(attr(x, "labels", T)) & !overwrite){
     old_labs <- as.list(attr(x, "labels", T))
@@ -22,7 +23,7 @@ i_labels <- function(x, ..., overwrite = F){
     all_labs <- .merge_labels(old_labs, new_labs)
   }
   if(is.character(x) && !is.null(labels) && !is.character(labels)){
-    all_labs <- setNames(as.character(all_labs), names(all_labs))
+    all_labs <- stats::setNames(as.character(all_labs), names(all_labs))
     warning("applying numeric labels values to non numeric x values")
   }
 

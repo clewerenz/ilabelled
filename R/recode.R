@@ -1,4 +1,4 @@
-
+#' i_recode
 #' Function for recoding new variable from origin variable(s).
 #'
 #' Returns a vector object of class i_labelled
@@ -25,8 +25,11 @@
 #' @param ... formula for recoding of values. See examples.
 #' @param label variable label
 #' @param na_values a vector with missing values
-#' @param na_rage a vector for missing range
+#' @param na_range a vector for missing range
+#' @param scale scale level (nominal, ordinal, metric)
 #' @param copy a variable from x. Copy the values of an existing variable before recode values according to ...
+#' @importFrom stats setNames
+#' @importFrom rlang is_formula
 #' @export
 i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, copy = NULL){
 
@@ -72,7 +75,7 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
   })
 
 
-  new_labels <- setNames(
+  new_labels <- stats::setNames(
     unlist(lapply(recode_map, function(x){ x$new_val })),
     unlist(lapply(recode_map, function(x){ x$new_lab }))
   )
