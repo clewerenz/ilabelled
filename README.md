@@ -23,6 +23,10 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
+  - drop custom <code>as.character()</code>: clashes with <code>factor()</code> and therefore with <code>table()</code>
+  - drop <code>%in%</code>: masks base package function and cannot be uses when custom <code>as.character()</code> cannot be used
+  - make <code>i_as_character()</code> to convert to character by labels
+  - make <code>%lin%</code> to match via labels
   - tests for <code>i_recode()</code> on data.frame
   - better messages for run-time-tests
   - <code>i_as_factor()</code>: more tests
