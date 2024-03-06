@@ -44,9 +44,9 @@ test_that("recode labels and negative values at the same time - no error", {
   expect_no_error(
     x <- i_recode(
       myVar,
-      "AB" = 1 ~ x %in% c("A", "B"),
-      "C2" = 2 ~ x %in% "C",
-      "D2" = 9 ~ x %in% "D",
+      "AB" = 1 ~ x %lin% c("A", "B"),
+      "C2" = 2 ~ x %lin% "C",
+      "D2" = 9 ~ x %lin% "D",
       "X" = -9 ~ x %in% c(-9,-8),
       "Y" = 888 ~ x %in% c(-7),
       na_values = -9

@@ -23,20 +23,10 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
-  - drop custom <code>as.character()</code>: clashes with <code>factor()</code> and therefore with <code>table()</code>
-  - drop <code>%in%</code>: masks base package function and cannot be uses when custom <code>as.character()</code> cannot be used
-  - make <code>i_as_character()</code> to convert to character by labels
-  - make <code>%lin%</code> to match via labels
-  - tests for <code>i_recode()</code> on data.frame
-  - better messages for run-time-tests
+  - improve messages for run-time-tests
   - <code>i_as_factor()</code>: more tests
   - <code>i_to_base_class()</code>: more tests
-  - documentation: rmarkdown html with examples of all features
-  - custom r_bind function (maybe):
-    - checks if value labels (if present) match
-    - checks if classes match
-    - returns 'talking' output
-  - example data: add correctly to or remove from package
+  - online documentation
   
 # Rescources
 

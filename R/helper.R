@@ -1,11 +1,5 @@
 
 
-# .restartR <- function(){
-#   rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
-#   rstudioapi::restartSession()
-# }
-
-
 #' internal replacement of match function for remove missing values (match is much slower but can handle more data classes)
 #' @description
 #' description description
@@ -42,14 +36,20 @@
 }
 
 
-#' find matches in vector (return T/F)
+#' Match values in i_labelled data via value labels
+#' @description
+#'
+#' Find matches in vector (return T/F)
+#' @examples
+#' x <- i_labelled(c(1:3,NA), labels = c("A" = 1, "B" = 2, "C" = 3), na_values = 3)
+#' x %lin% "A"
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @export
-"%in%" <- function(x, table){
+"%lin%" <- function(x, table){
   if(is.i_labelled(x)){
     if(is.character(table)){
-      match(as.character(x), table, nomatch = 0) > 0
+      match(i_as_character(x), table, nomatch = 0) > 0
     }else{
       match(unclass(x), table, nomatch = 0) > 0
     }

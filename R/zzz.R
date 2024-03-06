@@ -1,5 +1,7 @@
-.onLoad <- function(libname, pkgname){
+.onAttach <- function(libname, pkgname){
 
-  message(paste(pkgname, "was created unter R version 4.3.2"))
+  packageStartupMessage(
+    message(paste(pkgname, "was created under R version 4.3.3"))
+  )
 
 }
