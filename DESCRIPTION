@@ -6,7 +6,7 @@ Authors@R: c(
   person("Christof", "Lewerenz", email = "christof.lewerenz@gmx.net", role = c("aut", "cre"))
   )
 Maintainer: Christof Lewerenz <christof.lewerenz@gmx.net>
-Description: Simple handling of survey data.    Add labels to data values. Use value labels for subsetting and recoding of data. Add meta-information like variable labels and scale level to data. Easy access of meta-information. Validation of meta-information.
+Description: Simple handling of survey data. Add labels to data values. Use value labels for subsetting and recoding of data. Add meta-information like variable labels and scale level to data. Easy access of meta-information. Validation of meta-information.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-US
