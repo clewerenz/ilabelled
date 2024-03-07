@@ -15,30 +15,25 @@ print.i_labelled <- function(x, ...){
 
   print(`attributes<-`(x, NULL))
 
-  i_get_na_values(x)
-  i_get_na_range(x)
-  i_get_scale(x)
-  i_get_label(x)
-  i_get_labels(x)
+  i_print_na_values(x)
+  i_print_na_range(x)
+  i_print_scale(x)
+  i_print_label(x)
+  i_print_labels(x)
 
   invisible(x)
 }
 
 
-#' get value labels
-#' #' @description
-#' print variable labels when applied to vector
-#' return list when applied to data.frame
-#'
-#' @param x vector or data.frame
+#' print value labels
+#' @param x vector
 #' @export
-i_get_labels <- function(x){
-  UseMethod("i_get_labels")
+i_print_labels <- function(x){
+  UseMethod("i_print_labels")
 }
 
-
 #' @export
-i_get_labels.default <- function(x){
+i_print_labels.default <- function(x){
   labels <- attr(x, "labels", T)
   if(is.null(labels)){
     return(invisible(labels))
@@ -49,33 +44,15 @@ i_get_labels.default <- function(x){
 }
 
 
+#' print variable label
+#' @param x vector
 #' @export
-i_get_labels.data.frame <- function(x){
-  sapply(x, function(y){
-    labels <- attr(y, "labels", T)
-    if(is.null(labels)){
-      NA
-    }else{
-      data.frame(value = labels, label = names(labels), row.names = NULL, stringsAsFactors = F)
-    }
-  }, simplify = F)
+i_print_label <- function(x){
+  UseMethod("i_print_label")
 }
 
-
-#' get variable label
-#' @description
-#' print variable label when applied to vector
-#' return list when applied to data.frame
-#'
-#' @param x vector or data.frame
 #' @export
-i_get_label <- function(x){
-  UseMethod("i_get_label")
-}
-
-
-#' @export
-i_get_label.default <- function(x){
+i_print_label.default <- function(x){
   label <- attr(x, "label", T)
   if(is.null(label)){
     return(invisible(label))
@@ -84,33 +61,15 @@ i_get_label.default <- function(x){
 }
 
 
-#' @export
-i_get_label.data.frame <- function(x){
-  sapply(x, function(x){
-    label <- attr(x, "label", T)
-    if(is.null(label)){
-      NA
-    }else{
-      label
-    }
-  }, simplify = F)
-}
-
-
 #' print missing values
-#' @description
-#' print missing values when applied to vector
-#' return list when applied to data.frame
-#'
-#' @param x vector or data.frame
+#' @param x vector
 #' @export
-i_get_na_values <- function(x){
-  UseMethod("i_get_na_values")
+i_print_na_values <- function(x){
+  UseMethod("i_print_na_values")
 }
 
-
 #' @export
-i_get_na_values.default <- function(x){
+i_print_na_values.default <- function(x){
   na_values <- attr(x, "na_values", T)
   if(is.null(na_values)){
     return(invisible(na_values))
@@ -119,33 +78,15 @@ i_get_na_values.default <- function(x){
 }
 
 
-#' @export
-i_get_na_values.data.frame <- function(x){
-  sapply(x, function(y){
-    na_values <- attr(y, "na_values", T)
-    if(is.null(na_values)){
-      NA
-    }else{
-      sort(na_values)
-    }
-  }, simplify = F)
-}
-
-
 #' print missing range
-#' @description
-#' print missing range when applied to vector
-#' return list when applied to data.frame
-#'
-#' @param x vector or data.frame
+#' @param x vector
 #' @export
-i_get_na_range <- function(x){
-  UseMethod("i_get_na_range")
+i_print_na_range <- function(x){
+  UseMethod("i_print_na_range")
 }
 
-
 #' @export
-i_get_na_range.default <- function(x){
+i_print_na_range.default <- function(x){
   na_range <- attr(x, "na_range", T)
   if(is.null(na_range)){
     return(invisible(na_range))
@@ -154,32 +95,15 @@ i_get_na_range.default <- function(x){
 }
 
 
-#' @export
-i_get_na_range.data.frame <- function(x){
-  sapply(x, function(y){
-    na_range <- attr(y, "na_range", T)
-    if(is.null(na_range)){
-      NA
-    }else{
-      sort(na_range)
-    }
-  }, simplify = F)
-}
-
-
 #' print scale level
-#' @description
-#' print scale level when applied to vector
-#' return list when applied to data.frame
-#'
-#' @param x vector or data.frame
+#' @param x vector
 #' @export
-i_get_scale <- function(x){
-  UseMethod("i_get_scale")
+i_print_scale <- function(x){
+  UseMethod("i_print_scale")
 }
 
 #' @export
-i_get_scale.default <- function(x){
+i_print_scale.default <- function(x){
   scale <- attr(x, "scale", T)
   if(is.null(scale)){
     return(invisible(scale))
@@ -187,14 +111,4 @@ i_get_scale.default <- function(x){
   cat(paste0("\nScale level: ", scale), "\n")
 }
 
-#' @export
-i_get_scale.data.frame <- function(x){
-  sapply(x, function(y){
-    scale <- attr(y, "scale", T)
-    if(is.null(scale)){
-      NA
-    }else{
-      scale
-    }
-  }, simplify = F)
-}
+
