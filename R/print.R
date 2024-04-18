@@ -9,6 +9,8 @@ print.i_labelled <- function(x, ...){
     cat("<", "i_labelled double", ">\n", sep = "")
   }else if(is.character(unclass(x))){
     cat("<", "i_labelled character", ">\n", sep = "")
+  }else if(is.numeric(unclass(x))){
+    cat("<", "i_labelled numeric", ">\n", sep = "")
   }else{
     stop("print.i_labelled unknown class")
   }

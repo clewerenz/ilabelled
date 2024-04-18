@@ -59,6 +59,30 @@
 }
 
 
+#' Match values in i_labelled data via value labels
+#' @description
+#' i_labelled method for matching
+#' Find matches in vector (return T/F)1
+#'
+#' @export
+i_in <- function(x, table){
+  if(is.i_labelled(x)){
+    if(is.character(table)){
+      match(i_as_character(x), table, nomatch = 0) > 0
+    }else{
+      match(unclass(x), table, nomatch = 0) > 0
+    }
+  }else{
+    match(x, table, nomatch = 0) > 0
+  }
+}
+methods::setGeneric("%in%")
+suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled"), i_in))
+suppressMessages(methods::setMethod("%in%", methods::signature(table="i_labelled"), i_in))
+suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", table="i_labelled"), i_in))
+
+
+
 # mtfrm.i_labelled <- function(x){
 #   x
 # }
