@@ -23,6 +23,7 @@ The inspiration for this package was drawn from the [Sticky](https://github.com/
 
 # To-Do
   
+  - add Ops (=, <, >, etc.) and match methods according to https://github.com/pdbailey0/lfactors (maybe solution for %in% with ilabelled)
   - improve messages for run-time-tests
   - <code>i_as_factor()</code>: more tests
   - <code>i_to_base_class()</code>: more tests
