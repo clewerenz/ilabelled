@@ -1,3 +1,5 @@
+#' @importFrom methods setOldClass
+methods::setOldClass("i_labelled")
 
 
 #' class constructor
