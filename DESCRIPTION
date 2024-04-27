@@ -14,7 +14,7 @@ LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
 Imports:
-    methods, rlang, stats
+    methods, stats
 URL: https://github.com/clewerenz/ilabelled
 BugReports: https://github.com/clewerenz/ilabelled/issues
 Config/testthat/edition: 3
