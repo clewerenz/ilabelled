@@ -9,3 +9,5 @@
 ^benchmarking.R
 ^.RData
 ^.Rdata
+^\.git$
+^\.github$
