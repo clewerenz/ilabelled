@@ -19,11 +19,10 @@ A function library for working with labelled data in R.
   - <b>Reduce dependencies</b> 
     - The most possible minimum of third party dependencies. Right now the package depends on no third party libraries.
 
-The inspiration for this package was drawn from the [Sticky](https://github.com/cran/sticky) package and the [labelled](https://github.com/larmarange/labelled) package with the aim to bring dependencies on bloated third party libraries to zero. The self-understanding of this package is not to be better than comparable libraries, but be a lightweight alternative.
+The inspiration for this package was drawn from the [lfactors](https://github.com/pdbailey0/lfactors) package and the [labelled](https://github.com/larmarange/labelled) package with the aim to bring dependencies on bloated third party libraries to zero. The self-understanding of this package is not to be better than comparable libraries, but be a lightweight alternative.
 
 # To-Do
   
-  - add Ops (=, <, >, etc.) and match methods according to https://github.com/pdbailey0/lfactors (maybe solution for %in% with ilabelled)
   - improve messages for run-time-tests
   - <code>i_as_factor()</code>: more tests
   - <code>i_to_base_class()</code>: more tests

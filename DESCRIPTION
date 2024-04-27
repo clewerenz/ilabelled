@@ -18,6 +18,6 @@ Imports:
 URL: https://github.com/clewerenz/ilabelled
 BugReports: https://github.com/clewerenz/ilabelled/issues
 Config/testthat/edition: 3
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Depends: 
     R (>= 2.10)
