@@ -6,7 +6,11 @@
 \usage{
 i_in(x, table)
 }
+\arguments{
+\item{x}{vector or NULL: the values to be matched. Long vectors are supported.}
+
+\item{table}{vector or NULL: the values to be matched against. Long vectors are not supported.}
+}
 \description{
-i_labelled method for %in%
 Find matches in vector (return T/F)
 }

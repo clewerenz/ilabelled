@@ -14,7 +14,3 @@ x \%lin\% table
 \description{
 Find matches in vector (return T/F)
 }
-\examples{
-x <- i_labelled(c(1:3,NA), labels = c("A" = 1, "B" = 2, "C" = 3), na_values = 3)
-x \%lin\% "A"
-}

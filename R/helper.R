@@ -40,9 +40,6 @@
 #' @description
 #'
 #' Find matches in vector (return T/F)
-#' @examples
-#' x <- i_labelled(c(1:3,NA), labels = c("A" = 1, "B" = 2, "C" = 3), na_values = 3)
-#' x %lin% "A"
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @export
@@ -61,9 +58,10 @@
 
 #' Match values in i_labelled data via value labels
 #' @description
-#' i_labelled method for matching
-#' Find matches in vector (return T/F)1
 #'
+#' Find matches in vector (return T/F)
+#' @param x vector or NULL: the values to be matched. Long vectors are supported.
+#' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @export
 i_in <- function(x, table){
   if(is.i_labelled(x)){

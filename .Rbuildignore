@@ -7,3 +7,5 @@
 ^backupC.txt
 ^info/
 ^benchmarking.R
+^.RData
+^.Rdata
