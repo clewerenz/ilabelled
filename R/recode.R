@@ -19,7 +19,7 @@
 #'    V1 = i_labelled(1:3, labels = c("A" = 1, "B" = 2, "C" = 3)),
 #'    V2 = i_labelled(c(2:3,-9))
 #' )
-#' i_recode(x = myData, A = 1 ~ V1 %lin% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
+#' i_recode(x = myData, A = 1 ~ V1 %in% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
 #'
 #' @param x vector
 #' @param ... formula for recoding of values. See examples.
@@ -29,7 +29,6 @@
 #' @param scale scale level (nominal, ordinal, metric)
 #' @param copy a variable from x. Copy the values of an existing variable before recode values according to ...
 #' @importFrom stats setNames
-#' @importFrom rlang is_formula
 #' @export
 i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, copy = NULL){
 
@@ -56,7 +55,7 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
 
   recode_map <- list(...)
 
-  if(!all(unlist(lapply(recode_map, rlang::is_formula)))){
+  if(!all(unlist(lapply(recode_map, function(x) inherits(x, "formula"))))){
     stop("... must be formula")
   }
 

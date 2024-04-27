@@ -36,6 +36,31 @@
 }
 
 
+
+#' Match values in i_labelled data via value labels
+#' @description
+#'
+#' Find matches in vector (return T/F)
+#' @param x vector or NULL: the values to be matched. Long vectors are supported.
+#' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
+.i_in <- function(x, table){
+  if(is.i_labelled(x)){
+    if(is.character(table)){
+      match(i_as_character(x), table, nomatch = 0) > 0
+    }else{
+      match(unclass(x), table, nomatch = 0) > 0
+    }
+  }else{
+    match(x, table, nomatch = 0) > 0
+  }
+}
+
+methods::setGeneric("%in%")
+suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled"), .i_in))
+suppressMessages(methods::setMethod("%in%", methods::signature(table="i_labelled"), .i_in))
+suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", table="i_labelled"), .i_in))
+
+
 #' Match values in i_labelled data via value labels
 #' @description
 #'
@@ -44,40 +69,8 @@
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @export
 "%lin%" <- function(x, table){
-  if(is.i_labelled(x)){
-    if(is.character(table)){
-      match(i_as_character(x), table, nomatch = 0) > 0
-    }else{
-      match(unclass(x), table, nomatch = 0) > 0
-    }
-  }else{
-    match(x, table, nomatch = 0) > 0
-  }
+  .i_in(x, table)
 }
-
-
-#' Match values in i_labelled data via value labels
-#' @description
-#'
-#' Find matches in vector (return T/F)
-#' @param x vector or NULL: the values to be matched. Long vectors are supported.
-#' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
-#' @export
-i_in <- function(x, table){
-  if(is.i_labelled(x)){
-    if(is.character(table)){
-      match(i_as_character(x), table, nomatch = 0) > 0
-    }else{
-      match(unclass(x), table, nomatch = 0) > 0
-    }
-  }else{
-    match(x, table, nomatch = 0) > 0
-  }
-}
-methods::setGeneric("%in%")
-suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled"), i_in))
-suppressMessages(methods::setMethod("%in%", methods::signature(table="i_labelled"), i_in))
-suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", table="i_labelled"), i_in))
 
 
 
