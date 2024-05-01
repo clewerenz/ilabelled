@@ -9,6 +9,9 @@ i_get_na_range(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Return missing range
+}
 \description{
 return missing range when applied to vector
 return list when applied to data.frame

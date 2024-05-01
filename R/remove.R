@@ -2,6 +2,7 @@
 #' @description
 #' remove values labels from values which are declared as missing
 #'
+#' @returns Returns x without missing labels
 #' @param x vector or data.frame
 #' @export
 i_remove_missing_labels <- function(x){
@@ -13,8 +14,8 @@ i_remove_missing_labels <- function(x){
 i_remove_missing_labels.default <- function(x){
   stopifnot(is.atomic(x))
 
-  nas <- c(attr(x, "na_values", T), names(attr(x, "na_values", T)), attr(x, "na_range", T))
-  labels <- attr(x, "labels", T)
+  nas <- c(attr(x, "na_values", TRUE), names(attr(x, "na_values", TRUE)), attr(x, "na_range", TRUE))
+  labels <- attr(x, "labels", TRUE)
   if(!is.null(labels)){
     labels <- labels[!(labels %in% nas | names(labels) %in% nas)]
     if(length(labels) < 1){
@@ -40,6 +41,7 @@ i_remove_missing_labels.data.frame <- function(x){
 #' remove variable label
 #' keep other attributes
 #'
+#' @returns Returns x without variable label
 #' @param x vector or data.frame
 #' @export
 i_remove_label <- function(x){
@@ -69,6 +71,7 @@ i_remove_label.data.frame <- function(x){
 #' remove all value labels
 #' keep other attributes
 #'
+#' @returns Returns x without value labels
 #' @param x vector or data.frame
 #' @export
 i_remove_labels <- function(x){
@@ -98,6 +101,7 @@ i_remove_labels.data.frame <- function(x){
 #' remove na values (information which values should be handled as missing)
 #' keep other attributes
 #'
+#' @returns Returns x without na-values
 #' @param x vector or data.frame
 #' @export
 i_remove_na_values <- function(x){
@@ -126,6 +130,7 @@ i_remove_na_values.data.frame <- function(x){
 #' remove na range (information which values should be handled as missing)
 #' keep other attributes
 #'
+#' @returns Returns x without na-range
 #' @param x vector or data.frame
 #' @export
 i_remove_na_range <- function(x){

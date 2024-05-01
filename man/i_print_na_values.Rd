@@ -9,6 +9,9 @@ i_print_na_values(x)
 \arguments{
 \item{x}{vector}
 }
+\value{
+No return value. Print na values to console
+}
 \description{
 print missing values
 }

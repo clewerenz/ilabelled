@@ -9,6 +9,9 @@ i_data_to_double(x)
 \arguments{
 \item{x}{vector}
 }
+\value{
+Returns x coerced to double
+}
 \description{
 changes the data within class i_labelled
 

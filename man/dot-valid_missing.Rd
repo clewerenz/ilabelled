@@ -9,6 +9,9 @@
 \arguments{
 \item{x}{vector}
 }
+\value{
+T/F
+}
 \description{
 validate missing values/range - intern
 }

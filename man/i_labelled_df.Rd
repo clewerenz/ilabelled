@@ -9,6 +9,9 @@ i_labelled_df(x)
 \arguments{
 \item{x}{data.frame}
 }
+\value{
+x with all variables coerced to i_labelled object
+}
 \description{
 make all variables in data.frame i_labelled (dedicated function)
 }

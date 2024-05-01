@@ -9,6 +9,9 @@ i_remove_na_values(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Returns x without na-values
+}
 \description{
 remove na values (information which values should be handled as missing)
 keep other attributes

@@ -1,6 +1,7 @@
 
 #' set scale level
 #' @export
+#' @returns Returns x with scale label set
 #' @param x vector
 #' @param scale scale level (nominal, ordinal, scale) as string or NULL (NULL will remove scale level)
 i_scale <- function(x, scale){
@@ -20,6 +21,7 @@ i_scale <- function(x, scale){
 #' run-time-tests for scale level
 #' runs internally
 #'
+#' @returns No return value. Aborts process when scale level invalid.
 #' @param x vector
 .valid_scale <- function(x){
   if(is.null(x)){

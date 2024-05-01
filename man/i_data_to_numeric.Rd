@@ -9,6 +9,9 @@ i_data_to_numeric(x)
 \arguments{
 \item{x}{vector}
 }
+\value{
+Returns x coerced to numeric
+}
 \description{
 changes the data within class i_labelled
 

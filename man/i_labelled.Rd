@@ -29,6 +29,9 @@ i_labelled(
 
 \item{...}{further attributes passed to class}
 }
+\value{
+x as i_labelled object
+}
 \description{
 class constructor
 }

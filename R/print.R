@@ -1,6 +1,7 @@
 
 #' custom print method for i_labelled
 #' @export
+#' @returns No return value. Print object data and information to console
 #' @param x vector of class i_labelled
 #' @param ... not used
 print.i_labelled <- function(x, ...){
@@ -28,6 +29,7 @@ print.i_labelled <- function(x, ...){
 
 
 #' print value labels
+#' @returns No return value. Print labels to console
 #' @param x vector
 #' @export
 i_print_labels <- function(x){
@@ -36,17 +38,18 @@ i_print_labels <- function(x){
 
 #' @export
 i_print_labels.default <- function(x){
-  labels <- attr(x, "labels", T)
+  labels <- attr(x, "labels", TRUE)
   if(is.null(labels)){
     return(invisible(labels))
   }
   cat("\nValue labels:\n")
-  labels <- data.frame(value = labels, label = names(labels), row.names = NULL, stringsAsFactors = F)
-  print(labels, row.names = F)
+  labels <- data.frame(value = labels, label = names(labels), row.names = NULL, stringsAsFactors = FALSE)
+  print(labels, row.names = FALSE)
 }
 
 
 #' print variable label
+#' @returns No return value. Print variable label to console
 #' @param x vector
 #' @export
 i_print_label <- function(x){
@@ -55,7 +58,7 @@ i_print_label <- function(x){
 
 #' @export
 i_print_label.default <- function(x){
-  label <- attr(x, "label", T)
+  label <- attr(x, "label", TRUE)
   if(is.null(label)){
     return(invisible(label))
   }
@@ -64,6 +67,7 @@ i_print_label.default <- function(x){
 
 
 #' print missing values
+#' @returns No return value. Print na values to console
 #' @param x vector
 #' @export
 i_print_na_values <- function(x){
@@ -72,7 +76,7 @@ i_print_na_values <- function(x){
 
 #' @export
 i_print_na_values.default <- function(x){
-  na_values <- attr(x, "na_values", T)
+  na_values <- attr(x, "na_values", TRUE)
   if(is.null(na_values)){
     return(invisible(na_values))
   }
@@ -81,6 +85,7 @@ i_print_na_values.default <- function(x){
 
 
 #' print missing range
+#' @returns No return value. Print na range to console
 #' @param x vector
 #' @export
 i_print_na_range <- function(x){
@@ -89,15 +94,16 @@ i_print_na_range <- function(x){
 
 #' @export
 i_print_na_range.default <- function(x){
-  na_range <- attr(x, "na_range", T)
+  na_range <- attr(x, "na_range", TRUE)
   if(is.null(na_range)){
     return(invisible(na_range))
   }
-  cat(paste0("\nMissing range: [", min(na_range, na.rm = T), ":", max(na_range, na.rm = T), "]"), "\n")
+  cat(paste0("\nMissing range: [", min(na_range, na.rm = TRUE), ":", max(na_range, na.rm = TRUE), "]"), "\n")
 }
 
 
 #' print scale level
+#' @returns No return value. Print scale level to console
 #' @param x vector
 #' @export
 i_print_scale <- function(x){
@@ -106,7 +112,7 @@ i_print_scale <- function(x){
 
 #' @export
 i_print_scale.default <- function(x){
-  scale <- attr(x, "scale", T)
+  scale <- attr(x, "scale", TRUE)
   if(is.null(scale)){
     return(invisible(scale))
   }

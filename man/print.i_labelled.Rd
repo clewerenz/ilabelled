@@ -11,6 +11,9 @@
 
 \item{...}{not used}
 }
+\value{
+No return value. Print object data and information to console
+}
 \description{
 custom print method for i_labelled
 }

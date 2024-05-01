@@ -11,6 +11,9 @@ i_na_range(x, values)
 
 \item{values}{vector with missing range e.g. c(-9:-1) or NULL (NULL will remove all missing values)}
 }
+\value{
+Returns x with missing range set
+}
 \description{
 define which values will be handled as missing values
 }

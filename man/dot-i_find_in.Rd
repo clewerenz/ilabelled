@@ -11,6 +11,9 @@
 
 \item{y}{vector}
 }
+\value{
+Vector of T/F values with length of x
+}
 \description{
 description description
 }

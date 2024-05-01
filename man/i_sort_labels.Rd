@@ -4,7 +4,7 @@
 \alias{i_sort_labels}
 \title{sort value labels by values or by labels}
 \usage{
-i_sort_labels(x, by = "values", decreasing = F)
+i_sort_labels(x, by = "values", decreasing = FALSE)
 }
 \arguments{
 \item{x}{vector or data.frame}
@@ -12,6 +12,9 @@ i_sort_labels(x, by = "values", decreasing = F)
 \item{by}{either values or labels}
 
 \item{decreasing}{sort decreasing}
+}
+\value{
+Returns x with sorted value labels
 }
 \description{
 sort value labels by values or by labels

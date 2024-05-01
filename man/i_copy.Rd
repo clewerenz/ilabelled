@@ -15,6 +15,9 @@ i_copy(to, from, what = "all", ...)
 
 \item{...}{further attributes passed to structure}
 }
+\value{
+Returns 'to' with ilabelled attributes copied from 'from'
+}
 \description{
 copy labels from one variable to another
 }

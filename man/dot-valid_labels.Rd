@@ -9,6 +9,9 @@
 \arguments{
 \item{x}{named vector (label = value)}
 }
+\value{
+No return value. Aborts process when run-time-tests fail.
+}
 \description{
 contains several run-time-tests for value labels
 runs internally
