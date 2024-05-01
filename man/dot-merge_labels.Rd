@@ -11,6 +11,9 @@
 
 \item{new_labs}{named vector}
 }
+\value{
+Returns names vector of value labels
+}
 \description{
 return named vector
 }

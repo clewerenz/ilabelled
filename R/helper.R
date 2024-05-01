@@ -1,9 +1,22 @@
 
 
+#' Check if vector contains decimal values
+#' @importFrom stats na.omit
+#' @returns T/F
+#' @param x numeric vector
+#' @export
+is_decimal <- function(x){
+  if(!is.atomic(x)) stop("x must be atomic vector")
+  if(!is.numeric(x)) stop("x must be numeric")
+  any(stats::na.omit(x %% 1 > 0))
+}
+
+
 #' internal replacement of match function for remove missing values (match is much slower but can handle more data classes)
 #' @description
 #' description description
 #'
+#' @returns Vector of T/F values with length of x
 #' @param x vector
 #' @param y vector
 .i_find_in <- function(x, y){
@@ -29,6 +42,7 @@
 
 
 #' checks if vector is numeric sequence
+#' @returns T/F
 #' @param x vector
 .is_sequential <- function(x){
   stopifnot(is.numeric(x))
@@ -41,6 +55,7 @@
 #' @description
 #'
 #' Find matches in vector (return T/F)
+#' @returns Vector of T/F values with length of x
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 .i_in <- function(x, table){
@@ -65,6 +80,7 @@ suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", t
 #' @description
 #'
 #' Find matches in vector (return T/F)
+#' @returns Vector of T/F values with length of x
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @export

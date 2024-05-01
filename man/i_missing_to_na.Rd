@@ -4,12 +4,15 @@
 \alias{i_missing_to_na}
 \title{missing values to NA}
 \usage{
-i_missing_to_na(x, remove_missing_labels = F)
+i_missing_to_na(x, remove_missing_labels = FALSE)
 }
 \arguments{
 \item{x}{vector or data.frame}
 
 \item{remove_missing_labels}{remove values labels from values which are declared as missing}
+}
+\value{
+Returns x with missing values coerced to NA
 }
 \description{
 all values declared as missing will be recoded as NA

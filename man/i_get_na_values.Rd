@@ -9,6 +9,9 @@ i_get_na_values(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Return missing values
+}
 \description{
 return missing values when applied to vector
 return list when applied to data.frame

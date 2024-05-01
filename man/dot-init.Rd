@@ -29,6 +29,9 @@
 
 \item{...}{further attributes passed to class}
 }
+\value{
+x as i_labelled object with attributes applied to it
+}
 \description{
 all arguments are passed from i_labelled
 }

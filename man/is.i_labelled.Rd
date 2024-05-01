@@ -9,6 +9,9 @@ is.i_labelled(x)
 \arguments{
 \item{x}{vector of class i_labelled}
 }
+\value{
+T/F
+}
 \description{
 check for class i_labelled
 }

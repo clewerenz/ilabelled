@@ -1,5 +1,6 @@
 
 #' copy labels from one variable to another
+#' @returns Returns 'to' with ilabelled attributes copied from 'from'
 #' @param to vector
 #' @param from vector
 #' @param what character vector describing which labels are copied: 'all' (default), 'label', 'labels', 'na_values', 'na_range'
@@ -7,22 +8,22 @@
 i_copy <- function(to, from, what = "all", ...){
   stopifnot(is.atomic(to) || is.atomic(from))
   what <- tolower(what)
-  label <- attr(to, "labels", T)
-  labels <- attr(to, "labels", T)
-  na_values <- attr(to, "na_values", T)
-  na_range <- attr(to, "na_range", T)
+  label <- attr(to, "labels", TRUE)
+  labels <- attr(to, "labels", TRUE)
+  na_values <- attr(to, "na_values", TRUE)
+  na_range <- attr(to, "na_range", TRUE)
 
   if(any(c("all", "label") %in% what)){
-    label <- attr(from, "label", T)
+    label <- attr(from, "label", TRUE)
   }
   if(any(c("all", "labels") %in% what)){
-    labels <- attr(from, "labels", T)
+    labels <- attr(from, "labels", TRUE)
   }
   if(any(c("all", "na_values") %in% what)){
-    na_values <- attr(from, "na_values", T)
+    na_values <- attr(from, "na_values", TRUE)
   }
   if(any(c("all", "na_range") %in% what)){
-    na_range <- attr(from, "na_range", T)
+    na_range <- attr(from, "na_range", TRUE)
   }
 
   structure(

@@ -4,7 +4,12 @@
 \alias{i_as_factor}
 \title{as factor}
 \usage{
-i_as_factor(x, missing_to_na = F, require_all_labels = F, keep_attributes = F)
+i_as_factor(
+  x,
+  missing_to_na = FALSE,
+  require_all_labels = FALSE,
+  keep_attributes = FALSE
+)
 }
 \arguments{
 \item{x}{vector}
@@ -14,6 +19,9 @@ i_as_factor(x, missing_to_na = F, require_all_labels = F, keep_attributes = F)
 \item{require_all_labels}{process will be interrupted, when not all values have valid labels}
 
 \item{keep_attributes}{should attributes be preserved}
+}
+\value{
+Vector of class factor
 }
 \description{
 make factor from i_labelled

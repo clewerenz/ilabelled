@@ -4,6 +4,7 @@ methods::setOldClass("i_labelled")
 
 #' class constructor
 #' @export
+#' @returns x as i_labelled object
 #' @param x vector
 #' @param label variable label
 #' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
@@ -18,6 +19,7 @@ i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_rang
 
 #' class constructor
 #' @export
+#' @returns x as i_labelled object
 #' @param x vector
 #' @param label variable label
 #' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
@@ -37,11 +39,11 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
 
   if(is.null(labels) && is.factor(x)){
     labels <- stats::setNames(1:length(levels(x)), levels(x))
-  }else if(!is.null(labels) || !is.null(attr(x, "labels", T))){
-    labels <- .merge_labels(as.list(attr(x, "labels", T)), as.list(labels))
+  }else if(!is.null(labels) || !is.null(attr(x, "labels", TRUE))){
+    labels <- .merge_labels(as.list(attr(x, "labels", TRUE)), as.list(labels))
   }
 
-  if(is.numeric(x) && !is.null(labels) && any(stats::na.omit(x%%1 > 0))){
+  if(is.numeric(x) && !is.null(labels) && is_decimal(x)){
     stop("decimal numbers cannot be labelled")
   }
 
@@ -61,6 +63,7 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
 
 #' make all variables in data.frame i_labelled (dedicated function)
 #' @export
+#' @returns x with all variables coerced to i_labelled object
 #' @param x data.frame
 i_labelled_df <- function(x){
   x[] <- lapply(x, i_labelled)
@@ -69,6 +72,7 @@ i_labelled_df <- function(x){
 
 
 #' check for class i_labelled
+#' @returns T/F
 #' @param x vector of class i_labelled
 #' @importFrom methods is
 #' @export
@@ -78,6 +82,7 @@ is.i_labelled <- function(x){
 
 
 #' subsetting vectors of class i_labelled
+#' @returns Subset of x
 #' @export
 #' @param x vector of class i_labelled
 #' @param ... not used
@@ -94,16 +99,17 @@ is.i_labelled <- function(x){
 
 
 #' custom unclass function
+#' @returns x unclassed
 #' @param x vector of class i_labelled
 #' @param keep_attributes should attributes be preserved
 #' @export
-i_unclass <- function(x, keep_attributes = F){
+i_unclass <- function(x, keep_attributes = FALSE){
   UseMethod("i_unclass")
 }
 
 
 #' @export
-i_unclass.default <- function(x, keep_attributes = F){
+i_unclass.default <- function(x, keep_attributes = FALSE){
   tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
   x <- unclass(`attributes<-`(x, NULL))
   if(keep_attributes){
@@ -114,7 +120,7 @@ i_unclass.default <- function(x, keep_attributes = F){
 
 
 #' @export
-i_unclass.data.frame <- function(x, keep_attributes = F){
+i_unclass.data.frame <- function(x, keep_attributes = FALSE){
   x[] <- lapply(x, i_unclass)
 }
 

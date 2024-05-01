@@ -9,6 +9,9 @@ i_get_label(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Variable label
+}
 \description{
 return variable label when applied to vector
 return list when applied to data.frame

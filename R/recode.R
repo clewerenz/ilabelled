@@ -21,13 +21,14 @@
 #' )
 #' i_recode(x = myData, A = 1 ~ V1 %in% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
 #'
+#' @returns Returns i_labelled vector with values defined by formula and information given to function.
 #' @param x vector
 #' @param ... formula for recoding of values. See examples.
 #' @param label variable label
 #' @param na_values a vector with missing values
 #' @param na_range a vector for missing range
 #' @param scale scale level (nominal, ordinal, metric)
-#' @param copy a variable from x. Copy the values of an existing variable before recode values according to ...
+#' @param copy a variable from x. Copy the values of an existing variable before recoding values according to ...
 #' @importFrom stats setNames
 #' @export
 i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, copy = NULL){
@@ -50,7 +51,7 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
   }
 
   if(is_atomic){
-    x <- data.frame(x = x, stringsAsFactors = F)
+    x <- data.frame(x = x, stringsAsFactors = FALSE)
   }
 
   recode_map <- list(...)

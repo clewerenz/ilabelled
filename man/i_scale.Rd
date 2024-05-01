@@ -11,6 +11,9 @@ i_scale(x, scale)
 
 \item{scale}{scale level (nominal, ordinal, scale) as string or NULL (NULL will remove scale level)}
 }
+\value{
+Returns x with scale label set
+}
 \description{
 set scale level
 }

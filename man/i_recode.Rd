@@ -28,7 +28,10 @@ i_recode(
 
 \item{scale}{scale level (nominal, ordinal, metric)}
 
-\item{copy}{a variable from x. Copy the values of an existing variable before recode values according to ...}
+\item{copy}{a variable from x. Copy the values of an existing variable before recoding values according to ...}
+}
+\value{
+Returns i_labelled vector with values defined by formula and information given to function.
 }
 \description{
 Returns a vector object of class i_labelled

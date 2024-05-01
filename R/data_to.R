@@ -7,6 +7,7 @@
 #'
 #' will also change base R classes, since it is only a wrapper for keeping attributes
 #'
+#' @returns Returns x coerced to character
 #' @param x vector
 i_data_to_character <- function(x){
   tmp_attr <- attributes(x)
@@ -23,6 +24,7 @@ i_data_to_character <- function(x){
 #'
 #' will also change base R classes, since it is only a wrapper for keeping attributes
 #'
+#' @returns Returns x coerced to numeric
 #' @param x vector
 i_data_to_numeric <- function(x){
   tmp_attr <- attributes(x)
@@ -39,6 +41,7 @@ i_data_to_numeric <- function(x){
 #'
 #' will also change base R classes, since it is only a wrapper for keeping attributes
 #'
+#' @returns Returns x coerced to double
 #' @param x vector
 i_data_to_double <- function(x){
   tmp_attr <- attributes(x)
@@ -55,6 +58,7 @@ i_data_to_double <- function(x){
 #'
 #' will also change base R classes, since it is only a wrapper for keeping attributes
 #'
+#' @returns Returns x coerced to integer
 #' @param x vector
 i_data_to_integer <- function(x){
   tmp_attr <- attributes(x)

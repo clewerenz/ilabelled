@@ -11,6 +11,9 @@
 
 \item{...}{not used}
 }
+\value{
+Subset of x
+}
 \description{
 subsetting vectors of class i_labelled
 }

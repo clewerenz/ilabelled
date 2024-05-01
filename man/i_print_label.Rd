@@ -9,6 +9,9 @@ i_print_label(x)
 \arguments{
 \item{x}{vector}
 }
+\value{
+No return value. Print variable label to console
+}
 \description{
 print variable label
 }

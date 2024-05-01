@@ -9,6 +9,9 @@ i_remove_missing_labels(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Returns x without missing labels
+}
 \description{
 remove values labels from values which are declared as missing
 }

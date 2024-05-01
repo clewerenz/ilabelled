@@ -9,6 +9,9 @@
 \arguments{
 \item{x}{vector}
 }
+\value{
+T/F
+}
 \description{
 checks if vector is numeric sequence
 }

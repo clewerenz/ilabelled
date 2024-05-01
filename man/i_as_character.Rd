@@ -6,9 +6,9 @@
 \usage{
 i_as_character(
   x,
-  missing_to_na = F,
-  require_all_labels = F,
-  keep_attributes = F
+  missing_to_na = FALSE,
+  require_all_labels = FALSE,
+  keep_attributes = FALSE
 )
 }
 \arguments{
@@ -19,6 +19,9 @@ i_as_character(
 \item{require_all_labels}{process will be interrupted, when not all values have valid labels}
 
 \item{keep_attributes}{should attributes be preserved}
+}
+\value{
+Character vector
 }
 \description{
 make character from i_labelled

@@ -9,6 +9,9 @@ i_valid_label(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+No return value. Aborts process when run-time-test fails
+}
 \description{
 returns boolean
 returns a named list when applied to data.frame

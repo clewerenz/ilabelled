@@ -2,19 +2,17 @@
 % Please edit documentation in R/get.R
 \name{i_get_labels}
 \alias{i_get_labels}
-\title{get value labels
-#' @description
-return labels when applied to vector
-return list when applied to data.frame}
+\title{get value labels}
 \usage{
 i_get_labels(x)
 }
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Values and value labels as data.frame
+}
 \description{
-get value labels
-#' @description
 return labels when applied to vector
 return list when applied to data.frame
 }

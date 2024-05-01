@@ -4,7 +4,7 @@
 \alias{i_assert_labels}
 \title{Check for required value labels in set of variables}
 \usage{
-i_assert_labels(x, labels, info = NULL, verbose = T)
+i_assert_labels(x, labels, info = NULL, verbose = TRUE)
 }
 \arguments{
 \item{x}{data.frame}
@@ -14,6 +14,9 @@ i_assert_labels(x, labels, info = NULL, verbose = T)
 \item{info}{string with info message (purpose of assertion) - optional}
 
 \item{verbose}{return TRUE when assertion is successful}
+}
+\value{
+No return value (exept when verbose = T). Aborts process when test not valid.
 }
 \description{
 Check for required value labels in set of variables

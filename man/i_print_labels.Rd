@@ -9,6 +9,9 @@ i_print_labels(x)
 \arguments{
 \item{x}{vector}
 }
+\value{
+No return value. Print labels to console
+}
 \description{
 print value labels
 }

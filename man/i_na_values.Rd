@@ -4,7 +4,7 @@
 \alias{i_na_values}
 \title{define missing values}
 \usage{
-i_na_values(x, values, sort = T, desc = F)
+i_na_values(x, values, sort = TRUE, desc = FALSE)
 }
 \arguments{
 \item{x}{vector}
@@ -14,6 +14,9 @@ i_na_values(x, values, sort = T, desc = F)
 \item{sort}{sort values}
 
 \item{desc}{sort values in descending order}
+}
+\value{
+Returns x with missing values set
 }
 \description{
 define which values will be handled as missing values

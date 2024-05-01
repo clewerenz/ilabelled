@@ -9,6 +9,9 @@ i_print_na_range(x)
 \arguments{
 \item{x}{vector}
 }
+\value{
+No return value. Print na range to console
+}
 \description{
 print missing range
 }

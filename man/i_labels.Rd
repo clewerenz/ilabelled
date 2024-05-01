@@ -4,7 +4,7 @@
 \alias{i_labels}
 \title{set value labels}
 \usage{
-i_labels(x, ..., overwrite = F)
+i_labels(x, ..., overwrite = FALSE)
 }
 \arguments{
 \item{x}{vector}

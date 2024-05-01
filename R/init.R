@@ -4,6 +4,7 @@
 #' @description
 #' all arguments are passed from i_labelled
 #'
+#' @returns x as i_labelled object with attributes applied to it
 #' @param x vector
 #' @param label variable label
 #' @param labels value labels as named vector

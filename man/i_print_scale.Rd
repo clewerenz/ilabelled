@@ -9,6 +9,9 @@ i_print_scale(x)
 \arguments{
 \item{x}{vector}
 }
+\value{
+No return value. Print scale level to console
+}
 \description{
 print scale level
 }

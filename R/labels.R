@@ -6,9 +6,9 @@
 #' @param ... set labels for values (e.g. label_of_choice = 1 or "Label of Choice" = 1); remove single label with NULL = value (e.g. NULL = 1); removes all value labels when only NULL (e.g. i_label(x, NULL))
 #' @param overwrite should new labels be merged with existing labels or remove existing labels
 #' @importFrom stats setNames
-i_labels <- function(x, ..., overwrite = F){
-  if(!is.null(attr(x, "labels", T)) & !overwrite){
-    old_labs <- as.list(attr(x, "labels", T))
+i_labels <- function(x, ..., overwrite = FALSE){
+  if(!is.null(attr(x, "labels", TRUE)) & !overwrite){
+    old_labs <- as.list(attr(x, "labels", TRUE))
   }else{
     old_labs <- NULL
   }
@@ -38,6 +38,7 @@ i_labels <- function(x, ..., overwrite = F){
 #' @description
 #' return named vector
 #'
+#' @returns Returns names vector of value labels
 #' @param old_labs named vector
 #' @param new_labs named vector
 .merge_labels <- function(old_labs, new_labs){
@@ -70,6 +71,7 @@ i_labels <- function(x, ..., overwrite = F){
 #' contains several run-time-tests for value labels
 #' runs internally
 #'
+#' @returns No return value. Aborts process when run-time-tests fail.
 #' @param x named vector (label = value)
 .valid_labels <- function(x){
   if(is.null(x)){
@@ -127,6 +129,7 @@ i_labels <- function(x, ..., overwrite = F){
 #' returns NA when not i_labelled
 #' returns a named list when applied to data.frame
 #'
+#' @returns No return value. Aborts process when run-time-tests fail
 #' @param x vector or data.frame
 #' @export
 i_valid_labels <- function(x){
@@ -136,8 +139,8 @@ i_valid_labels <- function(x){
 
 #' @export
 i_valid_labels.default <- function(x){
-  y <- attr(x, "labels", T)
-  is_valid <- !"try-error" %in% class(try(.valid_labels(y), silent = T))
+  y <- attr(x, "labels", TRUE)
+  is_valid <- !"try-error" %in% class(try(.valid_labels(y), silent = TRUE))
   (!is.null(y) && is_valid) &&
     all(unique(x[!is.na(x)]) %in% y)
 }
@@ -145,22 +148,23 @@ i_valid_labels.default <- function(x){
 
 #' @export
 i_valid_labels.data.frame <- function(x){
-  sapply(x, i_valid_labels, USE.NAMES = T, simplify = F)
+  sapply(x, i_valid_labels, USE.NAMES = T, simplify = FALSE)
 }
 
 
 #' sort value labels by values or by labels
+#' @returns Returns x with sorted value labels
 #' @param x vector or data.frame
 #' @param by either values or labels
 #' @param decreasing sort decreasing
 #' @export
-i_sort_labels <- function(x, by = "values", decreasing = F){
+i_sort_labels <- function(x, by = "values", decreasing = FALSE){
   UseMethod("i_sort_labels")
 }
 
 
 #' @export
-i_sort_labels.default <- function(x, by = "values", decreasing = F){
+i_sort_labels.default <- function(x, by = "values", decreasing = FALSE){
   by <- tolower(by)
   if(!(is.atomic(x) & length(x)) > 0){
     stop("x must be vector")
@@ -174,7 +178,7 @@ i_sort_labels.default <- function(x, by = "values", decreasing = F){
   if(!by %in% c("values", "labels")){
     stop("'by' must be either 'values' or 'labels'")
   }
-  labels <- attr(x, "labels", T)
+  labels <- attr(x, "labels", TRUE)
   if(!is.null(labels)){
     .valid_labels(labels)
     if(by == "values"){
@@ -191,7 +195,7 @@ i_sort_labels.default <- function(x, by = "values", decreasing = F){
 
 
 #' @export
-i_sort_labels.data.frame <- function(x, by = "values", decreasing = F){
+i_sort_labels.data.frame <- function(x, by = "values", decreasing = FALSE){
   x[] <- lapply(x, function(y) i_sort_labels(y, by = by, decreasing = decreasing))
   x
 }
@@ -199,18 +203,19 @@ i_sort_labels.data.frame <- function(x, by = "values", decreasing = F){
 
 #' Check for required value labels in set of variables
 #'
+#' @returns No return value (exept when verbose = T). Aborts process when test not valid.
 #' @param x data.frame
 #' @param labels character vector
 #' @param info string with info message (purpose of assertion) - optional
 #' @param verbose return TRUE when assertion is successful
 #' @export
-i_assert_labels <- function(x, labels, info = NULL, verbose = T){
+i_assert_labels <- function(x, labels, info = NULL, verbose = TRUE){
   UseMethod("i_assert_labels")
 }
 
 
 #' @export
-i_assert_labels.default <- function(x, labels, info = NULL, verbose = T){
+i_assert_labels.default <- function(x, labels, info = NULL, verbose = TRUE){
   # prepare info message
   if(!is.null(info)){
     info <- paste0(info, ": ")
@@ -222,7 +227,7 @@ i_assert_labels.default <- function(x, labels, info = NULL, verbose = T){
   }
   # get value labels
   if("i_labelled" %in% class(x)){
-    varLabels <- names(attr(x, "labels"))
+    varLabels <- names(attr(x, "labels", TRUE))
   }else if("factor" %in% class(x)){
     varLabels <- levels(x)
   }else{
@@ -234,22 +239,22 @@ i_assert_labels.default <- function(x, labels, info = NULL, verbose = T){
   }
 
   if(verbose){
-    T
+    TRUE
   }
 }
 
 
 #' @export
-i_assert_labels.data.frame <- function(x, labels, info = NULL, verbose = T){
+i_assert_labels.data.frame <- function(x, labels, info = NULL, verbose = TRUE){
   myVars <- names(x)
   # run assert labels for all vars
   res <- sapply(myVars, function(y){
     tryCatch({
-      i_assert_labels(x[[y]], labels = labels, info = NULL, verbose = T)
+      i_assert_labels(x[[y]], labels = labels, info = NULL, verbose = TRUE)
     }, error = function(e){
       return(e$message)
     })
-  }, simplify = F)
+  }, simplify = FALSE)
   # print error messages, when error occurred
   res <- res[unlist(lapply(res, function(y) y != "TRUE"))]
   if(length(res) > 0){
@@ -260,7 +265,7 @@ i_assert_labels.data.frame <- function(x, labels, info = NULL, verbose = T){
     stop(message(strwrap(res, prefix = "\n", initial = "")))
   }
   if(verbose){
-    T
+    TRUE
   }
 }
 

@@ -11,6 +11,9 @@
 
 \item{table}{vector or NULL: the values to be matched against. Long vectors are not supported.}
 }
+\value{
+Vector of T/F values with length of x
+}
 \description{
 Find matches in vector (return T/F)
 }

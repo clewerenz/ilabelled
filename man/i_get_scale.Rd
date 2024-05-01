@@ -9,6 +9,9 @@ i_get_scale(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Returns scale level
+}
 \description{
 return scale level when applied to vector
 return list when applied to data.frame

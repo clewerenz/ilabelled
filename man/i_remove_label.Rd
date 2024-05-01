@@ -9,6 +9,9 @@ i_remove_label(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Returns x without variable label
+}
 \description{
 remove variable label
 keep other attributes

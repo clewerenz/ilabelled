@@ -9,6 +9,9 @@ i_remove_na_range(x)
 \arguments{
 \item{x}{vector or data.frame}
 }
+\value{
+Returns x without na-range
+}
 \description{
 remove na range (information which values should be handled as missing)
 keep other attributes

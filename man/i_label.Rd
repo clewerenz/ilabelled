@@ -11,6 +11,9 @@ i_label(x, label)
 
 \item{label}{variable label as string or NULL (NULL will remove label)}
 }
+\value{
+x with variable label applied
+}
 \description{
 set variable label
 }

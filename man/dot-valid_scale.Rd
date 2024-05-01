@@ -9,6 +9,9 @@
 \arguments{
 \item{x}{vector}
 }
+\value{
+No return value. Aborts process when scale level invalid.
+}
 \description{
 run-time-tests for scale level
 runs internally
