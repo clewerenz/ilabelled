@@ -13,7 +13,7 @@ i_valid_labels(x)
 No return value. Aborts process when run-time-tests fail
 }
 \description{
-returns boolean when i_labelled
-returns NA when not i_labelled
+returns boolean when applied to vector
+
 returns a named list when applied to data.frame
 }

@@ -10,7 +10,7 @@
 \item{x}{vector}
 }
 \value{
-No return value. Aborts process when scale level invalid.
+T/F
 }
 \description{
 run-time-tests for scale level

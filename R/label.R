@@ -42,7 +42,8 @@ i_label <- function(x, label){
 
 #' validate variable labels
 #' @description
-#' returns boolean
+#' returns boolean when applied to vector
+#'
 #' returns a named list when applied to data.frame
 #'
 #' @returns T/F

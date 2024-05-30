@@ -15,5 +15,5 @@
 Returns names vector of value labels
 }
 \description{
-return named vector
+combine old value labels with new value labels
 }

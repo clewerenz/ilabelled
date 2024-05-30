@@ -96,15 +96,6 @@ i_labelled.data.frame <- function(x, label = NULL, labels = NULL, na_values = NU
 }
 
 
-#' make all variables in data.frame i_labelled (dedicated function)
-#' @export
-#' @returns x with all variables coerced to i_labelled object
-#' @param x data.frame
-# i_labelled_df <- function(x){
-#   x[] <- lapply(x, i_labelled)
-#   x
-# }
-
 
 #' check for class i_labelled
 #' @returns T/F
@@ -133,9 +124,9 @@ is.i_labelled <- function(x){
 # }
 
 
-#' custom unclass function
+#' unclass variables
 #' @returns x unclassed
-#' @param x vector of class i_labelled
+#' @param x vector or data.frame
 #' @param keep_attributes should attributes be preserved
 #' @export
 i_unclass <- function(x, keep_attributes = FALSE){

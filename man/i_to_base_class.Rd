@@ -25,6 +25,8 @@ Returns x coerced to R base class
 }
 \description{
 - when value labels for all values are available will return factor
+
 - when value labels are missing will unclass i_labelled
+
 - remove class i_labelled and return variable as base R class
 }
