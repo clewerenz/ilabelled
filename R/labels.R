@@ -19,7 +19,6 @@ i_labels <- function(x, ..., overwrite = FALSE){
   if(length(new_labs) == 1 && is.null(new_labs[[1]])){
     all_labs <- NULL
   }else{
-    .valid_labels(new_labs)
     all_labs <- .merge_labels(old_labs, new_labs)
   }
 
@@ -143,8 +142,7 @@ i_valid_labels <- function(x){
 i_valid_labels.default <- function(x){
   y <- attr(x, "labels", TRUE)
   is_valid <- !"try-error" %in% class(try(.valid_labels(y), silent = TRUE))
-  (!is.null(y) && is_valid) &&
-    all(unique(x[!is.na(x)]) %in% y)
+  (!is.null(y) && is_valid) && all(unique(x[!is.na(x)]) %in% y)
 }
 
 

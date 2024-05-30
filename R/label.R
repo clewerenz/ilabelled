@@ -21,14 +21,18 @@ i_label <- function(x, label){
 #' run-time-tests for variable label
 #' runs internally
 #'
-#' @returns No return value. Aborts process when run-time-test fails
+#' @returns T/F
 #' @param x vector
 .valid_label <- function(x){
   if(is.null(x)){
     T
-  }else if(!(is.character(x) && length(x) == 1 && !is.logical(x))){
+  }else if(!is.character(x)){
     F
-  }else if(is.na(x)){
+  }else if(is.logical(x)){
+    F
+  }else if(any(is.na(x))){
+    F
+  }else if(!length(x) == 1){
     F
   }else{
     T
