@@ -67,6 +67,12 @@ test_that("initialize class - attributes are available", {
 })
 
 
+test_that("Error handling: value labels must be in correct format numeric/character", {
+  expect_error(i_labelled(1:3, labels = c("A" = "1", "B" = "2", "C" = "3")))
+  expect_error(i_labelled(c("1","2","3"), labels = c("A" = 1, "B" = 2, "C" = 3)))
+})
+
+
 test_that("i_labelled_df - make all vars in data.frame i_labelled", {
   expect_true(all(unlist(lapply(i_labelled_df(iris), is.i_labelled))))
 })

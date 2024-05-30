@@ -19,12 +19,13 @@ i_labels <- function(x, ..., overwrite = FALSE){
   if(length(new_labs) == 1 && is.null(new_labs[[1]])){
     all_labs <- NULL
   }else{
-    .valid_labels(new_labs)
     all_labs <- .merge_labels(old_labs, new_labs)
   }
-  if(is.character(x) && !is.null(labels) && !is.character(labels)){
-    all_labs <- stats::setNames(as.character(all_labs), names(all_labs))
-    warning("applying numeric labels values to non numeric x values")
+
+  if(!is.numeric(x) && !is.null(all_labs) && !is.character(all_labs)){
+    stop("Cannot apply non-character value labels to non-numeric vector. Value labels must be character.")
+  }else if(is.numeric(x) && !is.null(all_labs) && !is.numeric(all_labs)){
+    stop("Cannot apply non-numeric value labels to numeric vector. Value labels must be numeric.")
   }
 
   structure(
@@ -141,8 +142,7 @@ i_valid_labels <- function(x){
 i_valid_labels.default <- function(x){
   y <- attr(x, "labels", TRUE)
   is_valid <- !"try-error" %in% class(try(.valid_labels(y), silent = TRUE))
-  (!is.null(y) && is_valid) &&
-    all(unique(x[!is.na(x)]) %in% y)
+  (!is.null(y) && is_valid) && all(unique(x[!is.na(x)]) %in% y)
 }
 
 

@@ -4,11 +4,16 @@
 #' @returns Returns x with scale label set
 #' @param x vector
 #' @param scale scale level (nominal, ordinal, scale) as string or NULL (NULL will remove scale level)
-i_scale <- function(x, scale){
+i_scale <- function(x, scale = NULL){
   if(!is.null(scale)){
     scale <- tolower(scale)
   }
-  .valid_scale(scale)
+  if(!.valid_scale(scale)){
+    stop("scale must be character vector of length 1")
+  }
+  if(!scale %in% c("nominal", "ordinal", "scale")){
+    stop("scale must be either 'nominal', 'ordinal' or 'scale'")
+  }
   structure(
     x,
     scale = scale
@@ -25,12 +30,11 @@ i_scale <- function(x, scale){
 #' @param x vector
 .valid_scale <- function(x){
   if(is.null(x)){
-    return(invisible(NULL))
+    T
   }
   if(!(is.character(x) && length(x) == 1 && !is.logical(x))){
-    stop("scale level must be character vector of length 1")
-  }
-  if(!x %in% c("nominal", "ordinal", "scale")){
-    stop("scale level must be either 'nominal', 'ordinal' or 'scale'")
+    F
+  }else{
+    T
   }
 }

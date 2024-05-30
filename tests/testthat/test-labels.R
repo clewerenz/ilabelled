@@ -77,11 +77,10 @@ test_that(
     expect_false(i_valid_labels(x))
     attr(x, "labels") <- FALSE
     expect_false(i_valid_labels(x))
-    expect_true(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = "1", Bli = 2, Blubb = "3"))))
-    expect_true(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = "1", Bli = 2, Blubb = "3", What = 4))))
-    expect_false(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = "1", Bli = NULL, Blubb = "3"))))
-    expect_false(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = "1", NULL = 2, Blubb = "3"))))
-    expect_false(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = "1", "AAA" = "BBB", Blubb = "3"))))
+    expect_true(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = 1, Bli = 2, Blubb = 3))))
+    expect_true(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = 1, Bli = 2, Blubb = 3, What = 4))))
+    expect_false(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = 1, Bli = NULL, Blubb = 3))))
+    expect_false(i_valid_labels(i_labelled(iris$Species, labels = c(Bla = 1, NULL = 2, Blubb = 3))))
 
     # overwrite parameter - overwrite existing labels
     x <- i_labelled(iris$Species)
