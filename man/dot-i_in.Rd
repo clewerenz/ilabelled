@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper.R
 \name{.i_in}
 \alias{.i_in}
-\title{Match values in i_labelled data via value labels}
+\title{Match values}
 \usage{
 .i_in(x, table)
 }
@@ -15,5 +15,5 @@
 Vector of T/F values with length of x
 }
 \description{
-Find matches in vector (return T/F)
+Find matches (return T/F)
 }
