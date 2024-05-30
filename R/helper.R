@@ -58,6 +58,7 @@ is_decimal <- function(x){
 #' @returns Vector of T/F values with length of x
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
+#' @export
 .i_in <- function(x, table){
   if(is.i_labelled(x)){
     if(is.character(table)){
