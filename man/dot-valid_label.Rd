@@ -10,7 +10,7 @@
 \item{x}{vector}
 }
 \value{
-No return value. Aborts process when run-time-test fails
+T/F
 }
 \description{
 run-time-tests for variable label
