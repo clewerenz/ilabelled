@@ -43,9 +43,9 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     labels <- .merge_labels(as.list(attr(x, "labels", TRUE)), as.list(labels))
   }
 
-  if(is.numeric(x) && !is.null(labels) && is_decimal(x)){
-    stop("decimal numbers cannot be labelled")
-  }
+  # if(is.numeric(x) && !is.null(labels) && is_decimal(x)){
+  #   stop("decimal numbers cannot be labelled")
+  # }
 
   if(!is.numeric(x) && !is.null(labels) && !is.character(labels)){
     stop("Cannot apply non-character value labels to non-numeric vector. Value labels must be character.")
