@@ -22,9 +22,11 @@ i_labels <- function(x, ..., overwrite = FALSE){
     .valid_labels(new_labs)
     all_labs <- .merge_labels(old_labs, new_labs)
   }
-  if(is.character(x) && !is.null(labels) && !is.character(labels)){
-    all_labs <- stats::setNames(as.character(all_labs), names(all_labs))
-    warning("applying numeric labels values to non numeric x values")
+
+  if(!is.numeric(x) && !is.null(all_labs) && !is.character(all_labs)){
+    stop("Cannot apply non-character value labels to non-numeric vector. Value labels must be character.")
+  }else if(is.numeric(x) && !is.null(all_labs) && !is.numeric(all_labs)){
+    stop("Cannot apply non-numeric value labels to numeric vector. Value labels must be numeric.")
   }
 
   structure(
