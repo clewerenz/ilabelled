@@ -58,6 +58,7 @@ is_decimal <- function(x){
 #' @returns Vector of T/F values with length of x
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
+#' @export
 .i_in <- function(x, table){
   if(is.i_labelled(x)){
     if(is.character(table)){
@@ -70,12 +71,6 @@ is_decimal <- function(x){
   }
 }
 
-methods::setGeneric("%in%")
-suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled"), .i_in))
-suppressMessages(methods::setMethod("%in%", methods::signature(table="i_labelled"), .i_in))
-suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", table="i_labelled"), .i_in))
-
-
 #' Match values in i_labelled data via value labels
 #' @description
 #'
@@ -84,10 +79,15 @@ suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", t
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @export
-"%lin%" <- function(x, table){
-  .i_in(x, table)
-}
+# "%lin%" <- function(x, table){
+#   .i_in(x, table)
+# }
 
+
+methods::setGeneric("%in%")
+suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled"), .i_in))
+suppressMessages(methods::setMethod("%in%", methods::signature(table="i_labelled"), .i_in))
+suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", table="i_labelled"), .i_in))
 
 
 # mtfrm.i_labelled <- function(x){
