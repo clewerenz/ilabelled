@@ -67,7 +67,6 @@ test_that("initialize class - attributes are available", {
 })
 
 
-
 test_that("Error handling: value labels must be in correct format numeric/character", {
   expect_error(i_labelled(1:3, labels = c("A" = "1", "B" = "2", "C" = "3")))
   expect_error(i_labelled(c("1","2","3"), labels = c("A" = 1, "B" = 2, "C" = 3)))

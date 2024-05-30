@@ -33,7 +33,7 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     stop("x must be vector")
   }
 
-  .valid_label(label)
+  stopifnot(.valid_label(label))
   stopifnot(.valid_na_values(na_values))
   stopifnot(.valid_na_range(na_range))
 
@@ -55,7 +55,12 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
 
   if(!is.null(scale)){
     scale <- tolower(scale)
-    .valid_scale(scale)
+    if(!.valid_scale(scale)){
+      stop("scale must be character vector of length 1")
+    }
+    if(!scale %in% c("nominal", "ordinal", "scale")){
+      stop("scale must be either 'nominal', 'ordinal' or 'scale'")
+    }
   }
 
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, ...))
@@ -78,7 +83,7 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
     stop("x must be vector")
   }
 
-  .valid_label(label)
+  stopifnot(.valid_label(label))
   stopifnot(.valid_na_values(na_values))
   stopifnot(.valid_na_range(na_range))
 
@@ -95,7 +100,12 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
 
   if(!is.null(scale)){
     scale <- tolower(scale)
-    .valid_scale(scale)
+    if(!.valid_scale(scale)){
+      stop("scale must be character vector of length 1")
+    }
+    if(!scale %in% c("nominal", "ordinal", "scale")){
+      stop("scale must be either 'nominal', 'ordinal' or 'scale'")
+    }
   }
 
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, ...))
