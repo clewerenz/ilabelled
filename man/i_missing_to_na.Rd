@@ -16,5 +16,4 @@ Returns x with missing values coerced to NA
 }
 \description{
 all values declared as missing will be recoded as NA
-set missing values via i_labelled(), i_na_values() or i_na_range()
 }

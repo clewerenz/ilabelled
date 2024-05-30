@@ -13,6 +13,7 @@ i_valid_label(x)
 T/F
 }
 \description{
-returns boolean
+returns boolean when applied to vector
+
 returns a named list when applied to data.frame
 }

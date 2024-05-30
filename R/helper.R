@@ -84,6 +84,7 @@ is_decimal <- function(x){
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 #' @aliases %in%
+#' @returns T/F
 methods::setGeneric("%in%")
 
 #' @name grapesingrapes

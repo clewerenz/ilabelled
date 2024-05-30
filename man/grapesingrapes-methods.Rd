@@ -16,6 +16,9 @@ x \%in\% table
 
 \item{table}{vector or NULL: the values to be matched against. Long vectors are not supported.}
 }
+\value{
+T/F
+}
 \description{
 generic for \%in\%
 }

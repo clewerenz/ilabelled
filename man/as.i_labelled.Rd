@@ -2,12 +2,12 @@
 % Please edit documentation in R/coerce.R
 \name{as.i_labelled}
 \alias{as.i_labelled}
-\title{as.i_labelled}
+\title{coerce to i_labelled class}
 \usage{
 as.i_labelled(x, ...)
 }
 \arguments{
-\item{x}{vector or data.frame}
+\item{x}{vector}
 
 \item{...}{attributes passed to class}
 }
@@ -16,6 +16,4 @@ Vector of class i_labelled
 }
 \description{
 coerce to i_labelled class
-
-applicable to vector objects
 }

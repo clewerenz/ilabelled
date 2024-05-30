@@ -2,7 +2,7 @@
 % Please edit documentation in R/labelled.R
 \name{is.i_labelled}
 \alias{is.i_labelled}
-\title{make all variables in data.frame i_labelled (dedicated function)}
+\title{check for class i_labelled}
 \usage{
 is.i_labelled(x)
 }
@@ -10,10 +10,8 @@ is.i_labelled(x)
 \item{x}{vector of class i_labelled}
 }
 \value{
-x with all variables coerced to i_labelled object
-
 T/F
 }
 \description{
-make all variables in data.frame i_labelled (dedicated function)
+check for class i_labelled
 }

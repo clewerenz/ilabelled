@@ -26,7 +26,7 @@ i_scale <- function(x, scale = NULL){
 #' run-time-tests for scale level
 #' runs internally
 #'
-#' @returns No return value. Aborts process when scale level invalid.
+#' @returns T/F
 #' @param x vector
 .valid_scale <- function(x){
   if(is.null(x)){

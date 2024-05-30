@@ -70,13 +70,9 @@ i_as_character.default <- function(x, missing_to_na = FALSE, require_all_labels 
 # }
 
 
-#' as.i_labelled
-#' @description
 #' coerce to i_labelled class
-#'
-#' applicable to vector objects
 #' @returns Vector of class i_labelled
-#' @param x vector or data.frame
+#' @param x vector
 #' @param ... attributes passed to class
 #' @export
 as.i_labelled <- function(x, ...){
@@ -168,7 +164,9 @@ i_as_factor.factor <- function(x, ...){
 #' remove class i_labelled and return base R class
 #' @description
 #' - when value labels for all values are available will return factor
+#'
 #' - when value labels are missing will unclass i_labelled
+#'
 #' - remove class i_labelled and return variable as base R class
 #'
 #' @returns Returns x coerced to R base class

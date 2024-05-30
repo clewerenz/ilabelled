@@ -68,7 +68,6 @@ i_na_range.data.frame <- function(x, values){
 #' missing values to NA
 #' @description
 #' all values declared as missing will be recoded as NA
-#' set missing values via i_labelled(), i_na_values() or i_na_range()
 #'
 #' @returns Returns x with missing values coerced to NA
 #' @param x vector or data.frame

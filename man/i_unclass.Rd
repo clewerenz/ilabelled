@@ -2,12 +2,12 @@
 % Please edit documentation in R/labelled.R
 \name{i_unclass}
 \alias{i_unclass}
-\title{custom unclass function}
+\title{unclass variables}
 \usage{
 i_unclass(x, keep_attributes = FALSE)
 }
 \arguments{
-\item{x}{vector of class i_labelled}
+\item{x}{vector or data.frame}
 
 \item{keep_attributes}{should attributes be preserved}
 }
@@ -15,5 +15,5 @@ i_unclass(x, keep_attributes = FALSE)
 x unclassed
 }
 \description{
-custom unclass function
+unclass variables
 }

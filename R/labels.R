@@ -36,9 +36,6 @@ i_labels <- function(x, ..., overwrite = FALSE){
 
 
 #' combine old value labels with new value labels
-#' @description
-#' return named vector
-#'
 #' @returns Returns names vector of value labels
 #' @param old_labs named vector
 #' @param new_labs named vector
@@ -126,8 +123,8 @@ i_labels <- function(x, ..., overwrite = FALSE){
 
 #' validate value labels
 #' @description
-#' returns boolean when i_labelled
-#' returns NA when not i_labelled
+#' returns boolean when applied to vector
+#'
 #' returns a named list when applied to data.frame
 #'
 #' @returns No return value. Aborts process when run-time-tests fail
