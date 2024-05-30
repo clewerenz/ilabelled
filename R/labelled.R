@@ -90,7 +90,7 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
 
 
 #' @export
-i_labelled.data.frame <- function(x){
+i_labelled.data.frame <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
   x[] <- lapply(x, i_labelled)
   x
 }
