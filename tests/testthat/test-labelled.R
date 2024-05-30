@@ -73,8 +73,8 @@ test_that("Error handling: value labels must be in correct format numeric/charac
 })
 
 
-test_that("i_labelled_df - make all vars in data.frame i_labelled", {
-  expect_true(all(unlist(lapply(i_labelled_df(iris), is.i_labelled))))
+test_that("i_labelled - make all vars in data.frame i_labelled", {
+  expect_true(all(unlist(lapply(i_labelled(iris), is.i_labelled))))
 })
 
 
@@ -93,7 +93,7 @@ test_that("classic subsetting", {
   expect_equal(class(z[1:5]), c("i_labelled", "character"))
   expect_equal(class(k[1:5]), c("i_labelled", "double"))
 
-  x <- subset(i_labelled_df(iris), subset = Species %in% 1 & Sepal.Length < 5, select = c(Species, Sepal.Length))
+  x <- subset(i_labelled(iris), subset = Species %in% 1 & Sepal.Length < 5, select = c(Species, Sepal.Length))
   expect_true(all(unlist(lapply(x, is.i_labelled))))
   y <- x[1:5,1]
   expect_true(is.i_labelled(y))
