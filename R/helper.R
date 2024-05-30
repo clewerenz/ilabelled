@@ -76,10 +76,32 @@ is_decimal <- function(x){
 # }
 
 
+#' @title generic for \%in\%
+#' @name grapesingrapes
 #' @export
+#' @docType methods
+#' @rdname grapesingrapes-methods
+#' @param x vector or NULL: the values to be matched. Long vectors are supported.
+#' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
+#' @aliases %in%
 methods::setGeneric("%in%")
+
+#' @name grapesingrapes
+#' @aliases %in%,i_labelled,ANY-method
+#' @docType methods
+#' @rdname grapesingrapes-methods
 suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled"), .i_in))
+
+#' @name grapesingrapes
+#' @aliases %in%,ANY,i_labelled-method
+#' @docType methods
+#' @rdname grapesingrapes-methods
 suppressMessages(methods::setMethod("%in%", methods::signature(table="i_labelled"), .i_in))
+
+#' @name grapesingrapes
+#' @aliases %in%,i_labelled,i_labelled-method
+#' @docType methods
+#' @rdname grapesingrapes-methods
 suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", table="i_labelled"), .i_in))
 
 
