@@ -58,7 +58,6 @@ is_decimal <- function(x){
 #' @returns Vector of T/F values with length of x
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
-#' @export
 .i_in <- function(x, table){
   if(is.i_labelled(x)){
     if(is.character(table)){
@@ -71,6 +70,7 @@ is_decimal <- function(x){
   }
 }
 
+
 #' Match values in i_labelled data via value labels
 #' @description
 #'
@@ -78,7 +78,6 @@ is_decimal <- function(x){
 #' @returns Vector of T/F values with length of x
 #' @param x vector or NULL: the values to be matched. Long vectors are supported.
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
-#' @export
 # "%lin%" <- function(x, table){
 #   .i_in(x, table)
 # }
@@ -90,27 +89,12 @@ suppressMessages(methods::setMethod("%in%", methods::signature(table="i_labelled
 suppressMessages(methods::setMethod("%in%", methods::signature(x="i_labelled", table="i_labelled"), .i_in))
 
 
+
 # mtfrm.i_labelled <- function(x){
+#   browser()
 #   x
 # }
 
-#' match <- function(x, table, nomatch = NA_integer_, incomparables = NULL){
-#'   UseMethod("match")
-#' }
-
-#' match.default <- function(x, table, nomatch = NA_integer_, incomparables = NULL){
-#'   browser()
-#'   .Internal(match(x, table, nomatch, incomparables))
-#' }
-
-#' match.i_labelled <- function(x, table, nomatch = NA_integer_, incomparables = NULL){
-#'   browser()
-#'   if(is.character(table)){
-#'     .Internal(match(as.character(x), table, nomatch, incomparables))
-#'   }else{
-#'     .Internal(match(as.numeric(x), table, nomatch, incomparables))
-#'   }
-#' }
 
 
 # i_find_in_test <- inline::cfunction(

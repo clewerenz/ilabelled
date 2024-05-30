@@ -12,7 +12,7 @@
 #' # When applied to a single vector:
 #' # keep in mind that when function is applied to vector, instead of a column use x
 #' myVector <- i_labelled(1:4, labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4))
-#' i_recode(x = myVector, "AB" = 1 ~ x %lin% c("A", "B"), "CD" = 2 ~ x == c(3, 4))
+#' i_recode(x = myVector, "AB" = 1 ~ x %in% c("A", "B"), "CD" = 2 ~ x == c(3, 4))
 #'
 #' # When applied to data.frame (multiple conditions)
 #' myData <- data.frame(
