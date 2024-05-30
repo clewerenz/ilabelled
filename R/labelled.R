@@ -4,23 +4,8 @@ methods::setOldClass("i_labelled")
 
 #' class constructor
 #' @export
-#' @returns x as i_labelled object
-#' @param x vector
-#' @param label variable label
-#' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
-#' @param na_values missing values (e.g. c(888, 999))
-#' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
-#' @param scale scale level (nominal, ordinal, scale)
-#' @param ... further attributes passed to class
-i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
-  UseMethod("i_labelled")
-}
-
-
-#' class constructor
-#' @export
-#' @returns x as i_labelled object
-#' @param x vector
+#' @returns vector or data.frame
+#' @param x vector or data.frame
 #' @param label variable label
 #' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
 #' @param na_values missing values (e.g. c(888, 999))
@@ -28,6 +13,12 @@ i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_rang
 #' @param scale scale level (nominal, ordinal, scale)
 #' @importFrom stats setNames
 #' @param ... further attributes passed to class
+i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
+  UseMethod("i_labelled")
+}
+
+
+#' @export
 i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
   if(!is.atomic(x)){
     stop("x must be vector")
@@ -42,10 +33,6 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
   }else if(!is.null(labels) || !is.null(attr(x, "labels", TRUE))){
     labels <- .merge_labels(as.list(attr(x, "labels", TRUE)), as.list(labels))
   }
-
-  # if(is.numeric(x) && !is.null(labels) && is_decimal(x)){
-  #   stop("decimal numbers cannot be labelled")
-  # }
 
   if(!is.numeric(x) && !is.null(labels) && !is.character(labels)){
     stop("Cannot apply non-character value labels to non-numeric vector. Value labels must be character.")
@@ -67,17 +54,7 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
 }
 
 
-#' class constructor
 #' @export
-#' @returns x as i_labelled object
-#' @param x vector
-#' @param label variable label
-#' @param labels value labels as named vector (e.g. c("A"=1, "B"=2) or setNames(c(1,2), c("A","B")))
-#' @param na_values missing values (e.g. c(888, 999))
-#' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
-#' @param scale scale level (nominal, ordinal, scale)
-#' @importFrom stats setNames
-#' @param ... further attributes passed to class
 i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
   if(!is.atomic(x)){
     stop("x must be vector")
@@ -112,14 +89,21 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
 }
 
 
+#' @export
+i_labelled.data.frame <- function(x){
+  x[] <- lapply(x, i_labelled)
+  x
+}
+
+
 #' make all variables in data.frame i_labelled (dedicated function)
 #' @export
 #' @returns x with all variables coerced to i_labelled object
 #' @param x data.frame
-i_labelled_df <- function(x){
-  x[] <- lapply(x, i_labelled)
-  x
-}
+# i_labelled_df <- function(x){
+#   x[] <- lapply(x, i_labelled)
+#   x
+# }
 
 
 #' check for class i_labelled
@@ -172,8 +156,8 @@ i_unclass.default <- function(x, keep_attributes = FALSE){
 
 #' @export
 i_unclass.data.frame <- function(x, keep_attributes = FALSE){
-  x[] <- lapply(x, i_unclass)
+  x[] <- lapply(x, function(x) i_unclass(x, keep_attributes = keep_attributes))
+  x
 }
-
 
 

@@ -42,7 +42,7 @@ test_that(
     expect_true(is.null(attr(x, "na_values", T)))
 
     # set NA values to all variables in data.frame
-    x <- i_labelled_df(iris)
+    x <- i_labelled(iris)
     x <- i_na_values(x, c(1,2,3))
     res <- unlist(lapply(x, function(x) !is.null(attr(x, "na_values", T))))
     expect_true(all(res))
@@ -66,7 +66,7 @@ test_that(
     expect_error(i_labelled(iris$Species, na_range = c(-9:-4, -2:-1)))
     expect_error(i_labelled(iris$Species, na_range = c(1,2,3,5)))
     expect_error(i_labelled(iris$Species, na_range = LETTERS[1:3]))
-    expect_error(i_labelled_df(iris$Species, na_range = LETTERS[1:3]))
+    expect_error(i_labelled(iris$Species, na_range = LETTERS[1:3]))
 
     # set NA range via method
     x <- i_labelled(iris$Species)

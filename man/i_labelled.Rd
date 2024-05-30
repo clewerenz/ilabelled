@@ -15,7 +15,7 @@ i_labelled(
 )
 }
 \arguments{
-\item{x}{vector}
+\item{x}{vector or data.frame}
 
 \item{label}{variable label}
 
@@ -30,7 +30,7 @@ i_labelled(
 \item{...}{further attributes passed to class}
 }
 \value{
-x as i_labelled object
+vector or data.frame
 }
 \description{
 class constructor
