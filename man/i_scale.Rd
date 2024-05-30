@@ -4,7 +4,7 @@
 \alias{i_scale}
 \title{set scale level}
 \usage{
-i_scale(x, scale)
+i_scale(x, scale = NULL)
 }
 \arguments{
 \item{x}{vector}

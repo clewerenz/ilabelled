@@ -10,7 +10,7 @@ i_valid_label(x)
 \item{x}{vector or data.frame}
 }
 \value{
-No return value. Aborts process when run-time-test fails
+T/F
 }
 \description{
 returns boolean
