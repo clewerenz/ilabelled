@@ -6,6 +6,7 @@
 #' @param ... set labels for values (e.g. label_of_choice = 1 or "Label of Choice" = 1); remove single label with NULL = value (e.g. NULL = 1); removes all value labels when only NULL (e.g. i_label(x, NULL))
 #' @param overwrite should new labels be merged with existing labels or remove existing labels
 #' @importFrom stats setNames
+#' @returns returns x with value labels applied
 i_labels <- function(x, ..., overwrite = FALSE){
   if(!is.null(attr(x, "labels", TRUE)) & !overwrite){
     old_labs <- as.list(attr(x, "labels", TRUE))

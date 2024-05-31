@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: c(person("Christof", "Lewerenz", role = c("aut", "cre"), email = "christof.lewerenz@gmx.net"))
 Author: Christof Lewerenz [aut, cre]
 Maintainer: Christof Lewerenz <christof.lewerenz@gmx.net>
-Description: Simple handling of survey data. Add labels to data values. Use value labels for subsetting and recoding of data. Add meta-information like variable labels and scale level to data. Easy access of meta-information. Validation of meta-information.
+Description: Simple handling of survey data. Smart handling of meta-information like e.g. variable-labels value-labels and scale-levels. Easy access and validation of meta-information. Useage of value labels and values respectively for subsetting and recoding data. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-US
