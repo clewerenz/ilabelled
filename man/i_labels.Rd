@@ -13,6 +13,9 @@ i_labels(x, ..., overwrite = FALSE)
 
 \item{overwrite}{should new labels be merged with existing labels or remove existing labels}
 }
+\value{
+returns x with value labels applied
+}
 \description{
 set value labels
 }
