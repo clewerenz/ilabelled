@@ -21,13 +21,7 @@ A function library for working with labelled data in R.
 
 The inspiration for this package was drawn from the [lfactors](https://github.com/pdbailey0/lfactors) package and the [labelled](https://github.com/larmarange/labelled) package with the aim to bring dependencies on bloated third party libraries to zero. The self-understanding of this package is not to be better than comparable libraries, but be a lightweight alternative.
 
-# To-Do
-  
-  - improve messages for run-time-tests
-  - <code>i_as_factor()</code>: more tests
-  - <code>i_to_base_class()</code>: more tests
-  - online documentation
-  
+
 # Rescources
 
 ## General
