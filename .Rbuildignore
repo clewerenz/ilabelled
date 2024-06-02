@@ -11,4 +11,5 @@
 ^.Rdata
 ^\.git$
 ^\.github$
-^To_Do
+^To_Do$
+^script/
