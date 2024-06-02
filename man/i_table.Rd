@@ -7,7 +7,7 @@
 i_table(..., missing_to_na = TRUE, as_factor = TRUE, table_args = NULL)
 }
 \arguments{
-\item{...}{one or more atomic vectors}
+\item{...}{one or more atomic vectors or one data.frame}
 
 \item{missing_to_na}{make as missing declared values NA}
 
@@ -22,4 +22,15 @@ returns a contingency table, an object of class "table"
 wrapper for base::table
 
 convert i_labelled objects to base class and pass to table function
+}
+\examples{
+set.seed(1234)
+a <- sample(c(1:3, NA), 10, replace = TRUE)
+b <- i_labelled(sample(c(1:3, NA), 10, replace = TRUE), labels = c("A" = 1, "B" = 2, "C" = 3))
+c <- factor(sample(c("X", "Y", "Z", NA), 10, replace = TRUE))
+df <- data.frame(a, b, c)
+
+i_table(a, b)
+i_table(df, table_args = list(useNA = "ifany"))
+
 }
