@@ -13,3 +13,7 @@
 ^\.github$
 ^To_Do$
 ^script/
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^resscources\.md
