@@ -116,8 +116,9 @@ test_that(
     y <- i_missing_to_na(x, remove_missing_labels = F)
     expect_true(is.na(y[1]))
     expect_false(is.na(y[2]))
-    expect_true(y[2] == 1)
-    expect_true(y[3] == 2)
+    expect_true(y[2] == "setosa")
+    expect_true(as.numeric(y[2]) == 1)
+    expect_true(as.numeric(y[3]) == 2)
     expect_equal(names(attr(y, "labels", T)), c("setosa","versicolor","missing","virginica"))
     ### remove missing labels
     y <- i_missing_to_na(x, remove_missing_labels = T)
