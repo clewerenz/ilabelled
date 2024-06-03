@@ -14,10 +14,18 @@ i_remove_missing_labels <- function(x){
 i_remove_missing_labels.default <- function(x){
   stopifnot(is.atomic(x))
 
-  nas <- c(attr(x, "na_values", TRUE), names(attr(x, "na_values", TRUE)), attr(x, "na_range", TRUE))
+  na_vals <- c(attr(x, "na_values", TRUE), names(attr(x, "na_values", TRUE)))
+  na_range <- sort(attr(x, "na_range", TRUE))
   labels <- attr(x, "labels", TRUE)
   if(!is.null(labels)){
-    labels <- labels[!(labels %in% nas | names(labels) %in% nas)]
+    # browser()
+    isnaval <- (labels %in% na_vals | names(labels) %in% na_vals)
+    if(length(na_range) > 0){
+      isnarange <- labels >= min(na_range) & labels <= max(na_range)
+      labels <- labels[!isnaval & !isnarange]
+    }else{
+      labels <- labels[!isnaval]
+    }
     if(length(labels) < 1){
       labels <- NULL
     }
