@@ -119,7 +119,7 @@ i_as_factor.default <- function(x, missing_to_na = FALSE, require_all_labels = F
   .valid_labels(labels)
 
   if(missing_to_na){
-    x <- i_missing_to_na(x)
+    x <- i_missing_to_na(x, remove_missing_labels = TRUE)
     x <- i_remove_missing_labels(x)
     labels <- attr(x, "labels", TRUE)
   }
