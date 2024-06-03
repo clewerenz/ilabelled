@@ -105,9 +105,9 @@ i_missing_to_na.default <- function(x, remove_missing_labels = FALSE){
   }
 
   if(!is.numeric(x)){
-    isnaval <- as.character(x) %in% na_vals
+    isnaval <- as.character(x) %in% na_all
   }else{
-    isnaval <- x %in% na_vals
+    isnaval <- x %in% na_all
   }
 
   if(length(na_range) > 0){
