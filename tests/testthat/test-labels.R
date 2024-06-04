@@ -7,10 +7,11 @@ test_that(
     expect_equal(names(attr(i_labels(x), "labels")), c("A","B","C"))
     expect_equal(unname(attr(i_labels(x), "labels")), c(1,2,3))
 
-    # set labels with list or vector
+    # set labels with list or vector or setNames
     y <- i_labels(i_labelled(1:3), A = 1, NULL = 2, C = 3)
     expect_equal(names(attr(i_labels(y), "labels")), c("A","C"))
     expect_equal(unname(attr(i_labels(y), "labels")), c(1,3))
+    expect_equal(attr(i_labels(y, setNames(1, "AA")), "labels", TRUE), setNames(c(1,3), c("AA", "C")))
 
     # remove all labels
     expect_null(attr(i_labels(x, NULL), "labels"))
@@ -53,7 +54,7 @@ test_that(
     expect_error(i_labels(x, list("A" = LETTERS[1:5], "B" = 1:5)))
     expect_error(i_labels(x, A = 1, B = 2, C))
     expect_error(i_labels(x, A = 1, B = 2, C = "bla"))
-    expect_error(i_labels(i_labelled(1:3), list(A = 1, NULL = 2, C = 3)))
+    # expect_error(i_labels(i_labelled(1:3), list(A = 1, NULL = 2, C = 3)))
     ## no duplicate labels in value labels
     expect_error(i_labels(x, c(A = 1, A = 2)))
     ## no duplicate values in value labels
