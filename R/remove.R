@@ -9,7 +9,6 @@ i_remove_missing_labels <- function(x){
   UseMethod("i_remove_missing_labels")
 }
 
-
 #' @export
 i_remove_missing_labels.default <- function(x){
   stopifnot(is.atomic(x))
@@ -35,14 +34,13 @@ i_remove_missing_labels.default <- function(x){
   }
 }
 
-
 #' @export
 i_remove_missing_labels.data.frame <- function(x){
   x[] <- lapply(x, i_remove_missing_labels)
   x
 }
 
-
+# -----------------------------------------------------------------------------
 
 #' remove variable label
 #' @description
@@ -56,7 +54,6 @@ i_remove_label <- function(x){
   UseMethod("i_remove_label")
 }
 
-
 #' @export
 i_remove_label.default <- function(x){
   stopifnot(is.atomic(x))
@@ -66,13 +63,13 @@ i_remove_label.default <- function(x){
   )
 }
 
-
 #' @export
 i_remove_label.data.frame <- function(x){
   x[] <- lapply(x, i_remove_label)
   x
 }
 
+# -----------------------------------------------------------------------------
 
 #' remove all value labels
 #' @description
@@ -86,7 +83,6 @@ i_remove_labels <- function(x){
   UseMethod("i_remove_labels")
 }
 
-
 #' @export
 i_remove_labels.default <- function(x){
   stopifnot(is.atomic(x))
@@ -96,13 +92,13 @@ i_remove_labels.default <- function(x){
   )
 }
 
-
 #' @export
 i_remove_labels.data.frame <- function(x){
   x[] <- lapply(x, i_remove_labels)
   x
 }
 
+# -----------------------------------------------------------------------------
 
 #' remove as na values
 #' @description
@@ -116,7 +112,6 @@ i_remove_na_values <- function(x){
   UseMethod("i_remove_na_values")
 }
 
-
 #' @export
 i_remove_na_values.default <- function(x){
   stopifnot(is.atomic(x))
@@ -126,12 +121,12 @@ i_remove_na_values.default <- function(x){
   )
 }
 
-
 #' @export
 i_remove_na_values.data.frame <- function(x){
   x[] <- lapply(x, i_remove_na_values)
 }
 
+# -----------------------------------------------------------------------------
 
 #' remove as na range
 #' @description
@@ -145,7 +140,6 @@ i_remove_na_range <- function(x){
   UseMethod("i_remove_na_range")
 }
 
-
 #' @export
 i_remove_na_range.default <- function(x){
   stopifnot(is.atomic(x))
@@ -155,10 +149,35 @@ i_remove_na_range.default <- function(x){
   )
 }
 
-
 #' @export
 i_remove_na_range.data.frame <- function(x){
   x[] <- lapply(x, i_remove_na_range)
 }
 
+# -----------------------------------------------------------------------------
 
+#' remove scale level
+#' @description
+#' remove scale label from variable
+#' keep other attributes
+#'
+#' @returns Returns x without scale level
+#' @param x vector or data.frame
+#' @export
+i_remove_scale <- function(x){
+  UseMethod("i_remove_scale")
+}
+
+#' @export
+i_remove_scale.default <- function(x){
+  stopifnot(is.atomic(x))
+  structure(
+    x,
+    scale = NULL
+  )
+}
+
+#' @export
+i_remove_scale.data.frame <- function(x){
+  x[] <- lapply(x, i_remove_scale)
+}
