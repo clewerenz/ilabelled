@@ -17,11 +17,11 @@ test_that("initialize i_labelled object", {
   expect_equal(unname(attr(y, "labels", T)), 1:3)
   expect_equal(names(attr(y, "labels", T)), c("A","B","C"))
   y <- i_labelled(x, labels = c(Bla = 3, Blubb = 4))
-  expect_equal(unname(attr(y, "labels", T)), c(3,4,1,2))
-  expect_equal(names(attr(y, "labels", T)), c("Bla","Blubb","A","B"))
+  expect_equal(unname(attr(y, "labels", T)), c(1,2,3,4))
+  expect_equal(names(attr(y, "labels", T)), c("A","B","Bla","Blubb"))
   y <- i_labelled(x, labels = c(NULL = 3, Blubb = 4))
-  expect_equal(unname(attr(y, "labels", T)), c(4,1:2))
-  expect_equal(names(attr(y, "labels", T)), c("Blubb","A","B"))
+  expect_equal(unname(attr(y, "labels", T)), c(1:2,4))
+  expect_equal(names(attr(y, "labels", T)), c("A","B","Blubb"))
 })
 
 

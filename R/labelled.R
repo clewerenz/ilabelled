@@ -54,6 +54,10 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     }
   }
 
+  if(!is.null(labels)){
+    labels <- labels[order(labels, decreasing = FALSE)]
+  }
+
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, ...))
 }
 
