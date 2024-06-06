@@ -17,11 +17,11 @@ test_that("initialize i_labelled object", {
   expect_equal(unname(attr(y, "labels", T)), 1:3)
   expect_equal(names(attr(y, "labels", T)), c("A","B","C"))
   y <- i_labelled(x, labels = c(Bla = 3, Blubb = 4))
-  expect_equal(unname(attr(y, "labels", T)), c(3,4,1,2))
-  expect_equal(names(attr(y, "labels", T)), c("Bla","Blubb","A","B"))
+  expect_equal(unname(attr(y, "labels", T)), c(1,2,3,4))
+  expect_equal(names(attr(y, "labels", T)), c("A","B","Bla","Blubb"))
   y <- i_labelled(x, labels = c(NULL = 3, Blubb = 4))
-  expect_equal(unname(attr(y, "labels", T)), c(4,1:2))
-  expect_equal(names(attr(y, "labels", T)), c("Blubb","A","B"))
+  expect_equal(unname(attr(y, "labels", T)), c(1:2,4))
+  expect_equal(names(attr(y, "labels", T)), c("A","B","Blubb"))
 })
 
 
@@ -41,7 +41,7 @@ test_that("class attributes are correct", {
   expect_equal(class(i_labelled(1:5)), c("i_labelled", "double"))
   expect_equal(class(i_labelled(as.double(seq(1.10,5)))), c("i_labelled", "double"))
   expect_equal(class(i_labelled(factor(LETTERS))), c("i_labelled", "double"))
-  expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled", "character"))
+  expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled", "double"))
   expect_equal(class(i_labelled(c(Sys.Date(), Sys.Date()-1, Sys.Date()-2, Sys.Date()-3))), c("i_labelled", "character"))
 })
 

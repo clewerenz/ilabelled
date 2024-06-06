@@ -21,7 +21,7 @@ i_as_character(
 \item{keep_attributes}{should attributes be preserved}
 }
 \value{
-Character vector
+character vector
 }
 \description{
 make character from i_labelled

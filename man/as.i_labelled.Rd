@@ -12,7 +12,7 @@ as.i_labelled(x, ...)
 \item{...}{attributes passed to class}
 }
 \value{
-Vector of class i_labelled
+vector of class i_labelled
 }
 \description{
 coerce to i_labelled class

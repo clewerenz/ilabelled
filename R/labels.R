@@ -34,6 +34,10 @@ i_labels <- function(x, ..., overwrite = FALSE){
     stop("Cannot apply non-numeric value labels to numeric vector. Value labels must be numeric.")
   }
 
+  if(!is.null(all_labs)){
+    all_labs <- all_labs[order(all_labs, decreasing = FALSE)]
+  }
+
   structure(
     x,
     labels = all_labs
