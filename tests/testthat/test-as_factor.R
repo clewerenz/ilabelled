@@ -31,7 +31,7 @@ test_that(
 
     x <- i_as_factor(i_labelled(c(T,F,F,T,NA)))
     expect_equal(class(x), "factor")
-    expect_equal(levels(x), c("FALSE", "TRUE"))
+    expect_equal(levels(x), c("0", "1"))
     expect_equal(as.numeric(x), c(2,1,1,2,NA))
 
     ## no value labels applied: values become labels (base classes)
@@ -70,14 +70,14 @@ test_that(
     attr(x, "labels") <- c(A = 1, B = 2, C = 3, X = -9)
     x <- i_as_factor(x)
     expect_equal(class(x), "factor")
-    expect_equal(levels(x), c("X","A","B","C"))
+    expect_equal(levels(x), c("-9","1","2","3"))
     expect_equal(as.numeric(x), c(2:4,1,NA))
 
     x <- c(LETTERS[1:3],"X",NA)
     attr(x, "labels") <- c("Eins" = "A", "Zwei" = "B", "Drei" = "C", "Null" = "X")
     x <- i_as_factor(x)
     expect_equal(class(x), "factor")
-    expect_equal(levels(x), c("Eins","Zwei","Drei","Null"))
+    expect_equal(levels(x), c("A","B","C","X"))
     expect_equal(as.numeric(x), c(1:4,NA))
 
     ### as factor when not all values are labelled: values become labels for missing labels; applied labels become levels, too
@@ -85,7 +85,7 @@ test_that(
     attr(x, "labels") <- c(A = 123, B = 345, C = 567, X = 789)
     x <- i_as_factor(x)
     expect_equal(class(x), "factor")
-    expect_equal(levels(x), c("-9","1","2","3","A","B","C","X"))
+    expect_equal(levels(x), c("-9","1","2","3"))
     expect_equal(as.numeric(x), c(NA,2:4,1))
 
     x <- i_labelled(c(LETTERS[1:3],NA,"X"), labels = c("YYY" = "K", "ZZZ" = "L"))
@@ -97,11 +97,6 @@ test_that(
     ##################################################
 
     # Error handling
-
-    ## duplicate labels in value labels: no duplicate labels allowed
-    x <- c(LETTERS[1:3], "X")
-    attr(x, "labels") <- c(A = 123, B = 345, C = 567, X = 789)
-    expect_error(suppressWarnings(i_as_factor(x)))
 
     ## duplicate values in value labels: no duplicate values allowed
     x <- i_labelled(c(1:3))

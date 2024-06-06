@@ -24,6 +24,10 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     stop("x must be vector")
   }
 
+  if(is.logical(labels)){
+    labels <- stats::setNames(as.numeric(labels), names(labels))
+  }
+
   stopifnot(.valid_label(label))
   stopifnot(.valid_na_values(na_values))
   stopifnot(.valid_na_range(na_range))
@@ -34,7 +38,7 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     labels <- .merge_labels(as.list(attr(x, "labels", TRUE)), as.list(labels))
   }
 
-  if(!is.numeric(x) && !is.null(labels) && !is.character(labels)){
+  if(!is.numeric(x) && !is.logical(x) && !is.null(labels) && !is.character(labels)){
     stop("Cannot apply non-character value labels to non-numeric vector. Value labels must be character.")
   }else if(is.numeric(x) && !is.null(labels) && !is.numeric(labels)){
     stop("Cannot apply non-numeric value labels to numeric vector. Value labels must be numeric.")

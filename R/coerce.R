@@ -1,77 +1,5 @@
-
-# as.character.i_labelled <- function(x, ...){
-#   if(is.null(attr(x, "labels", TRUE))){
-#     as.character(unclass(x))
-#   }else{
-#     .Call("asCharILabelled", x, PACKAGE = "ilabelled")
-#   }
-# }
-
-#' as character
-#' @description
-#' make character from i_labelled
-#'
-#' @returns Character vector
-#' @param x vector
-#' @param missing_to_na as missing declared values will become NA
-#' @param require_all_labels process will be interrupted, when not all values have valid labels
-#' @param keep_attributes should attributes be preserved
-#' @importFrom stats setNames
-#' @export
-i_as_character <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
-  UseMethod("i_as_character")
-}
-
-#' @export
-i_as_character.default <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
-  stopifnot(is.atomic(x) || is.null(x))
-
-  labels <- attr(x, "labels", TRUE)
-
-  if(is.null(labels)){
-    return(as.character(unclass(x)))
-  }
-
-  .valid_labels(labels)
-
-  if(missing_to_na){
-    x <- i_missing_to_na(x)
-    x <- i_remove_missing_labels(x)
-    labels <- attr(x, "labels", TRUE)
-  }
-
-  missing_values <- unique(unclass(x[!match(unclass(x), labels, nomatch = FALSE) > 0]))
-  missing_values <- missing_values[!is.na(missing_values)]
-
-  if(require_all_labels && length(missing_values) > 0){
-    stop("missing value labels")
-  }
-  if(any(duplicated(names(labels)))){
-    stop("cannot convert to character: duplicate labels in value labels")
-  }
-  if(any(duplicated(labels))){
-    stop("cannot convert to character: duplicate values in value labels")
-  }
-
-  tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
-
-  if(keep_attributes){
-    x <- .Call("asCharILabelled", x, PACKAGE = "ilabelled")
-    attributes(x) <- tmp_attr
-    x
-  }else{
-    .Call("asCharILabelled", x, PACKAGE = "ilabelled")
-  }
-}
-
-# i_as_character.character <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
-#   # do nothing
-#   x
-# }
-
-
 #' coerce to i_labelled class
-#' @returns Vector of class i_labelled
+#' @returns vector of class i_labelled
 #' @param x vector
 #' @param ... attributes passed to class
 #' @export
@@ -90,11 +18,145 @@ as.i_labelled <- function(x, ...){
 }
 
 
+# -----------------------------------------------------------------------------
+
+
+#' as character
+#' @description
+#' make character from i_labelled
+#'
+#' @returns character vector
+#' @param x vector
+#' @param missing_to_na as missing declared values will become NA
+#' @param require_all_labels process will be interrupted, when not all values have valid labels
+#' @param keep_attributes should attributes be preserved
+#' @importFrom stats setNames
+#' @export
+i_as_character <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
+  UseMethod("i_as_character")
+}
+
+#' @export
+i_as_character.default <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
+  if(keep_attributes){
+    ch <- as.character(x)
+    attributes(ch) <- attributes(x)
+    ch
+  }else{
+    as.character(x)
+  }
+}
+
+#' @export
+i_as_character.i_labelled <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
+
+  labels <- attr(x, "labels", TRUE)
+
+  .valid_labels(labels)
+
+  if(missing_to_na){
+    x <- i_missing_to_na(x, remove_missing_labels = TRUE)
+    labels <- attr(x, "labels", TRUE)
+  }
+
+  missing_values <- unique(unclass(x[!match(unclass(x), labels, nomatch = FALSE) > 0]))
+  missing_values <- missing_values[!is.na(missing_values)]
+
+  if(require_all_labels && length(missing_values) > 0){
+    stop("missing value labels")
+  }
+  if(any(duplicated(names(labels)))){
+    stop("cannot convert to character: duplicate labels in value labels")
+  }
+  if(any(duplicated(labels))){
+    stop("cannot convert to character: duplicate values in value labels")
+  }
+
+  tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
+
+  if(keep_attributes && !is.null(attr(x, "labels", TRUE))){
+    x <- .Call("asCharILabelled", x, PACKAGE = "ilabelled")
+    attributes(x) <- tmp_attr
+    x
+  }else if(keep_attributes && is.null(attr(x, "labels", TRUE))){
+    x <- as.character(x)
+    attributes(x) <- tmp_attr
+    x
+  }else if(!is.null(attr(x, "labels", TRUE))){
+    .Call("asCharILabelled", x, PACKAGE = "ilabelled")
+  }else{
+    as.character(x)
+  }
+}
+
+#' @export
+i_as_character.character <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
+  # do nothing
+  x
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+#' as numeric
+#' @description
+#' make numeric from i_labelled
+#'
+#' @returns numeric vector
+#' @param x vector
+#' @param missing_to_na as missing declared values will become NA
+#' @param keep_attributes should attributes be preserved
+#' @importFrom stats setNames
+#' @export
+i_as_numeric <- function(x, missing_to_na = FALSE, keep_attributes = FALSE){
+  UseMethod("i_as_numeric")
+}
+
+#' @export
+i_as_numeric.default <- function(x, missing_to_na = FALSE, keep_attributes = FALSE){
+  if(keep_attributes){
+    n <- as.numeric(x)
+    attributes(n) <- attributes(x)
+    n
+  }else{
+    as.numeric(x)
+  }
+}
+
+#' @export
+i_as_numeric.i_labelled <- function(x, missing_to_na = FALSE, keep_attributes = FALSE){
+
+  if(missing_to_na){
+    x <- i_missing_to_na(x, remove_missing_labels = TRUE)
+  }
+
+  tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
+
+  if(keep_attributes){
+    x <- as.numeric(x)
+    attributes(x) <- tmp_attr
+    x
+  }else{
+    as.numeric(x)
+  }
+}
+
+#' @export
+i_as_numeric.numeric <- function(x, missing_to_na = FALSE, keep_attributes = FALSE){
+  # do nothing
+  x
+}
+
+
+# -----------------------------------------------------------------------------
+
+
 #' as factor
 #' @description
 #' make factor from i_labelled
 #'
-#' @returns Vector of class factor
+#' @returns vector of class factor
 #' @param x vector
 #' @param missing_to_na as missing declared values will become NA
 #' @param require_all_labels process will be interrupted, when not all values have valid labels
@@ -107,11 +169,17 @@ i_as_factor <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, ke
 
 #' @export
 i_as_factor.default <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
-  stopifnot(is.atomic(x) || is.null(x))
-
-  if(!is.i_labelled(x)){
-    x <- i_labelled(x)
+  if(keep_attributes){
+    f <- as.factor(x)
+    attributes(f) <- attributes(x)
+    f
+  }else{
+    as.factor(x)
   }
+}
+
+#' @export
+i_as_factor.i_labelled <- function(x, missing_to_na = FALSE, require_all_labels = FALSE, keep_attributes = FALSE){
 
   labels <- attr(x, "labels", TRUE)
   na_vals <- c(attr(x, "na_values", TRUE))
@@ -120,7 +188,6 @@ i_as_factor.default <- function(x, missing_to_na = FALSE, require_all_labels = F
 
   if(missing_to_na){
     x <- i_missing_to_na(x, remove_missing_labels = TRUE)
-    x <- i_remove_missing_labels(x)
     labels <- attr(x, "labels", TRUE)
   }
 
@@ -143,8 +210,8 @@ i_as_factor.default <- function(x, missing_to_na = FALSE, require_all_labels = F
 
   tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
 
-  x <- i_as_character(x)
-  x <- match(x, labels)
+  x <- match(i_as_character(x), labels)
+
   if(keep_attributes){
     attributes(x) <- tmp_attr
   }
@@ -159,6 +226,9 @@ i_as_factor.factor <- function(x, ...){
   # do nothing
   x
 }
+
+
+# -----------------------------------------------------------------------------
 
 
 #' remove class i_labelled and return base R class
@@ -181,6 +251,17 @@ i_to_base_class <- function(x, missing_to_na = TRUE, as_factor = TRUE, keep_attr
 
 #' @export
 i_to_base_class.default <- function(x, missing_to_na = TRUE, as_factor = TRUE, keep_attributes = FALSE){
+  if(keep_attributes){
+    b <- unclass(x)
+    attributes(b) <- attributes(x)
+    b
+  }else{
+    unclass(x)
+  }
+}
+
+#' @export
+i_to_base_class.i_labelled <- function(x, missing_to_na = TRUE, as_factor = TRUE, keep_attributes = FALSE){
   stopifnot(is.atomic(x))
   stopifnot(is.logical(as_factor) && length(as_factor) == 1)
   stopifnot(is.logical(keep_attributes) && length(keep_attributes) == 1)

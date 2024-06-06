@@ -41,7 +41,7 @@ test_that("class attributes are correct", {
   expect_equal(class(i_labelled(1:5)), c("i_labelled", "double"))
   expect_equal(class(i_labelled(as.double(seq(1.10,5)))), c("i_labelled", "double"))
   expect_equal(class(i_labelled(factor(LETTERS))), c("i_labelled", "double"))
-  expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled", "character"))
+  expect_equal(class(i_labelled(sample(c(T,F),20,replace = T))), c("i_labelled", "double"))
   expect_equal(class(i_labelled(c(Sys.Date(), Sys.Date()-1, Sys.Date()-2, Sys.Date()-3))), c("i_labelled", "character"))
 })
 

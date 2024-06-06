@@ -21,7 +21,7 @@ i_as_factor(
 \item{keep_attributes}{should attributes be preserved}
 }
 \value{
-Vector of class factor
+vector of class factor
 }
 \description{
 make factor from i_labelled
