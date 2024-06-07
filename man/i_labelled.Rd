@@ -11,6 +11,8 @@ i_labelled(
   na_values = NULL,
   na_range = NULL,
   scale = NULL,
+  annotation = NULL,
+  wording = NULL,
   ...
 )
 }
@@ -27,7 +29,12 @@ i_labelled(
 
 \item{scale}{scale level (nominal, ordinal, scale)}
 
-\item{...}{further attributes passed to class}
+\item{annotation}{additional information about variable}
+
+\item{wording}{question text}
+
+\item{...}{further attributes passed to class
+#' @importFrom stats setNames}
 }
 \value{
 vector or data.frame

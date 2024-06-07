@@ -10,7 +10,7 @@ i_get_label(x)
 \item{x}{vector or data.frame}
 }
 \value{
-Variable label
+variable label
 }
 \description{
 return variable label when applied to vector

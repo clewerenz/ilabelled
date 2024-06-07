@@ -4,7 +4,7 @@
 #' return labels when applied to vector
 #' return list when applied to data.frame
 #'
-#' @returns Values and value labels as data.frame
+#' @returns values and value labels as data.frame
 #' @param x vector or data.frame
 #' @export
 i_get_labels <- function(x){
@@ -38,7 +38,7 @@ i_get_labels.data.frame <- function(x){
 #' return variable label when applied to vector
 #' return list when applied to data.frame
 #'
-#' @returns Variable label
+#' @returns variable label
 #' @param x vector or data.frame
 #' @export
 i_get_label <- function(x){
@@ -72,7 +72,7 @@ i_get_label.data.frame <- function(x){
 #' return missing values when applied to vector
 #' return list when applied to data.frame
 #'
-#' @returns Return missing values
+#' @returns return missing values
 #' @param x vector or data.frame
 #' @export
 i_get_na_values <- function(x){
@@ -106,7 +106,7 @@ i_get_na_values.data.frame <- function(x){
 #' return missing range when applied to vector
 #' return list when applied to data.frame
 #'
-#' @returns Return missing range
+#' @returns return missing range
 #' @param x vector or data.frame
 #' @export
 i_get_na_range <- function(x){
@@ -140,7 +140,7 @@ i_get_na_range.data.frame <- function(x){
 #' return scale level when applied to vector
 #' return list when applied to data.frame
 #'
-#' @returns Returns scale level
+#' @returns returns scale level
 #' @param x vector or data.frame
 #' @export
 i_get_scale <- function(x){
@@ -167,3 +167,72 @@ i_get_scale.data.frame <- function(x){
     }
   }, simplify = FALSE)
 }
+
+
+#' get annotation
+#' @description
+#' return annotation as character vector applied to vector
+#' return list when applied to data.frame
+#'
+#' @returns returns annotation
+#' @param x vector or data.frame
+#' @export
+i_get_annotation <- function(x){
+  UseMethod("i_get_annotation")
+}
+
+#' @export
+i_get_annotation.default <- function(x){
+  annotation <- attr(x, "annotation", TRUE)
+  if(is.null(annotation)){
+    return(NA)
+  }
+  annotation
+}
+
+#' @export
+i_get_annotation.data.frame <- function(x){
+  sapply(x, function(y){
+    annotation <- attr(y, "annotation", TRUE)
+    if(is.null(annotation)){
+      NA
+    }else{
+      annotation
+    }
+  }, simplify = FALSE)
+}
+
+
+#' get wording
+#' @description
+#' return wording as character vector applied to vector
+#' return list when applied to data.frame
+#'
+#' @returns returns wording
+#' @param x vector or data.frame
+#' @export
+i_get_wording <- function(x){
+  UseMethod("i_get_wording")
+}
+
+#' @export
+i_get_wording.default <- function(x){
+  wording <- attr(x, "wording", TRUE)
+  if(is.null(wording)){
+    return(NA)
+  }
+  wording
+}
+
+#' @export
+i_get_wording.data.frame <- function(x){
+  sapply(x, function(y){
+    wording <- attr(y, "wording", TRUE)
+    if(is.null(wording)){
+      NA
+    }else{
+      wording
+    }
+  }, simplify = FALSE)
+}
+

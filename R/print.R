@@ -18,10 +18,12 @@ print.i_labelled <- function(x, ...){
 
   print(`attributes<-`(x, NULL))
 
+  i_print_wording(x)
   i_print_na_values(x)
   i_print_na_range(x)
   i_print_scale(x)
   i_print_label(x)
+  i_print_annotation(x)
   i_print_labels(x)
 
   invisible(x)
@@ -120,3 +122,38 @@ i_print_scale.default <- function(x){
 }
 
 
+
+#' print annotation
+#' @returns No return value. Print annotation attribute to console
+#' @param x vector
+#' @export
+i_print_annotation <- function(x){
+  UseMethod("i_print_annotation")
+}
+
+#' @export
+i_print_annotation.default <- function(x){
+  annotation <- attr(x, "annotation", TRUE)
+  if(is.null(annotation)){
+    return(invisible(annotation))
+  }
+  cat(c("\nAnnotation: ", annotation), sep = "\n")
+}
+
+
+#' print wording
+#' @returns No return value. Print wording attribute to console
+#' @param x vector
+#' @export
+i_print_wording <- function(x){
+  UseMethod("i_print_wording")
+}
+
+#' @export
+i_print_wording.default <- function(x){
+  wording <- attr(x, "wording", TRUE)
+  if(is.null(wording)){
+    return(invisible(wording))
+  }
+  cat(c("\nWording:\n", wording, "\n"))
+}

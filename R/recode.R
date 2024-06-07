@@ -74,12 +74,15 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
     stop("invalid ... formula")
   })
 
-
   new_labels <- stats::setNames(
     unlist(lapply(recode_map, function(x){ x$new_val })),
     unlist(lapply(recode_map, function(x){ x$new_lab }))
   )
   new_labels <- new_labels[!names(new_labels) %in% ""]
+
+  if(length(new_labels) > 0){
+    new_labels <- new_labels[order(new_labels, decreasing = FALSE)]
+  }
 
   if(!is.null(copy)){
     x <- i_unclass(x[[copy]])
