@@ -12,6 +12,7 @@
   na_range = NULL,
   scale = NULL,
   annotation = NULL,
+  wording = NULL,
   ...
 )
 }
@@ -29,6 +30,8 @@
 \item{scale}{scale level (nominal, ordinal, scale)}
 
 \item{annotation}{additional information about variable}
+
+\item{wording}{question text}
 
 \item{...}{further attributes passed to class}
 }

@@ -201,3 +201,38 @@ i_get_annotation.data.frame <- function(x){
     }
   }, simplify = FALSE)
 }
+
+
+#' get wording
+#' @description
+#' return wording as character vector applied to vector
+#' return list when applied to data.frame
+#'
+#' @returns returns wording
+#' @param x vector or data.frame
+#' @export
+i_get_wording <- function(x){
+  UseMethod("i_get_wording")
+}
+
+#' @export
+i_get_wording.default <- function(x){
+  wording <- attr(x, "wording", TRUE)
+  if(is.null(wording)){
+    return(NA)
+  }
+  wording
+}
+
+#' @export
+i_get_wording.data.frame <- function(x){
+  sapply(x, function(y){
+    wording <- attr(y, "wording", TRUE)
+    if(is.null(wording)){
+      NA
+    }else{
+      wording
+    }
+  }, simplify = FALSE)
+}
+

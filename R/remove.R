@@ -181,3 +181,61 @@ i_remove_scale.default <- function(x){
 i_remove_scale.data.frame <- function(x){
   x[] <- lapply(x, i_remove_scale)
 }
+
+
+# -----------------------------------------------------------------------------
+
+#' remove annotation
+#' @description
+#' remove annotation label from variable
+#' keep other attributes
+#'
+#' @returns Returns x without annotation
+#' @param x vector or data.frame
+#' @export
+i_remove_annotation <- function(x){
+  UseMethod("i_remove_annotation")
+}
+
+#' @export
+i_remove_annotation.default <- function(x){
+  stopifnot(is.atomic(x))
+  structure(
+    x,
+    annotation = NULL
+  )
+}
+
+#' @export
+i_remove_annotation.data.frame <- function(x){
+  x[] <- lapply(x, i_remove_annotation)
+}
+
+
+# -----------------------------------------------------------------------------
+
+#' remove wording
+#' @description
+#' remove wording label from variable
+#' keep other attributes
+#'
+#' @returns Returns x without wording
+#' @param x vector or data.frame
+#' @export
+i_remove_wording <- function(x){
+  UseMethod("i_remove_wording")
+}
+
+#' @export
+i_remove_wording.default <- function(x){
+  stopifnot(is.atomic(x))
+  structure(
+    x,
+    wording = NULL
+  )
+}
+
+#' @export
+i_remove_wording.data.frame <- function(x){
+  x[] <- lapply(x, i_remove_wording)
+}
