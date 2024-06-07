@@ -11,15 +11,16 @@ methods::setOldClass("i_labelled")
 #' @param na_values missing values (e.g. c(888, 999))
 #' @param na_range range of missing values as vector length 2 (e.g. c(-9,-1))
 #' @param scale scale level (nominal, ordinal, scale)
-#' @importFrom stats setNames
+#' @param annotation additional information about variable
 #' @param ... further attributes passed to class
-i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
+#' #' @importFrom stats setNames
+i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, ...){
   UseMethod("i_labelled")
 }
 
 
 #' @export
-i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
+i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, ...){
   if(!is.atomic(x)){
     stop("x must be vector")
   }
@@ -58,12 +59,16 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     labels <- labels[order(labels, decreasing = FALSE)]
   }
 
-  return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, ...))
+  if(!is.null(annotation) && !.valid_annotation(annotation)){
+    stop("invalid annotation")
+  }
+
+  return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, annotation = annotation, ...))
 }
 
 
 #' @export
-i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
+i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, ...){
   if(!is.atomic(x)){
     stop("x must be vector")
   }
@@ -93,12 +98,20 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
     }
   }
 
+  if(!is.null(labels)){
+    labels <- labels[order(labels, decreasing = FALSE)]
+  }
+
+  if(!is.null(annotation) && !.valid_annotation(annotation)){
+    stop("invalid annotation")
+  }
+
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, ...))
 }
 
 
 #' @export
-i_labelled.data.frame <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, ...){
+i_labelled.data.frame <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, ...){
   x[] <- lapply(x, i_labelled)
   x
 }

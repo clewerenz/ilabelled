@@ -10,7 +10,7 @@ i_get_na_values(x)
 \item{x}{vector or data.frame}
 }
 \value{
-Return missing values
+return missing values
 }
 \description{
 return missing values when applied to vector

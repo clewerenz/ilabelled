@@ -22,6 +22,7 @@ print.i_labelled <- function(x, ...){
   i_print_na_range(x)
   i_print_scale(x)
   i_print_label(x)
+  i_print_annotation(x)
   i_print_labels(x)
 
   invisible(x)
@@ -117,6 +118,25 @@ i_print_scale.default <- function(x){
     return(invisible(scale))
   }
   cat(paste0("\nScale level: ", scale), "\n")
+}
+
+
+
+#' print annotation
+#' @returns No return value. Print annotation attribute to console
+#' @param x vector
+#' @export
+i_print_annotation <- function(x){
+  UseMethod("i_print_annotation")
+}
+
+#' @export
+i_print_annotation.default <- function(x){
+  annotation <- attr(x, "annotation", TRUE)
+  if(is.null(annotation)){
+    return(invisible(annotation))
+  }
+  cat(c("\nAnnotation: ", annotation), sep = "\n")
 }
 
 

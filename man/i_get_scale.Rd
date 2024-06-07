@@ -10,7 +10,7 @@ i_get_scale(x)
 \item{x}{vector or data.frame}
 }
 \value{
-Returns scale level
+returns scale level
 }
 \description{
 return scale level when applied to vector

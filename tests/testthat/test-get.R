@@ -95,3 +95,20 @@ test_that("get scale level from data.frame", {
   expect_equal(i_get_scale(x)[[1]], "nominal")
   expect_true(is.na(i_get_scale(x)[[2]]))
 })
+
+test_that("get annotation from vector", {
+  x <- i_labelled(1:3)
+  x <- i_annotation(x, "my annotation")
+  expect_equal(i_get_annotation(x), "my annotation")
+})
+
+test_that("get annotation from data.frame", {
+  x <- data.frame(
+    V1 = i_labelled(1:3),
+    V2 = i_labelled(1:3)
+  )
+  x$V1 <- i_annotation(x$V1, "my annotation")
+  r <- list(V1 = "my annotation", V2 = NA)
+  expect_equal(i_get_annotation(x), r)
+})
+

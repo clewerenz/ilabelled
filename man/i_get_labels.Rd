@@ -10,7 +10,7 @@ i_get_labels(x)
 \item{x}{vector or data.frame}
 }
 \value{
-Values and value labels as data.frame
+values and value labels as data.frame
 }
 \description{
 return labels when applied to vector
