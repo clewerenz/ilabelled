@@ -12,6 +12,8 @@ i_recode(
   na_values = NULL,
   na_range = NULL,
   scale = NULL,
+  annotation = NULL,
+  wording = NULL,
   copy = NULL
 )
 }
@@ -27,6 +29,10 @@ i_recode(
 \item{na_range}{a vector for missing range}
 
 \item{scale}{scale level (nominal, ordinal, metric)}
+
+\item{annotation}{addition information about variable}
+
+\item{wording}{question text}
 
 \item{copy}{a variable from x. Copy the values of an existing variable before recoding values according to ...}
 }
