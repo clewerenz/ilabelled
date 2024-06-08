@@ -17,5 +17,5 @@ named list or NA. return named list with one list entry for each subject. when n
 \description{
 return all variable names by subjects
 
-one or more subjects can be looked up
+one, several, or all subjects can be looked up
 }

@@ -115,7 +115,7 @@ test_that("get annotation from data.frame", {
 
 # ----------------------------------------------------------------------------
 
-# get_equal_subject()
+# i_get_equal_subject()
 
 dataWithSubjects <- data.frame(
   V1 = i_labelled(1:3, subject = "my subject 1"),
@@ -173,3 +173,61 @@ test_that("i_get_equal_subject - throw error when subject is not character vecto
 
 
 
+
+# ----------------------------------------------------------------------------
+
+# i_get_equal_wording()
+
+dataWithwordings <- data.frame(
+  V1 = i_labelled(1:3, wording = "my wording 1"),
+  V2 = i_labelled(1:3, wording = "my wording 1"),
+  V3 = i_labelled(1:3, wording = "my wording 2"),
+  V4 = i_labelled(1:3)
+)
+
+dataWithoutwordings <- data.frame(
+  V1 = i_labelled(1:3),
+  V2 = i_labelled(1:3),
+  V3 = i_labelled(1:3),
+  V4 = i_labelled(1:3)
+)
+
+test_that("i_get_equal_wording - return list with variables for each wording in data. param wording = NULL", {
+  ret <- list("my wording 1" = c("V1", "V2"), "my wording 2" = c("V3"))
+  expect_equal(i_get_equal_wording(dataWithwordings), ret)
+})
+
+test_that("i_get_equal_wording - return NA for data with no wordings. param wording = NULL", {
+  expect_equal(i_get_equal_wording(dataWithoutwordings), NA)
+})
+
+test_that("i_get_equal_wording - return list with variables for each wording in data. specified wordings", {
+  ret1 <- list("my wording 1" = c("V1", "V2"))
+  ret2 <- list("my wording 1" = c("V1", "V2"), "my wording 2" = c("V3"))
+  expect_equal(i_get_equal_wording(dataWithwordings, wording = c("my wording 1")), ret1)
+  expect_equal(i_get_equal_wording(dataWithwordings, wording = c("my wording 1", "my wording 2")), ret2)
+  expect_equal(
+    suppressWarnings(i_get_equal_wording(dataWithwordings, wording = c("my wording 1", "my wording 2", "my wording 3"))),
+    ret2
+  )
+  expect_equal(
+    suppressWarnings(i_get_equal_wording(dataWithwordings, wording = c("my wording 3"))),
+    NA
+  )
+})
+
+test_that("i_get_equal_wording - throw warning when wording is not in data", {
+  expect_warning(i_get_equal_wording(dataWithwordings, wording = c("my wording 3")))
+  expect_warning(i_get_equal_wording(dataWithwordings, wording = c("my wording 1", "my wording 3")))
+})
+
+test_that("i_get_equal_wording - throw error when x is not data.frame", {
+  expect_error(i_get_equal_wording(1:3))
+})
+
+test_that("i_get_equal_wording - throw error when wording is not character vector", {
+  expect_error(i_get_equal_wording(dataWithwordings, wording = 1:3))
+  expect_error(i_get_equal_wording(dataWithwordings, wording = list("A" = 1)))
+  expect_error(i_get_equal_wording(dataWithwordings, wording = data.frame("A" = 1)))
+  expect_error(i_get_equal_wording(dataWithwordings, wording = c(TRUE, FALSE)))
+})
