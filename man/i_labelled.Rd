@@ -13,6 +13,7 @@ i_labelled(
   scale = NULL,
   annotation = NULL,
   wording = NULL,
+  subject = NULL,
   ...
 )
 }
@@ -33,8 +34,9 @@ i_labelled(
 
 \item{wording}{question text}
 
-\item{...}{further attributes passed to class
-#' @importFrom stats setNames}
+\item{subject}{subject}
+
+\item{...}{further attributes passed to class}
 }
 \value{
 vector or data.frame

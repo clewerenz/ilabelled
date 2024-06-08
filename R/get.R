@@ -236,3 +236,149 @@ i_get_wording.data.frame <- function(x){
   }, simplify = FALSE)
 }
 
+
+#' get subject
+#' @description
+#' return subject as character vector applied to vector
+#' return list when applied to data.frame
+#'
+#' @returns returns subject
+#' @param x vector or data.frame
+#' @export
+i_get_subject <- function(x){
+  UseMethod("i_get_subject")
+}
+
+#' @export
+i_get_subject.default <- function(x){
+  subject <- attr(x, "subject", TRUE)
+  if(is.null(subject)){
+    return(NA)
+  }
+  subject
+}
+
+#' @export
+i_get_subject.data.frame <- function(x){
+  sapply(x, function(y){
+    subject <- attr(y, "subject", TRUE)
+    if(is.null(subject)){
+      NA
+    }else{
+      subject
+    }
+  }, simplify = FALSE)
+}
+
+
+#' get variable names by subject
+#' @description
+#' return all variable names by subjects
+#'
+#' one, several, or all subjects can be looked up
+#'
+#'
+#' @returns named list or NA. return named list with one list entry for each subject. when no subject in data or no match for subjects, return NA.
+#' @param x data.frame
+#' @param subject one or more subjects as character vector. when NULL return all variable names by all subjects in data
+#' @export
+i_get_equal_subject <- function(x, subject = NULL){
+  if(!inherits(x, "data.frame")) stop("x must be data.frame")
+  if(!is.null(subject) && !is.atomic(subject)){
+    stop("subject must be character vector")
+  }else if(!is.null(subject) && is.atomic(subject) && !is.character(subject)){
+    stop("subject must be character vector")
+  }
+
+  # get all subject and check for valid subjects
+  all_subjects <- i_get_subject(x)
+  is_valid_subject <- unlist(lapply(all_subjects, function(y){ .valid_subject(y) }))
+  all_subjects <- all_subjects[is_valid_subject]
+
+  if(is.null(subject)){
+    # for all subjects in data get variables for each subject
+    unique_subjects <- unlist(all_subjects)
+    unique_subjects <- unique(unique_subjects)
+    unique_subjects <- unique_subjects[!is.na(unique_subjects)]
+    ret <- sapply(unique_subjects, function(y){
+      all_subjects_temp <- unlist(all_subjects)
+      names(all_subjects_temp[all_subjects_temp %in% y])
+    }, USE.NAMES = TRUE, simplify = FALSE)
+  }else{
+    # get variables for each subject provided to function
+    ret <- sapply(subject, function(y){
+      all_subjects_temp <- unlist(all_subjects)
+      names(all_subjects_temp[all_subjects_temp %in% y])
+    }, USE.NAMES = TRUE, simplify = FALSE)
+
+    not_available <- unlist(lapply(ret, function(y) length(y) < 1))
+    not_available <- names(not_available[not_available])
+    for(i in not_available) warning("no matching subject for '", i, "'")
+
+    ret <- ret[!names(ret) %in% not_available]
+  }
+
+  # return list when not empty.
+  if(length(ret) > 0){
+    return(ret)
+  }else{
+    return(NA)
+  }
+}
+
+
+
+#' get variable names by wording
+#' @description
+#' return all variable names by wordings
+#'
+#' one, several, or all wordings can be looked up
+#'
+#'
+#' @returns named list or NA. return named list with one list entry for each wording. when no wording in data or no match for wordings, return NA.
+#' @param x data.frame
+#' @param wording one or more wordings as character vector. when NULL return all variable names by all wordings in data
+#' @export
+i_get_equal_wording <- function(x, wording = NULL){
+  if(!inherits(x, "data.frame")) stop("x must be data.frame")
+  if(!is.null(wording) && !is.atomic(wording)){
+    stop("wording must be character vector")
+  }else if(!is.null(wording) && is.atomic(wording) && !is.character(wording)){
+    stop("wording must be character vector")
+  }
+
+  # get all wording and check for valid wordings
+  all_wordings <- i_get_wording(x)
+  is_valid_wording <- unlist(lapply(all_wordings, function(y){ .valid_wording(y) }))
+  all_wordings <- all_wordings[is_valid_wording]
+
+  if(is.null(wording)){
+    # for all wordings in data get variables for each wording
+    unique_wordings <- unlist(all_wordings)
+    unique_wordings <- unique(unique_wordings)
+    unique_wordings <- unique_wordings[!is.na(unique_wordings)]
+    ret <- sapply(unique_wordings, function(y){
+      all_wordings_temp <- unlist(all_wordings)
+      names(all_wordings_temp[all_wordings_temp %in% y])
+    }, USE.NAMES = TRUE, simplify = FALSE)
+  }else{
+    # get variables for each wording provided to function
+    ret <- sapply(wording, function(y){
+      all_wordings_temp <- unlist(all_wordings)
+      names(all_wordings_temp[all_wordings_temp %in% y])
+    }, USE.NAMES = TRUE, simplify = FALSE)
+
+    not_available <- unlist(lapply(ret, function(y) length(y) < 1))
+    not_available <- names(not_available[not_available])
+    for(i in not_available) warning("no matching wording for '", i, "'")
+
+    ret <- ret[!names(ret) %in% not_available]
+  }
+
+  # return list when not empty.
+  if(length(ret) > 0){
+    return(ret)
+  }else{
+    return(NA)
+  }
+}

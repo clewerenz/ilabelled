@@ -1,7 +1,7 @@
 IMPORTANT
   - user should not be able to apply numeric na-values/na-range to non-numeric data
-  - as.logical.i_labelled
-  - value 0 is deleted (gets lost)
+  - i_valid_scale
+  - get variables for same wording
 
 SECONDARY
   - improve messages for run-time-tests

@@ -19,6 +19,7 @@ print.i_labelled <- function(x, ...){
   print(`attributes<-`(x, NULL))
 
   i_print_wording(x)
+  i_print_subject(x)
   i_print_na_values(x)
   i_print_na_range(x)
   i_print_scale(x)
@@ -156,4 +157,22 @@ i_print_wording.default <- function(x){
     return(invisible(wording))
   }
   cat(c("\nWording:\n", wording, "\n"))
+}
+
+
+#' print subject
+#' @returns No return value. Print subject attribute to console
+#' @param x vector
+#' @export
+i_print_subject <- function(x){
+  UseMethod("i_print_subject")
+}
+
+#' @export
+i_print_subject.default <- function(x){
+  subject <- attr(x, "subject", TRUE)
+  if(is.null(subject)){
+    return(invisible(subject))
+  }
+  cat(c("\nsubject:\n", subject, "\n"))
 }

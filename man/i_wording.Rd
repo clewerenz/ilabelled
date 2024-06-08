@@ -17,5 +17,5 @@ x with wording applied
 \description{
 add wording to i_labelled object
 
-can be used to store additional information about a variable
+can be used to store question text
 }

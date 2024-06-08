@@ -1,8 +1,12 @@
 library(devtools)
 devtools::load_all()
 
-x <- i_labelled(c(1:4,-9), labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4), na_values = -9, na_range = c(-9,-1), scale = "nominal", wording = "How are you?")
-x
+dataWithSubjects <- data.frame(
+  V1 = i_labelled(1:3, subject = "my subject 1"),
+  V2 = i_labelled(1:3, subject = "my subject 1"),
+  V3 = i_labelled(1:3, subject = "my subject 2"),
+  V4 = i_labelled(1:3)
+)
 
-x <- i_labelled(factor(c(1:4,-9)), labels = c("A" = 1, "B" = 2, "C" = 3, "D" = 4), na_values = -9, na_range = c(-9,-1), scale = "nominal", wording = "How are you?")
-x
+
+i_get_equal_subject(dataWithSubjects, subject = 1:3)

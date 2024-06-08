@@ -13,13 +13,14 @@
 #' @param scale scale level (nominal, ordinal, scale)
 #' @param annotation additional information about variable
 #' @param wording question text
+#' @param subject subject
 #' @param ... further attributes passed to class
-.init <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, ...) {
+.init <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, subject = NULL, ...) {
   UseMethod(".init")
 }
 
 
-.init.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, ...) {
+.init.default <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, subject = NULL, ...) {
   # set class i_labelled
   if(is.numeric(x) || is.factor(x) || is.logical(x)){
     structure(
@@ -32,6 +33,7 @@
       scale = scale,
       annotation = annotation,
       wording = wording,
+      subject = subject,
       ...
     )
   }else{
@@ -45,13 +47,14 @@
       scale = scale,
       annotation = annotation,
       wording = wording,
+      subject = subject,
       ...
     )
   }
 }
 
 
-.init.i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, ...) {
+.init.i_labelled <- function(x, label = NULL, labels = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, subject = NULL, ...) {
   # do nothing
   x
 }
