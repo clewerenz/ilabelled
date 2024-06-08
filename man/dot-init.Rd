@@ -13,6 +13,7 @@
   scale = NULL,
   annotation = NULL,
   wording = NULL,
+  subject = NULL,
   ...
 )
 }
@@ -32,6 +33,8 @@
 \item{annotation}{additional information about variable}
 
 \item{wording}{question text}
+
+\item{subject}{subject}
 
 \item{...}{further attributes passed to class}
 }

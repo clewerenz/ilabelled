@@ -236,3 +236,37 @@ i_get_wording.data.frame <- function(x){
   }, simplify = FALSE)
 }
 
+
+#' get subject
+#' @description
+#' return subject as character vector applied to vector
+#' return list when applied to data.frame
+#'
+#' @returns returns subject
+#' @param x vector or data.frame
+#' @export
+i_get_subject <- function(x){
+  UseMethod("i_get_subject")
+}
+
+#' @export
+i_get_subject.default <- function(x){
+  subject <- attr(x, "subject", TRUE)
+  if(is.null(subject)){
+    return(NA)
+  }
+  subject
+}
+
+#' @export
+i_get_subject.data.frame <- function(x){
+  sapply(x, function(y){
+    subject <- attr(y, "subject", TRUE)
+    if(is.null(subject)){
+      NA
+    }else{
+      subject
+    }
+  }, simplify = FALSE)
+}
+
