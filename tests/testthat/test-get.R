@@ -112,3 +112,64 @@ test_that("get annotation from data.frame", {
   expect_equal(i_get_annotation(x), r)
 })
 
+
+# ----------------------------------------------------------------------------
+
+# get_equal_subject()
+
+dataWithSubjects <- data.frame(
+  V1 = i_labelled(1:3, subject = "my subject 1"),
+  V2 = i_labelled(1:3, subject = "my subject 1"),
+  V3 = i_labelled(1:3, subject = "my subject 2"),
+  V4 = i_labelled(1:3)
+)
+
+dataWithoutSubjects <- data.frame(
+  V1 = i_labelled(1:3),
+  V2 = i_labelled(1:3),
+  V3 = i_labelled(1:3),
+  V4 = i_labelled(1:3)
+)
+
+test_that("i_get_equal_subject - return list with variables for each subject in data. param subject = NULL", {
+  ret <- list("my subject 1" = c("V1", "V2"), "my subject 2" = c("V3"))
+  expect_equal(i_get_equal_subject(dataWithSubjects), ret)
+})
+
+test_that("i_get_equal_subject - return NA for data with no subjects. param subject = NULL", {
+  expect_equal(i_get_equal_subject(dataWithoutSubjects), NA)
+})
+
+test_that("i_get_equal_subject - return list with variables for each subject in data. specified subjects", {
+  ret1 <- list("my subject 1" = c("V1", "V2"))
+  ret2 <- list("my subject 1" = c("V1", "V2"), "my subject 2" = c("V3"))
+  expect_equal(i_get_equal_subject(dataWithSubjects, subject = c("my subject 1")), ret1)
+  expect_equal(i_get_equal_subject(dataWithSubjects, subject = c("my subject 1", "my subject 2")), ret2)
+  expect_equal(
+    suppressWarnings(i_get_equal_subject(dataWithSubjects, subject = c("my subject 1", "my subject 2", "my subject 3"))),
+    ret2
+  )
+  expect_equal(
+    suppressWarnings(i_get_equal_subject(dataWithSubjects, subject = c("my subject 3"))),
+    NA
+  )
+})
+
+test_that("i_get_equal_subject - throw warning when subject is not in data", {
+  expect_warning(i_get_equal_subject(dataWithSubjects, subject = c("my subject 3")))
+  expect_warning(i_get_equal_subject(dataWithSubjects, subject = c("my subject 1", "my subject 3")))
+})
+
+test_that("i_get_equal_subject - throw error when x is not data.frame", {
+  expect_error(i_get_equal_subject(1:3))
+})
+
+test_that("i_get_equal_subject - throw error when subject is not character vector", {
+  expect_error(i_get_equal_subject(dataWithSubjects, subject = 1:3))
+  expect_error(i_get_equal_subject(dataWithSubjects, subject = list("A" = 1)))
+  expect_error(i_get_equal_subject(dataWithSubjects, subject = data.frame("A" = 1)))
+  expect_error(i_get_equal_subject(dataWithSubjects, subject = c(TRUE, FALSE)))
+})
+
+
+

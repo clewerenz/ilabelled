@@ -270,3 +270,59 @@ i_get_subject.data.frame <- function(x){
   }, simplify = FALSE)
 }
 
+
+#' get variable names by subject
+#' @description
+#' return all variable names by subjects
+#'
+#' one or more subjects can be looked up
+#'
+#'
+#' @returns named list or NA. return named list with one list entry for each subject. when no subject in data or no match for subjects, return NA.
+#' @param x data.frame
+#' @param subject one or more subjects as character vector. when NULL return all variable names by all subjects in data
+#' @export
+i_get_equal_subject <- function(x, subject = NULL){
+  if(!inherits(x, "data.frame")) stop("x must be data.frame")
+  if(!is.null(subject) && !is.atomic(subject)){
+    stop("subject must be character vector")
+  }else if(!is.null(subject) && is.atomic(subject) && !is.character(subject)){
+    stop("subject must be character vector")
+  }
+
+  # get all subject and check for valid subjects
+  all_subjects <- i_get_subject(x)
+  is_valid_subject <- unlist(lapply(all_subjects, function(y){ .valid_subject(y) }))
+  all_subjects <- all_subjects[is_valid_subject]
+
+  if(is.null(subject)){
+    # for all subjects in data get variables for each subject
+    unique_subjects <- unlist(all_subjects)
+    unique_subjects <- unique(unique_subjects)
+    unique_subjects <- unique_subjects[!is.na(unique_subjects)]
+    ret <- sapply(unique_subjects, function(y){
+      all_subjects_temp <- unlist(all_subjects)
+      names(all_subjects_temp[all_subjects_temp %in% y])
+    }, USE.NAMES = TRUE, simplify = FALSE)
+  }else{
+    # get variables for each subject provided to function
+    ret <- sapply(subject, function(y){
+      all_subjects_temp <- unlist(all_subjects)
+      names(all_subjects_temp[all_subjects_temp %in% y])
+    }, USE.NAMES = TRUE, simplify = FALSE)
+
+    not_available <- unlist(lapply(ret, function(y) length(y) < 1))
+    not_available <- names(not_available[not_available])
+    for(i in not_available) warning("no matching subject for '", i, "'")
+
+    ret <- ret[!names(ret) %in% not_available]
+  }
+
+  # return list when not empty.
+  if(length(ret) > 0){
+    return(ret)
+  }else{
+    return(NA)
+  }
+}
+
