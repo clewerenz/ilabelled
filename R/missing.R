@@ -17,7 +17,14 @@ i_na_values <- function(x, values, sort = TRUE, desc = FALSE){
 
 #' @export
 i_na_values.default <- function(x, values, sort = TRUE, desc = FALSE){
-  stopifnot(.valid_na_values(values))
+  if(!.valid_na_values(values)) stop("invalid na_values")
+  if(!is.null(values)){
+    if(!is.numeric(x) && !is.factor(x) && !is.logical(x) && !is.character(values)){
+      stop("Cannot apply non-character na_values to non-numeric vector. Value na_values must be character.")
+    }else if((is.numeric(x) || is.factor(x)) && !is.numeric(values)){
+      stop("Cannot apply non-numeric na_values to numeric vector. na_values must be numeric.")
+    }
+  }
   if(sort){
     values <- sort(values, desc)
   }
@@ -50,7 +57,14 @@ i_na_range <- function(x, values){
 
 #' @export
 i_na_range.default <- function(x, values){
-  stopifnot(.valid_na_range(values))
+  if(!.valid_na_range(values)) stop("invalid na_range")
+  if(!is.null(values)){
+    if(!is.numeric(x) && !is.factor(x) && !is.logical(x) && !is.character(values)){
+      stop("Cannot na_range to non-numeric vector.")
+    }else if((is.numeric(x) || is.factor(x)) && !is.numeric(values)){
+      stop("Cannot apply non-numeric na_range to numeric vector. na_range must be numeric.")
+    }
+  }
   structure(
     x,
     na_range = values

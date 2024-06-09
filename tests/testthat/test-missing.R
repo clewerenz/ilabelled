@@ -11,12 +11,7 @@ test_that(
     expect_true(length(attr(x, "na_values", T)) == 2)
     expect_true(all(attr(x, "na_values", T) == c(1,3)))
 
-    x <- i_labelled(iris$Species, na_values = c("bla","blubb"))
-    expect_true(length(attr(x, "na_values", T)) == 2)
-    expect_true(all(attr(x, "na_values", T) == c("bla","blubb")))
-    x <- i_labelled(iris$Species, na_values = c("Z","W","A"))
-    expect_true(length(attr(x, "na_values", T)) == 3)
-    expect_true(all(attr(x, "na_values", T) == c("Z","W","A")))
+    expect_error(i_labelled(iris$Species, na_values = c("bla","blubb"))) # na values for factor must be numeric
 
     expect_error(i_labelled(1:5, na_values = c(NA,1)))
 
@@ -32,12 +27,9 @@ test_that(
     x <- i_na_values(x, c(1,3))
     expect_true(length(attr(x, "na_values", T)) == 2)
     expect_true(all(attr(x, "na_values", T) == c(1,3)))
-    x <- i_na_values(x, c("Z","W","A"))
-    expect_true(length(attr(x, "na_values", T)) == 3)
-    expect_true(all(attr(x, "na_values", T) == c("A","W","Z")))
-    x <- i_na_values(x, c("Z","W","A"),sort = T, desc = T)
-    expect_true(length(attr(x, "na_values", T)) == 3)
-    expect_true(all(attr(x, "na_values", T) == c("Z","W","A")))
+    expect_error(i_na_values(x, c("Z","W","A"))) # na_values cannot be character on numeric values
+    expect_error(i_na_values(x, c("Z","W","A"),sort = T, desc = T)) # na_values cannot be character on numeric values
+
     x <- i_na_values(x, NULL)
     expect_true(is.null(attr(x, "na_values", T)))
 
@@ -93,12 +85,11 @@ test_that(
     attr(x, "na_values") <- "A"
     expect_true(is.na(i_missing_to_na(x)[[1]]))
 
-    x <- data.frame(V1 = c(286,127,478,-9), V2 = c(-8,1,2,3), V3 = c("A","B","-9","D"))
+    x <- data.frame(V1 = c(286,127,478,-9), V2 = c(-8,1,2,3))
     x <- i_na_values(x, values = c(-9,-8))
     x <- i_missing_to_na(x)
     expect_true(is.na(x$V1[4]))
     expect_true(is.na(x$V2[1]))
-    expect_true(is.na(x$V3[3]))
 
     # missings to NA - method
 

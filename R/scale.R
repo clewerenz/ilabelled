@@ -38,3 +38,32 @@ i_scale <- function(x, scale = NULL){
     T
   }
 }
+
+
+#' validate variable scale level
+#' @description
+#' returns boolean when applied to vector
+#'
+#' returns a named list when applied to data.frame
+#'
+#' @returns T/F
+#' @param x vector or data.frame
+#' @export
+i_valid_scale <- function(x){
+  UseMethod("i_valid_scale")
+}
+
+
+#' @export
+i_valid_scale.default <- function(x){
+  y <- attr(x, "scale", TRUE)
+  !is.null(y) && .valid_scale(y) && any(y %in% c("nominal", "ordinal", "scale"))
+}
+
+
+#' @export
+i_valid_scale.data.frame <- function(x){
+  sapply(x, i_valid_scale, USE.NAMES = TRUE, simplify = FALSE)
+}
+
+

@@ -239,3 +239,33 @@ i_remove_wording.default <- function(x){
 i_remove_wording.data.frame <- function(x){
   x[] <- lapply(x, i_remove_wording)
 }
+
+
+
+# -----------------------------------------------------------------------------
+
+#' remove subject
+#' @description
+#' remove subject label from variable
+#' keep other attributes
+#'
+#' @returns Returns x without subject
+#' @param x vector or data.frame
+#' @export
+i_remove_subject <- function(x){
+  UseMethod("i_remove_subject")
+}
+
+#' @export
+i_remove_subject.default <- function(x){
+  stopifnot(is.atomic(x))
+  structure(
+    x,
+    subject = NULL
+  )
+}
+
+#' @export
+i_remove_subject.data.frame <- function(x){
+  x[] <- lapply(x, i_remove_subject)
+}
