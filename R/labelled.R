@@ -47,6 +47,22 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     stop("Cannot apply non-numeric value labels to numeric vector. Value labels must be numeric.")
   }
 
+  if(!is.null(na_values)){
+    if(!is.numeric(x) && !is.logical(x) && !is.character(na_values)){
+      stop("Cannot apply non-character na_values to non-numeric vector. Value na_values must be character.")
+    }else if(is.numeric(x) && !is.numeric(na_values)){
+      stop("Cannot apply non-numeric na_values to numeric vector. na_values must be numeric.")
+    }
+  }
+
+  if(!is.null(na_range)){
+    if(!is.numeric(x) && !is.logical(x) && !is.character(na_range)){
+      stop("Cannot na_range to non-numeric vector.")
+    }else if(is.numeric(x) && !is.numeric(na_range)){
+      stop("Cannot apply non-numeric na_range to numeric vector. na_range must be numeric.")
+    }
+  }
+
   if(!is.null(scale)){
     scale <- tolower(scale)
     if(!.valid_scale(scale)){
@@ -65,8 +81,12 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
     stop("invalid annotation")
   }
 
-  if(!is.null(wording) && !.valid_annotation(wording)){
-    stop("invalid wording")
+  if(!is.null(wording) && !.valid_wording(wording)){
+    stop("wording must be character vector of length 1")
+  }
+
+  if(!is.null(subject) && !.valid_subject(subject)){
+    stop("subject must be character vector of length 1")
   }
 
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, annotation = annotation, wording = wording, subject = subject, ...))
@@ -94,6 +114,22 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
     stop("Cannot apply non-numeric value labels to factor. Value labels must be numeric.")
   }
 
+  if(!is.null(na_values)){
+    if(!is.numeric(x) && !is.factor(x) && !is.logical(x) && !is.character(na_values)){
+      stop("Cannot apply non-character na_values to non-numeric vector. Value na_values must be character.")
+    }else if((is.numeric(x) || is.factor(x)) && !is.numeric(na_values)){
+      stop("Cannot apply non-numeric na_values to numeric vector. na_values must be numeric.")
+    }
+  }
+
+  if(!is.null(na_range)){
+    if(!is.numeric(x) && !is.factor(x) && !is.logical(x) && !is.character(na_range)){
+      stop("Cannot na_range to non-numeric vector.")
+    }else if((is.numeric(x) || is.factor(x)) && !is.numeric(na_range)){
+      stop("Cannot apply non-numeric na_range to numeric vector. na_range must be numeric.")
+    }
+  }
+
   if(!is.null(scale)){
     scale <- tolower(scale)
     if(!.valid_scale(scale)){
@@ -112,8 +148,12 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
     stop("invalid annotation")
   }
 
-  if(!is.null(wording) && !.valid_annotation(wording)){
+  if(!is.null(wording) && !.valid_wording(wording)){
     stop("invalid wording")
+  }
+
+  if(!is.null(subject) && !.valid_subject(subject)){
+    stop("invalid subject")
   }
 
   return(.init(x, label = label, labels = labels, na_values = na_values, na_range = na_range, scale = scale, wording = wording, subject = subject, ...))
