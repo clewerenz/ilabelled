@@ -38,17 +38,19 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
   is_atomic <- is.atomic(x)
   is_data_frame <- is.data.frame(x)
 
-  stopifnot(is_atomic | is_data_frame)
+  if(!is_atomic & !is_data_frame){
+    stop("'copy' can only be applied to vector or data.frame")
+  }
 
   if(!is.null(copy) && !is.atomic(copy) && length(copy) != 1){
-    stop("'copy from' must be variable name of length 1")
+    stop("'copy' must be variable name of length 1 on data.frame or T/F on vector.")
   }
-  if(!is.null(copy) && !is_data_frame){
-    stop("'copy' can only be used on data.frame")
-  }
-  if(!is.null(copy) && is_data_frame){
+
+  if(!is.null(copy) && !is_data_frame && !is.logical(copy)){
+    stop("'copy' must be T/F when i_recode is applied to vector.")
+  }else if(!is.null(copy) && is_data_frame){
     if(!copy %in% names(x)){
-      stop("'copy' can not be found in x")
+      stop("'copy' can not be found in data.frame x")
     }
   }
 
@@ -86,7 +88,10 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
     new_labels <- new_labels[order(new_labels, decreasing = FALSE)]
   }
 
-  if(!is.null(copy)){
+  # copy part
+  if(is_atomic && !is.null(copy) && copy){
+    x <- i_unclass(x[[1]])
+  }else if(is_data_frame && !is.null(copy)){
     x <- i_unclass(x[[copy]])
   }else{
     x <- rep(NA, length(x))
