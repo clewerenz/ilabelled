@@ -70,3 +70,30 @@ test_that("... must be formula", {
 })
 
 
+test_that("i_recode: copy param - copy data when vector is provided", {
+  testVec <- i_labelled(1:3, labels = c("A" = 1, "B" = 2, "A_dubplicated_" = 3))
+
+  # copy is FALSE
+  ret1 <- i_labelled(c(NA,NA,1), labels = c("A" = 1))
+  expect_equal(i_recode(testVec, "A" = 1 ~ x == 3, copy = FALSE), ret1)
+
+  # copy is TRUE
+  ret2 <- i_labelled(c(1,2,1), labels = c("A" = 1))
+  expect_equal(i_recode(testVec, "A" = 1 ~ x == 3, copy = TRUE), ret2)
+})
+
+
+test_that("i_recode: copy param - copy data when data.frame is provided", {
+  testData <- data.frame(
+    V1 = i_labelled(1:3, labels = c("A" = 1, "B" = 2, "A_dubplicated_" = 3))
+  )
+
+  # copy is FALSE
+  ret1 <- i_labelled(c(NA,NA,1), labels = c("A" = 1))
+  expect_equal(i_recode(testData, "A" = 1 ~ V1 == 3), ret1)
+
+  # copy is TRUE
+  ret2 <- i_labelled(c(1,2,1), labels = c("A" = 1))
+  expect_equal(i_recode(testData, "A" = 1 ~ V1 == 3, copy = "V1"), ret2)
+})
+

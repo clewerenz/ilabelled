@@ -2,18 +2,18 @@ library(devtools)
 devtools::load_all()
 
 testData <- data.frame(
-  validScale = i_labelled(1:3, scale = c("nominal")),
-  invalidScale = i_labelled(1:3),
-  missingScale = i_labelled(1:3)
+  V1 = i_labelled(1:3, labels = c("A" = 1, "B" = 2, "A_dubplicated_" = 3))
 )
-attr(testData$invalidScale, "scale") <- "invalid"
+
+testVec <- i_labelled(1:3, labels = c("A" = 1, "B" = 2, "A_dubplicated_" = 3))
 
 
-i_labelled(1:2, na_values = "A")
-i_labelled(c("A", "B"), na_values = 1)
+i_recode(testVec, "A" = 1 ~ x == 3, copy = FALSE)
+i_recode(testVec, "A" = 1 ~ x == 3, copy = TRUE)
 
-i_labelled(c("A", "B"), na_range = c(1,3))
-i_labelled(1:3, na_range = c(1,3))
 
+
+i_recode(testData, "A" = 1 ~ V1 == 3)
+i_recode(testData, "A" = 1 ~ V1 == 3, copy = "V1")
 
 
