@@ -60,7 +60,9 @@ is_decimal <- function(x){
 #' @param table vector or NULL: the values to be matched against. Long vectors are not supported.
 .i_in <- function(x, table){
   if(is.i_labelled(x)){
-    if(is.character(table)){
+    if(is.i_labelled(table)){
+      match(i_as_character(x), i_as_character(table), nomatch = 0) > 0
+    }else if(is.character(table)){
       match(i_as_character(x), table, nomatch = 0) > 0
     }else{
       match(unclass(x), table, nomatch = 0) > 0
