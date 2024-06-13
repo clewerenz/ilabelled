@@ -9,7 +9,6 @@ Description: Simple handling of survey data. Smart handling of meta-information 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-US
-LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
 Imports:
