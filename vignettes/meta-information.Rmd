@@ -1,0 +1,54 @@
+---
+title: "Meta Information"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Meta Information}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE, message=FALSE}
+library(ilabelled)
+```
+
+
+# Meta Information
+
+Meta information that is part of i_labeled objects: 
+  
+  1. *label*: Variable label 
+  2. *labels*: Value labels 
+  3. *na_values*: Missing values 
+  4. *na_range*: Missing range 
+  5. *scale*: Scale level 
+  6. *wording*: Question text in the questionnaire 
+  7. *subject*: Subject of the variable 
+  8: *annotation*: Additional information 
+
+Meta information can be applied via the class constructor i_labelled (as seen above) or by dedicated functions. Adding meta information by base R's <code>attr()</code> function is also possible.
+
+```{r}
+myVariable <- i_labelled(c(1, 2, 3, -9, NA))
+
+myVariable <- myVariable |>
+  i_label("my variable label") |>
+  i_labels(
+    "A" = 1,
+    "B" = 2,
+    "C" = 3,
+    "X" = -9
+  ) |>
+  i_na_range(c(-9,-1)) |>
+  i_scale("nominal") |>
+  i_subject("dummy data")
+myVariable
+```
+
+

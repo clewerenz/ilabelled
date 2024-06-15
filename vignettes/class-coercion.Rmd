@@ -1,0 +1,52 @@
+---
+title: "Class Coercion"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class Coercion}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE, echo=FALSE}
+library(ilabelled)
+```
+
+
+# Class coercion
+
+Objects of type i_labelled can be very easily converted into base R object classes. On the one hand, this is possible using the familiar <code>as.*</code> methods. On the other hand, there are specific functions in which value labels are taken into account: <code>i_as_factor()</code> and <code>i_as_character</code>
+
+If R's own method as.* is used, the underlying data is converted accordingly. Value labels are not taken into account.
+
+```{r}
+myData <- i_labelled(
+  x = c(1, 2, 3, NA), 
+  labels = c("A" = 1, "B" = 2), 
+  label = "my Variable"
+)
+as.character(myData)
+as.numeric(myData)
+as.factor(myData)
+```
+
+
+However, ilabelled also offers two specific functions that take value labels into account during conversion.
+
+```{r}
+myData <- i_labelled(
+  x = c(1, 2, 3, NA, -9), 
+  labels = c("A" = 1, "B" = 2, "X" = -9), 
+  label = "my Variable",
+  na_values = -9
+)
+i_as_factor(myData, missing_to_na = FALSE, keep_attributes = FALSE)
+i_as_character(myData, missing_to_na = TRUE, keep_attributes = TRUE)
+```
+
