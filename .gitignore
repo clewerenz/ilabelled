@@ -5,3 +5,4 @@
 benchmarking.R
 docs
 inst/doc
+_pkgdown.yml
