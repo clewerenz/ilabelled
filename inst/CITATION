@@ -1,8 +1,0 @@
-bibentry(bibtype = "Manual",
-    title = "ilabelled: Simple Handling of Labelled Data",
-    author = "Christof Lewerenz",
-    address = "Kassel, Germany",
-    note = "version 0.3.0",
-    year = 2024,
-    url = "https://github.com/clewerenz/ilabelled"
-)
