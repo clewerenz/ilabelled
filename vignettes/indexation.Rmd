@@ -1,0 +1,57 @@
+---
+title: "Indexation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Indexation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE, message=FALSE}
+library(ilabelled)
+```
+
+
+# Indexation
+
+One of the fundamental features of i_labelled objects is that both underlying values and value labels can be used for logical operations. 
+
+The following rules must be observed when indexing i_labelled objects: 
+
+  1. If numerical values are used for the indexation of numerical i_labelled data, the underlying numerical values of the i_labelled data are used for the comparison. 
+  2. If character values or values of class i_labelled are used for indexation, *value labels are always used over the underlying values of the i_labelled data*.
+
+
+## Example 1: Indexation of unterlying data
+
+```{r}
+myData <- i_labelled(
+  x = c(1, 2, 3, NA), 
+  labels = c("A" = 1, "B" = 2, "C" = 3), 
+  label = "my Variable"
+)
+
+myData %in% 1
+myData == 1
+myData > 1
+```
+
+
+## Example 2: Indexation of value labels
+
+Keep in mind, if character values are used for indexation, value labels are alway chosen over underlying values.
+
+```{r}
+myData %in% c("A", "B")
+myData != "C"
+myData > "A"
+```
+
+

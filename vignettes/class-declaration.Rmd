@@ -1,0 +1,63 @@
+---
+title: "Class Declaration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class Declaration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE, message=FALSE}
+library(ilabelled)
+```
+
+
+# Class declaration
+
+ilabelled offers the option of declaring individual vectors or all vectors in a data.frame as an object i_labelled. Additional meta information is added as attributes. Additional information can be viewed transparently using a class-specific print method.
+
+In principle, adding additional information is optional. As mentioned above, the class-specific syntax is intended to encourage meta information to be included. 
+
+```{r}
+set.seed(1234)
+
+myVar <- i_labelled(
+  x = sample(c(1:3,-9), 50, replace = TRUE), 
+  label = "Gender",
+  labels = c(
+    "A" = 1,
+    "B" = 2,
+    "C" = 3,
+    "X" = -9
+  ),
+  na_values = -9,
+  subject = "Personal information",
+  wording = "What is your gender",
+  scale = "nominal"
+)
+myVar
+
+```
+
+
+## factor to i_labelled
+
+Value labels are automatically assigned for vectors of class factor. In contrast to the base R factor class, underlying values and labels can be addressed directly for i_labelled objects.
+
+```{r}
+myData <- factor(c(1, 2, 3, NA), levels = 1:3, labels = c("A", "B", "C"))
+myData <- i_labelled(myData)
+myData
+myData %in% "A"
+myData == 1
+```
+
+
+

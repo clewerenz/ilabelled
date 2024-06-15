@@ -1,0 +1,31 @@
+---
+title: "General Information"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{General Information}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE, message=FALSE}
+library(ilabelled)
+```
+
+# General Information
+
+ilabelled was developed to address a fundamental problem in labeling values in R: 
+
+  1. Underlying values should not be changed when value labels are added (as is the case with the factor class). 
+  2. Value labels as well as underlying values should be able to be used as indices. 
+
+In addition, the i_labelled class should encourage users to think directly about meta information about variables in the work process and add it to the variables.
+
+The basic idea behind this endeavor is to enable a similar handling of survey data as is the case in common social science statistical software such as SPSS or STATA.
+
