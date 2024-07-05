@@ -2,7 +2,7 @@
 % Please edit documentation in R/copy.R
 \name{i_copy}
 \alias{i_copy}
-\title{copy labels from one variable to another}
+\title{copy meta information from one variable to another}
 \usage{
 i_copy(to, from, what = "all", ...)
 }
@@ -19,5 +19,5 @@ i_copy(to, from, what = "all", ...)
 Returns 'to' with ilabelled attributes copied from 'from'
 }
 \description{
-copy labels from one variable to another
+copy meta information from one variable to another
 }

@@ -30,10 +30,11 @@
 #' @param scale scale level (nominal, ordinal, metric)
 #' @param annotation addition information about variable
 #' @param wording question text
+#' @param subject subject
 #' @param copy a variable from x. Copy the values of an existing variable before recoding values according to ...
 #' @importFrom stats setNames
 #' @export
-i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, copy = NULL){
+i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, subject = NULL, copy = NULL){
 
   is_atomic <- is.atomic(x)
   is_data_frame <- is.data.frame(x)
@@ -101,5 +102,5 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
     x[recode_map[[i]]$which_val] <- recode_map[[i]]$new_val
   }
 
-  i_labelled(x, labels = new_labels, label = label, na_values = na_values, na_range = na_range, scale = scale, annotation = annotation, wording = wording)
+  i_labelled(x, labels = new_labels, label = label, na_values = na_values, na_range = na_range, scale = scale, annotation = annotation, subject = subject, wording = wording)
 }
