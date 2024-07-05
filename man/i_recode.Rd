@@ -14,6 +14,7 @@ i_recode(
   scale = NULL,
   annotation = NULL,
   wording = NULL,
+  subject = NULL,
   copy = NULL
 )
 }
@@ -33,6 +34,8 @@ i_recode(
 \item{annotation}{addition information about variable}
 
 \item{wording}{question text}
+
+\item{subject}{subject}
 
 \item{copy}{a variable from x. Copy the values of an existing variable before recoding values according to ...}
 }
