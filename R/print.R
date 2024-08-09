@@ -200,6 +200,5 @@ i_print_attributes.default <- function(x, exclude = NULL){
     tmp <- a[[i]]
     cat(paste0("\n", i, ":\n"))
     print(tmp)
-    cat("\n")
   }
 }
