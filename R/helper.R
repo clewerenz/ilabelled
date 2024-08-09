@@ -4,7 +4,6 @@
 #' @importFrom stats na.omit
 #' @returns T/F
 #' @param x numeric vector
-#' @export
 is_decimal <- function(x){
   if(!is.atomic(x)) stop("x must be atomic vector")
   if(!is.numeric(x)) stop("x must be numeric")
