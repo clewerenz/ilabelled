@@ -65,7 +65,8 @@ i_print_label.default <- function(x){
   if(is.null(label)){
     return(invisible(label))
   }
-  cat("\nVariable label:", label, "\n")
+  cat(c("\nVariable label: ", label), sep = "\n ")
+  # cat("\nVariable label:", paste0(label, collapse = " / "), "\n")
 }
 
 
@@ -119,7 +120,7 @@ i_print_scale.default <- function(x){
   if(is.null(scale)){
     return(invisible(scale))
   }
-  cat(paste0("\nScale level: ", scale), "\n")
+  cat(paste0("\nScale level: ", scale), sep = "\n")
 }
 
 
@@ -138,7 +139,7 @@ i_print_annotation.default <- function(x){
   if(is.null(annotation)){
     return(invisible(annotation))
   }
-  cat(c("\nAnnotation: ", annotation), sep = "\n")
+  cat(c("\nAnnotation: ", annotation), sep = "\n ")
 }
 
 
@@ -156,7 +157,7 @@ i_print_wording.default <- function(x){
   if(is.null(wording)){
     return(invisible(wording))
   }
-  cat(c("\nWording:\n", wording, "\n"))
+  cat(c("\nWording:", wording), sep = "\n ")
 }
 
 
