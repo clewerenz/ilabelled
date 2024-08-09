@@ -29,3 +29,10 @@ In addition, the i_labelled class should encourage users to think directly about
 
 The basic idea behind this endeavor is to enable a similar handling of survey data as is the case in common social science statistical software such as SPSS or STATA.
 
+## Context
+
+R is a great software for working with data. However, there is a non-negligible disadvantage when it comes to handling categorical data and meta-information, such as variable labels or scale levels, and the like, as known from other statistical software, especially SPSS.
+
+The aim of this package is to introduce a data class in which meta information (variable-label, value-labels, missing-values, scale-level) can and should be directly included. In addition, one of the biggest disadvantages of the base R factor class is to be addressed: Numerical values are not changed if they are provided with value labels. Negative and non-sequential consecutive values are not changed. In other words: the underlying database is not changed by labeling. Nevertheless, the option of using value labels for indexing is offered. 
+
+An intuitive syntax enables easy access to package-specific functions. All functions available for data manipulation can be controlled by an “i_*”.

@@ -1,3 +1,5 @@
+This is the development repository for R package ilabelled.
+
 # ilabelled
 
 A function library for working with labelled data in R. This package introduces the data class 'i_labelled' for atomic vector objects which can be used within data.frames.

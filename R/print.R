@@ -198,8 +198,7 @@ i_print_attributes.default <- function(x, exclude = NULL){
   a <- a[!names(a) %in% exclude]
   for(i in names(a)){
     tmp <- a[[i]]
-    cat(paste0("\n", i, ":\n"))
+    cat("\n", i, ":\n")
     print(tmp)
-    cat("\n")
   }
 }
