@@ -65,9 +65,6 @@ i_as_character.i_labelled <- function(x, missing_to_na = FALSE, require_all_labe
   if(require_all_labels && length(missing_values) > 0){
     stop("missing value labels")
   }
-  if(any(duplicated(names(labels)))){
-    stop("cannot convert to character: duplicate labels in value labels")
-  }
   if(any(duplicated(labels))){
     stop("cannot convert to character: duplicate values in value labels")
   }
@@ -199,14 +196,12 @@ i_as_factor.i_labelled <- function(x, missing_to_na = FALSE, require_all_labels 
   }else if(length(missing_values) > 0){
     labels <- c(labels, stats::setNames(missing_values, missing_values))
   }
-  if(any(duplicated(names(labels)))){
-    stop("cannot convert to factor: duplicate labels in value labels")
-  }
   if(any(duplicated(labels))){
     stop("cannot convert to factor: duplicate values in value labels")
   }
 
   labels <- names(sort(labels))
+  labels <- unique(labels)
 
   tmp_attr <- attributes(x)[!names(attributes(x)) %in% c("class", "levels")]
 

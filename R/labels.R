@@ -94,8 +94,8 @@ i_labels <- function(x, ..., overwrite = FALSE){
       stop("value labels should be of same class")
     }else if(length(x) < 1){
       stop("value labels cannot be of length 0")
-    }else if(any(duplicated(names(x)[!names(x) == "NULL"]))){
-      stop("duplicated names in value labels")
+    # }else if(any(duplicated(names(x)[!names(x) == "NULL"]))){ # we do allow dup value labs
+    #   stop("duplicated names in value labels")
     }else if(any(duplicated(unlist(x)))){
       stop("duplicated values in value labels")
     }
@@ -104,8 +104,8 @@ i_labels <- function(x, ..., overwrite = FALSE){
       stop("all values in value labels should be labelled")
     }else if(length(x) < 1){
       stop("value labels cannot be of length 0")
-    }else if(any(duplicated(names(x)[!names(x) == "NULL"]))){
-      stop("duplicated names in value labels")
+    # }else if(any(duplicated(names(x)[!names(x) == "NULL"]))){ # we do allow dup value labs
+    #   stop("duplicated names in value labels")
     }else if(any(duplicated(x))){
       stop("duplicated values in value labels")
     }

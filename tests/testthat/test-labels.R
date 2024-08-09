@@ -54,9 +54,7 @@ test_that(
     expect_error(i_labels(x, list("A" = LETTERS[1:5], "B" = 1:5)))
     expect_error(i_labels(x, A = 1, B = 2, C))
     expect_error(i_labels(x, A = 1, B = 2, C = "bla"))
-    # expect_error(i_labels(i_labelled(1:3), list(A = 1, NULL = 2, C = 3)))
-    ## no duplicate labels in value labels
-    expect_error(i_labels(x, c(A = 1, A = 2)))
+
     ## no duplicate values in value labels
     expect_error(i_labels(x, c(A = 1, B = 1)))
 
@@ -134,6 +132,21 @@ test_that(
     expect_equal(names(attr(y$V1, "labels", T)), c("A","B","C","X"))
     expect_equal(unname(attr(y$V2, "labels", T)), c("C","A","X","B"))
     expect_equal(names(attr(y$V2, "labels", T)), c("Drei","Eins","Null","Zwei"))
-
   }
 )
+
+
+test_that("allow duplicated value labels", {
+  ## allow duplicated value labels in class constructor
+  expect_no_error(i_labelled(1:2, labels = c("A" = 1, "A" = 2)))
+
+  ## allow duplicated value labels in as factor
+  expect_no_error(i_as_factor(i_labelled(1:2, labels = c("A" = 1, "A" = 2))))
+  expect_equal(i_as_factor(i_labelled(1:2, labels = c("A" = 1, "A" = 2))), factor(c(1,1), levels = 1, labels = "A"))
+
+  ## allow duplicated value labels in as character
+  expect_no_error(i_as_character(i_labelled(1:2, labels = c("A" = 1, "A" = 2))))
+  expect_equal(i_as_character(i_labelled(1:2, labels = c("A" = 1, "A" = 2))), c("A", "A"))
+})
+
+
