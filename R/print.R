@@ -26,6 +26,7 @@ print.i_labelled <- function(x, ...){
   i_print_label(x)
   i_print_annotation(x)
   i_print_labels(x)
+  i_print_attributes(x, exclude = c("class", "wording", "subject", "na_values", "na_range", "scale", "label", "annotation", "labels"))
 
   invisible(x)
 }
@@ -176,4 +177,29 @@ i_print_subject.default <- function(x){
     return(invisible(subject))
   }
   cat(c("\nsubject:\n", subject, "\n"))
+}
+
+
+#' print attributes
+#' @returns No return value. Print attributes to console
+#' @param x vector
+#' @param exclude character vector with attribute names not taken into account
+#' @export
+i_print_attributes <- function(x, exclude = NULL){
+  UseMethod("i_print_attributes")
+}
+
+#' @export
+i_print_attributes.default <- function(x, exclude = NULL){
+  a <- attributes(x)
+  if(length(a) < 1){
+    return(invisible(a))
+  }
+  a <- a[!names(a) %in% exclude]
+  for(i in names(a)){
+    tmp <- a[[i]]
+    cat(paste0("\n", i, ":\n"))
+    print(tmp)
+    cat("\n")
+  }
 }
