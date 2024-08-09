@@ -22,7 +22,7 @@
 #' i_recode(x = myData, A = 1 ~ V1 %in% c("A", "B"), 2 ~ "V2" == 3, "C" = 999 ~ V2 == -9)
 #'
 #' @returns Returns i_labelled vector with values defined by formula and information given to function.
-#' @param x vector
+#' @param x vector or data.frame
 #' @param ... formula for recoding of values. See examples.
 #' @param label variable label
 #' @param na_values a vector with missing values
@@ -31,10 +31,11 @@
 #' @param annotation addition information about variable
 #' @param wording question text
 #' @param subject subject
-#' @param copy a variable from x. Copy the values of an existing variable before recoding values according to ...
+#' @param copy When applied to vector: T/F. When applied to a data.frame: a variable from x. Copy the values of an existing variable or x before recoding values according to ...
+#' @param keep_labels keep value labels from origin vector when copy TRUE or variable from x
 #' @importFrom stats setNames
 #' @export
-i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, subject = NULL, copy = NULL){
+i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, scale = NULL, annotation = NULL, wording = NULL, subject = NULL, copy = NULL, keep_labels = FALSE){
 
   is_atomic <- is.atomic(x)
   is_data_frame <- is.data.frame(x)
@@ -51,10 +52,17 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
     stop("'copy' must be T/F when i_recode is applied to vector.")
   }else if(!is.null(copy) && is_data_frame){
     if(!copy %in% names(x)){
-      stop("'copy' can not be found in data.frame x")
+      stop("'copy' is not column of data.frame x")
     }
   }
 
+  if(is_atomic && isTRUE(copy)){
+    old_labels <- attr(x, "labels", exact = TRUE)
+  }else if(is_data_frame && !is.null(copy)){
+    old_labels <- attr(x[[copy]], "labels", exact = TRUE)
+  }else{
+    old_labels <- NULL
+  }
   if(is_atomic){
     x <- data.frame(x = x, stringsAsFactors = FALSE)
   }
@@ -87,6 +95,11 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
 
   if(length(new_labels) > 0){
     new_labels <- new_labels[order(new_labels, decreasing = FALSE)]
+    if(keep_labels && !is.null(old_labels)){
+      new_labels <- .merge_labels(old_labs = as.list(old_labels), new_labs = as.list(new_labels))
+    }
+  }else{
+    new_labels <- NULL
   }
 
   # copy part

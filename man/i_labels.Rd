@@ -19,3 +19,8 @@ returns x with value labels applied
 \description{
 set value labels
 }
+\details{
+In order to assign a specific label to multiple values a named list can also be provided to ... (e.g. list(missing = -9:-1, valid = 1:3))
+
+A named vector can also be provided (e.g. setNames(c(1,2), c("A","B")))
+}

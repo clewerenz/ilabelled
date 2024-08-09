@@ -15,11 +15,12 @@ i_recode(
   annotation = NULL,
   wording = NULL,
   subject = NULL,
-  copy = NULL
+  copy = NULL,
+  keep_labels = FALSE
 )
 }
 \arguments{
-\item{x}{vector}
+\item{x}{vector or data.frame}
 
 \item{...}{formula for recoding of values. See examples.}
 
@@ -37,7 +38,9 @@ i_recode(
 
 \item{subject}{subject}
 
-\item{copy}{a variable from x. Copy the values of an existing variable before recoding values according to ...}
+\item{copy}{When applied to vector: T/F. When applied to a data.frame: a variable from x. Copy the values of an existing variable or x before recoding values according to ...}
+
+\item{keep_labels}{keep value labels from origin vector when copy TRUE or variable from x}
 }
 \value{
 Returns i_labelled vector with values defined by formula and information given to function.

@@ -150,3 +150,17 @@ test_that("allow duplicated value labels", {
 })
 
 
+test_that("set i_labels via named vector", {
+  myData <- i_labelled(iris$Species)
+  expect_equal(attr(i_labels(myData, "A" = 1, "B" = 2), "labels", exact = TRUE), c("A" = 1, "B" = 2, "virginica" = 3))
+})
+
+test_that("set i_labels via setNames", {
+  myData <- i_labelled(iris$Species)
+  expect_equal(attr(i_labels(myData, setNames(c(1,2), c("A", "B"))), "labels", exact = TRUE), c("A" = 1, "B" = 2, "virginica" = 3))
+})
+
+test_that("set i_labels via named list", {
+  myData <- i_labelled(iris$Species)
+  expect_equal(attr(i_labels(myData, list("A" = 1:2, "B" = 3)), "labels", exact = TRUE), c("A" = 1, "A" = 2, "B" = 3))
+})
