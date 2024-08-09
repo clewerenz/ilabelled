@@ -1,5 +1,4 @@
 IMPORTANT
-  - better vignettes
 
 SECONDARY
   - improve messages for run-time-tests
