@@ -189,10 +189,17 @@ is.i_labelled <- function(x){
   r
 }
 
-# old version using vctrs package
-# `[.i_labelled` <- function(x, ...){
-#   vctrs::vec_restore(NextMethod("["), x)
-# }
+
+#' subsetting vectors of class i_labelled
+#' @returns Subset of x
+#' @export
+#' @param x vector of class i_labelled
+#' @param ... not used
+`[[.i_labelled` <- function(x, ...){
+  r <- NextMethod("[[")
+  mostattributes(r) <- attributes(x)
+  r
+}
 
 
 #' unclass variables
