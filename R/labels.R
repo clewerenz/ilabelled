@@ -5,6 +5,10 @@
 #' @param x vector
 #' @param ... set labels for values (e.g. label_of_choice = 1 or "Label of Choice" = 1); remove single label with NULL = value (e.g. NULL = 1); removes all value labels when only NULL (e.g. i_label(x, NULL))
 #' @param overwrite should new labels be merged with existing labels or remove existing labels
+#' @details
+#' In order to assign a specific label to multiple values a named list can also be provided to ... (e.g. list(missing = -9:-1, valid = 1:3))
+#'
+#' A named vector can also be provided (e.g. setNames(c(1,2), c("A","B")))
 #' @importFrom stats setNames
 #' @returns returns x with value labels applied
 i_labels <- function(x, ..., overwrite = FALSE){
@@ -14,17 +18,33 @@ i_labels <- function(x, ..., overwrite = FALSE){
   }else{
     old_labs <- NULL
   }
+
   new_labs <- list(...)
   if(!length(new_labs)){
     new_labs <- NULL
+  }else{
+    if(is.list(new_labs) && length(new_labs) == 1 && !is.null(new_labs[[1]]) && is.list(new_labs[[1]])){
+      new_labs <- new_labs[[1]]
+    }
+    for(i in names(new_labs)){
+      if(length(new_labs[[i]]) > 1){
+        for(j in 2:length(new_labs[[i]])){
+          tmp <- list(new_labs[[i]][j])
+          names(tmp) <- i
+          new_labs <- c(new_labs, tmp)
+        }
+        new_labs[[i]] <- new_labs[[i]][1]
+      }
+    }
+  }
+  if(!is.list(new_labs)){
+    new_labs <- as.list(new_labs)
   }
 
   if(length(new_labs) == 1 && is.null(new_labs[[1]])){
     all_labs <- NULL
-  }else if(is.list(new_labs) && length(new_labs) == 1 && length(names(new_labs[[1]])) > 0){
-    new_labs <- as.list(unlist(new_labs))
-    all_labs <- .merge_labels(old_labs, new_labs)
   }else{
+    new_labs <- as.list(unlist(new_labs))
     all_labs <- .merge_labels(old_labs, new_labs)
   }
 
