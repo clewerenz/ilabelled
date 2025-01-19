@@ -1,3 +1,27 @@
+#' @title evaluate dots argument
+#' @details
+#' Make list from dots, unlist and evaluate.
+#'
+#' @param ... dots passed from function input
+#' @param flatten should lists be flattened
+#' @returns vector
+.eval_dots_arg <- function(..., flatten = FALSE){
+  ret <- eval(unlist(list(...), use.names = TRUE, recursive = FALSE), enclos = NULL)
+
+  if(flatten && !is.null(ret)){
+    ret <- unlist(lapply(seq(length(ret)), FUN = function(x){
+      tmp_val <- unlist(ret[[x]])
+      tmp_nam <- rep(names(ret)[[x]], length(tmp_val))
+      stats::setNames(tmp_val, tmp_nam)
+    }))
+  }
+
+  if(length(ret) < 1){
+    ret <- NULL
+  }
+
+  return(ret)
+}
 
 
 #' Check if vector contains decimal values

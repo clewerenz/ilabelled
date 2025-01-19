@@ -37,8 +37,8 @@ i_labelled.default <- function(x, label = NULL, labels = NULL, na_values = NULL,
 
   if(is.null(labels) && is.factor(x)){
     labels <- stats::setNames(1:length(levels(x)), levels(x))
-  }else if(!is.null(labels) || !is.null(attr(x, "labels", TRUE))){
-    labels <- .merge_labels(as.list(attr(x, "labels", TRUE)), as.list(labels))
+  }else if(!is.null(labels) || !is.null(attr(x, "labels", exact = TRUE))){
+    labels <- .merge_labels(new_labs = labels, old_labs = attr(x, "labels", exact = TRUE))
   }
 
   if(!is.numeric(x) && !is.logical(x) && !is.null(labels) && !is.character(labels)){
@@ -107,7 +107,7 @@ i_labelled.factor <- function(x, label = NULL, labels = NULL, na_values = NULL, 
     labels <- stats::setNames(1:length(levels(x)), levels(x))
   }
   if(!is.null(labels) || !is.null(attr(x, "labels", TRUE))){
-    labels <- .merge_labels(as.list(attr(x, "labels", TRUE)), as.list(labels))
+    labels <- .merge_labels(labels, attr(x, "labels", TRUE))
   }
 
   if(!is.null(labels) && !is.numeric(labels)){
