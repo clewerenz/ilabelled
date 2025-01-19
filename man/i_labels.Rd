@@ -11,7 +11,7 @@ i_labels(x, ..., overwrite = FALSE)
 
 \item{...}{set labels for values (e.g. label_of_choice = 1 or "Label of Choice" = 1); remove single label with NULL = value (e.g. NULL = 1); removes all value labels when only NULL (e.g. i_label(x, NULL))}
 
-\item{overwrite}{should new labels be merged with existing labels or remove existing labels}
+\item{overwrite}{when TRUE, all existing labels are dropped and replaced with the new ones}
 }
 \value{
 returns x with value labels applied

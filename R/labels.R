@@ -4,7 +4,7 @@
 #' @export
 #' @param x vector
 #' @param ... set labels for values (e.g. label_of_choice = 1 or "Label of Choice" = 1); remove single label with NULL = value (e.g. NULL = 1); removes all value labels when only NULL (e.g. i_label(x, NULL))
-#' @param overwrite should new labels be merged with existing labels or remove existing labels
+#' @param overwrite when TRUE, all existing labels are dropped and replaced with the new ones
 #' @details
 #' In order to assign a specific label to multiple values a named list can also be provided to ... (e.g. list(missing = -9:-1, valid = 1:3))
 #'
@@ -12,39 +12,18 @@
 #' @importFrom stats setNames
 #' @returns returns x with value labels applied
 i_labels <- function(x, ..., overwrite = FALSE){
-
-  if(!is.null(attr(x, "labels", TRUE)) & !overwrite){
-    old_labs <- as.list(attr(x, "labels", TRUE))
+  if(!is.null(attr(x, "labels", TRUE)) && !overwrite){
+    old_labs <- attr(x, "labels", exact = TRUE)
   }else{
     old_labs <- NULL
   }
 
-  new_labs <- list(...)
-  if(!length(new_labs)){
-    new_labs <- NULL
-  }else{
-    if(is.list(new_labs) && length(new_labs) == 1 && !is.null(new_labs[[1]]) && is.list(new_labs[[1]])){
-      new_labs <- new_labs[[1]]
-    }
-    for(i in names(new_labs)){
-      if(length(new_labs[[i]]) > 1){
-        for(j in 2:length(new_labs[[i]])){
-          tmp <- list(new_labs[[i]][j])
-          names(tmp) <- i
-          new_labs <- c(new_labs, tmp)
-        }
-        new_labs[[i]] <- new_labs[[i]][1]
-      }
-    }
-  }
-  if(!is.list(new_labs)){
-    new_labs <- as.list(new_labs)
-  }
+  new_labs <- .eval_dots_arg(..., flatten = TRUE)
+  if(!length(new_labs)) new_labs <- NULL
 
-  if(length(new_labs) == 1 && is.null(new_labs[[1]])){
+  if(is.null(new_labs)){
     all_labs <- NULL
   }else{
-    new_labs <- as.list(unlist(new_labs))
     all_labs <- .merge_labels(old_labs, new_labs)
   }
 
@@ -58,10 +37,7 @@ i_labels <- function(x, ..., overwrite = FALSE){
     all_labs <- all_labs[order(all_labs, decreasing = FALSE)]
   }
 
-  structure(
-    x,
-    labels = all_labs
-  )
+  structure(x, labels = all_labs)
 }
 
 
@@ -70,27 +46,17 @@ i_labels <- function(x, ..., overwrite = FALSE){
 #' @param old_labs named vector
 #' @param new_labs named vector
 .merge_labels <- function(old_labs, new_labs){
-  stopifnot((is.null(old_labs) || is.list(old_labs)) && (is.null(new_labs) || is.list(new_labs)))
-  if(length(old_labs) < 1){
-    old_labs <- NULL
-  }
-  if(length(new_labs) < 1){
-    new_labs <- NULL
-  }
+  if(length(old_labs) < 1) old_labs <- NULL
+  if(length(new_labs) < 1) new_labs <- NULL
   .valid_labels(old_labs)
   .valid_labels(new_labs)
 
-  # stopifnot(length(unique(c(lapply(old_labs, is.numeric), lapply(new_labs, is.numeric)))) <= 1)
-
-  all_labs <- append(new_labs, old_labs)
-  all_labs <- unlist(all_labs)
+  all_labs <- c(new_labs, old_labs)
   all_labs <- all_labs[!duplicated(all_labs)]
-  # all_labs <- sort(all_labs)
   all_labs <- all_labs[!names(all_labs) %in% "NULL"]
-  if(length(all_labs) < 1){
-    all_labs <- NULL
-  }
-  all_labs
+  if(length(all_labs) < 1) all_labs <- NULL
+
+  return(all_labs)
 }
 
 
@@ -102,53 +68,13 @@ i_labels <- function(x, ..., overwrite = FALSE){
 #' @returns No return value. Aborts process when run-time-tests fail.
 #' @param x named vector (label = value)
 .valid_labels <- function(x){
-  if(is.null(x)){
-    return(invisible(NULL))
-  }
-  if(any(is.na(x))){
-    stop("label cannot contain NA values")
-  }else if(is.list(x)){
-    if(length(names(x)) != length(x) || any(names(x) == "")){
-      stop("all values in value labels should be labelled")
-    }else if(length(unique(unlist(lapply(x, function(x) class(x))))) != 1){
-      stop("value labels should be of same class")
-    }else if(length(x) < 1){
-      stop("value labels cannot be of length 0")
-    # }else if(any(duplicated(names(x)[!names(x) == "NULL"]))){ # we do allow dup value labs
-    #   stop("duplicated names in value labels")
-    }else if(any(duplicated(unlist(x)))){
-      stop("duplicated values in value labels")
-    }
-  }else{
-    if(length(names(x)) != length(x)){
-      stop("all values in value labels should be labelled")
-    }else if(length(x) < 1){
-      stop("value labels cannot be of length 0")
-    # }else if(any(duplicated(names(x)[!names(x) == "NULL"]))){ # we do allow dup value labs
-    #   stop("duplicated names in value labels")
-    }else if(any(duplicated(x))){
-      stop("duplicated values in value labels")
-    }
-  }
+  if(is.null(x)) return(invisible(NULL))
+  if(any(is.na(x))) stop("labels cannot contain NA values")
+  if(is.list(x) || is.data.frame(x)) stop("labels cannot be list or data.frame")
+  if(length(grep("[[:alnum:]]", names(x))) != length(x)) stop("all values in value labels should be labelled")
+  if(length(x) < 1) stop("value labels cannot be of length 0")
+  if(any(duplicated(x))) stop("duplicated values in value labels")
 }
-# .valid_labels <- function(x){
-#   if(is.null(x)){
-#     T
-#   }else if(any(is.na(x))){
-#     F
-#   }else if(is.list(x)){
-#     length(names(x)) == length(x) &&
-#       length(unique(unlist(lapply(x, function(x) class(x))))) == 1 &&
-#       length(x) > 0 &&
-#       !any(duplicated(names(x)[!names(x) == "NULL"])) &&
-#       !any(duplicated(unlist(x)))
-#   }else{
-#     length(names(x)) == length(x) &&
-#       length(x) > 0 &&
-#       !any(duplicated(names(x)[!names(x) == "NULL"])) &&
-#       !any(duplicated(x))
-#   }
-# }
 
 
 #' validate value labels

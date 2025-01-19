@@ -1,16 +1,43 @@
+# test_that(".valid_labels", {
+#
+#   # valid input: named vector
+#   expect_no_error(.valid_labels(x = c(A = 1, B = 2, C = 3)))
+#
+#   # return valus is NULL, wenn x is NULL
+#   expect_equal(.valid_labels(x = NULL), NULL)
+#
+#   # Errors: invalid inputs
+#   expect_error(.valid_labels(x = c(A = 1, B  = NA)), regexp = "labels cannot contain NA values")
+#   expect_error(.valid_labels(x = list(A = 1, B = 2, C = 3)), regexp = "labels cannot be list or data.frame")
+#   expect_error(.valid_labels(x = data.frame(A = 1, B = 2, C = 3)), regexp = "labels cannot be list or data.frame")
+#   expect_error(.valid_labels(x = c(A = 1, B = 2, 3)), regexp = "all values in value labels should be labelled")
+#   expect_error(.valid_labels(x = c(A = 1, B = 1, C = 3)), regexp = "duplicated values in value labels")
+# })
+
+
+test_that("i_labels: default behaviour", {
+
+  # Apply labels
+  # x <- i_labelled(x = c(1:3,NA))
+  # expect_equal(attr(i_labels(x = x, list(A = 1:2, B = 3)), "labels"), c(A = 1, A = 2, B = 3))
+  # expect_equal(attr(i_labels(x = x, setNames(1:3, c("A","B","C"))), "labels"), c(A = 1, B = 2, C = 3))
+  # expect_equal(attr(i_labels(x = x, A = 1, B = 2, C = 3), "labels"), c(A = 1, B = 2, C = 3))
+  # expect_equal(attr(i_labels(x = x, c(A = 1, B = 2, C = 3)), "labels"), c(A = 1, B = 2, C = 3))
+
+  # Drop alle labels
+  expect_null(attr(i_labels(i_labelled(iris$Species), NULL), "labels", exact = TRUE))
+})
+
+
 test_that(
   "Set value labels", {
 
     x <- i_labelled(iris$Species, labels = c(A = 1, B = 2, C = 3))
 
-    # return labels correctly when no arguments given
-    expect_equal(names(attr(i_labels(x), "labels")), c("A","B","C"))
-    expect_equal(unname(attr(i_labels(x), "labels")), c(1,2,3))
-
     # set labels with list or vector or setNames
     y <- i_labels(i_labelled(1:3), A = 1, NULL = 2, C = 3)
-    expect_equal(names(attr(i_labels(y), "labels")), c("A","C"))
-    expect_equal(unname(attr(i_labels(y), "labels")), c(1,3))
+    expect_equal(names(attr(y, "labels")), c("A","C"))
+    expect_equal(unname(attr(y, "labels")), c(1,3))
     expect_equal(attr(i_labels(y, setNames(1, "AA")), "labels", TRUE), setNames(c(1,3), c("AA", "C")))
 
     # remove all labels
