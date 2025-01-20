@@ -1,4 +1,4 @@
-test_that("subsetting via [", {
+test_that("subsetting via '['", {
   # attributes are preserved
 
   x <- i_labelled(1:3, labels = c("A" = 1, "B" = 2, "C" = 3))
@@ -8,7 +8,7 @@ test_that("subsetting via [", {
 })
 
 
-test_that("subsetting via [[", {
+test_that("subsetting via '[['", {
   # attributes are preserved
 
   x <- i_labelled(1:3, labels = c("A" = 1, "B" = 2, "C" = 3))
@@ -16,6 +16,3 @@ test_that("subsetting via [[", {
 
   expect_equal(x[[2]], ref)
 })
-
-
-

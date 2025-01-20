@@ -213,7 +213,7 @@ i_as_factor.i_labelled <- function(x, missing_to_na = FALSE, require_all_labels 
   attr(x, "levels") <- labels
   class(x) <- "factor"
 
-  x
+  return(x)
 }
 
 #' @export

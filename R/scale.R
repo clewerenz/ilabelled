@@ -11,7 +11,7 @@ i_scale <- function(x, scale = NULL){
   if(!.valid_scale(scale)){
     stop("scale must be character vector of length 1")
   }
-  if(!scale %in% c("nominal", "ordinal", "scale")){
+  if(!is.null(scale) && !scale %in% c("nominal", "ordinal", "scale")){
     stop("scale must be either 'nominal', 'ordinal' or 'scale'")
   }
   structure(
@@ -30,12 +30,11 @@ i_scale <- function(x, scale = NULL){
 #' @param x vector
 .valid_scale <- function(x){
   if(is.null(x)){
-    T
-  }
-  if(!(is.character(x) && length(x) == 1 && !is.logical(x))){
-    F
+    TRUE
+  }else if(!(is.character(x) && length(x) == 1 && !is.logical(x))){
+    FALSE
   }else{
-    T
+    TRUE
   }
 }
 

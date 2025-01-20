@@ -94,11 +94,12 @@ i_missing_to_na <- function(x, remove_missing_labels = FALSE){
 
 #' @export
 i_missing_to_na.default <- function(x, remove_missing_labels = FALSE){
-  stopifnot(is.atomic(x) || is.null(x))
+  if(!(is.atomic(x) || is.null(x))) stop("x must be atomic")
 
   na_vals <- c(attr(x, "na_values", TRUE), names(attr(x, "na_values", TRUE)))
   na_range <- sort(attr(x, "na_range", TRUE))
-  stopifnot(.valid_na_values(na_vals) || .valid_na_range(na_range))
+  if(!.valid_na_values(na_vals)) stop("invalid na_values attributes")
+  if(!.valid_na_range(na_range)) stop("invalid na_range attributes")
   if(!is.null(na_range)){
     na_range <- seq(min(na_range), max(na_range), 1)
   }

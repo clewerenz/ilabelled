@@ -4,19 +4,21 @@
 \alias{i_copy}
 \title{copy meta information from one variable to another}
 \usage{
-i_copy(to, from, what = "all", ...)
+i_copy(to, from, what = "all", overwrite = TRUE, ...)
 }
 \arguments{
 \item{to}{vector}
 
 \item{from}{vector}
 
-\item{what}{character vector describing which labels are copied: 'all' (default), 'label', 'labels', 'na_values', 'na_range'}
+\item{what}{character vector describing which attributes are copied. When 'all' (default), all attributes are copied.}
+
+\item{overwrite}{overwrite existing attributes when present in attributes of from.}
 
 \item{...}{further attributes passed to structure}
 }
 \value{
-Returns 'to' with ilabelled attributes copied from 'from'
+Returns 'to' with attributes copied from 'from'
 }
 \description{
 copy meta information from one variable to another

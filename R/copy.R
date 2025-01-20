@@ -1,58 +1,26 @@
 
 #' copy meta information from one variable to another
-#' @returns Returns 'to' with ilabelled attributes copied from 'from'
+#' @returns Returns 'to' with attributes copied from 'from'
 #' @param to vector
 #' @param from vector
-#' @param what character vector describing which labels are copied: 'all' (default), 'label', 'labels', 'na_values', 'na_range'
+#' @param what character vector describing which attributes are copied. When 'all' (default), all attributes are copied.
+#' @param overwrite overwrite existing attributes when present in attributes of from.
 #' @param ... further attributes passed to structure
-i_copy <- function(to, from, what = "all", ...){
+i_copy <- function(to, from, what = "all", overwrite = TRUE, ...){
   stopifnot(is.atomic(to) || is.atomic(from))
-  what <- tolower(what)
 
-  label <- attr(to, "labels", TRUE)
-  labels <- attr(to, "labels", TRUE)
-  na_values <- attr(to, "na_values", TRUE)
-  na_range <- attr(to, "na_range", TRUE)
-  scale <- attr(to, "scale", TRUE)
-  annotation <- attr(to, "annotation", TRUE)
-  wording <- attr(to, "wording", TRUE)
-  subject <- attr(to, "subject", TRUE)
+  if(any(grepl("^[Aa]ll$", what))) what <- names(attributes(from))
 
-  if(any(c("all", "label") %in% what)){
-    label <- attr(from, "label", TRUE)
+  if(!overwrite){
+    what <- what[!what %in% names(attributes(to))]
   }
-  if(any(c("all", "labels") %in% what)){
-    labels <- attr(from, "labels", TRUE)
-  }
-  if(any(c("all", "na_values") %in% what)){
-    na_values <- attr(from, "na_values", TRUE)
-  }
-  if(any(c("all", "na_range") %in% what)){
-    na_range <- attr(from, "na_range", TRUE)
-  }
-  if(any(c("all", "scale") %in% what)){
-    scale <- attr(from, "scale", TRUE)
-  }
-  if(any(c("all", "annotation") %in% what)){
-    annotation <- attr(from, "annotation", TRUE)
-  }
-  if(any(c("all", "wording") %in% what)){
-    wording <- attr(from, "wording", TRUE)
-  }
-  if(any(c("all", "subject") %in% what)){
-    subject <- attr(from, "subject", TRUE)
+
+  for(i in what){
+    attr(to, i) <- attr(from, i, exact = TRUE)
   }
 
   structure(
     to,
-    label = label,
-    labels = labels,
-    na_values = na_values,
-    na_range = na_range,
-    scale = scale,
-    annotation = annotation,
-    wording = wording,
-    subject = subject,
     ...
   )
 }

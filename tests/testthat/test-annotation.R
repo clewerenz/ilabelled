@@ -73,3 +73,10 @@ test_that("i_annotation: valid annotation on data.frame", {
   r <- list(V1 = TRUE, V2 = FALSE, V3 = FALSE)
   expect_equal(i_valid_annotation(x), r)
 })
+
+
+test_that("i_annotation: remove annotations with NULL value", {
+  x <- i_labelled(iris$Species, annotation = "blaBliBlubb")
+  x <- i_annotation(x = x, annotation = NULL)
+  expect_null(attr(x, "annotation", exact = TRUE))
+})

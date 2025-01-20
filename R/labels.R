@@ -103,9 +103,7 @@ i_valid_labels <- function(x){
 #' @export
 i_valid_labels.default <- function(x){
   y <- attr(x, "labels", TRUE)
-  # is_valid <- !"try-error" %in% class(try(.valid_labels(y), silent = TRUE))
-  is_valid <- .valid_labels(y)
-  (!is.null(y) && is_valid) && all(unique(x[!is.na(x)]) %in% y)
+  (!is.null(y) && .valid_labels(y)) && all(unique(x[!is.na(x)]) %in% y)
 }
 
 
