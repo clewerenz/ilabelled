@@ -52,7 +52,7 @@ i_as_character.i_labelled <- function(x, missing_to_na = FALSE, require_all_labe
 
   labels <- attr(x, "labels", TRUE)
 
-  .valid_labels(labels)
+  if(!.valid_labels(labels)) stop("invalid labels attribute")
 
   if(missing_to_na){
     x <- i_missing_to_na(x, remove_missing_labels = TRUE)
@@ -181,7 +181,7 @@ i_as_factor.i_labelled <- function(x, missing_to_na = FALSE, require_all_labels 
   labels <- attr(x, "labels", TRUE)
   na_vals <- c(attr(x, "na_values", TRUE))
 
-  .valid_labels(labels)
+  if(!.valid_labels(labels)) stop("invalid labels attribute")
 
   if(missing_to_na){
     x <- i_missing_to_na(x, remove_missing_labels = TRUE)

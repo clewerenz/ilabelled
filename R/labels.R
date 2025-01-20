@@ -48,8 +48,8 @@ i_labels <- function(x, ..., overwrite = FALSE){
 .merge_labels <- function(old_labs, new_labs){
   if(length(old_labs) < 1) old_labs <- NULL
   if(length(new_labs) < 1) new_labs <- NULL
-  .valid_labels(old_labs)
-  .valid_labels(new_labs)
+  if(!.valid_labels(old_labs)) stop("invalid labels value")
+  if(!.valid_labels(new_labs)) stop("invalid labels value")
 
   all_labs <- c(new_labs, old_labs)
   all_labs <- all_labs[!duplicated(all_labs)]
@@ -66,14 +66,23 @@ i_labels <- function(x, ..., overwrite = FALSE){
 #' runs internally
 #'
 #' @returns No return value. Aborts process when run-time-tests fail.
-#' @param x named vector (label = value)
+#' @param x named vector c(label = value)
 .valid_labels <- function(x){
-  if(is.null(x)) return(invisible(NULL))
-  if(any(is.na(x))) stop("labels cannot contain NA values")
-  if(is.list(x) || is.data.frame(x)) stop("labels cannot be list or data.frame")
-  if(length(grep("[[:alnum:]]", names(x))) != length(x)) stop("all values in value labels should be labelled")
-  if(length(x) < 1) stop("value labels cannot be of length 0")
-  if(any(duplicated(x))) stop("duplicated values in value labels")
+  if(is.null(x)){
+    TRUE
+  }else if(any(is.na(x))){
+    FALSE
+  }else if(is.list(x) || is.data.frame(x)){
+    FALSE
+  }else if(length(grep("[[:alnum:]]", names(x))) != length(x)){
+    FALSE
+  }else if(length(x) < 1){
+    FALSE
+  }else if(any(duplicated(x))){
+    FALSE
+  }else{
+    TRUE
+  }
 }
 
 
@@ -94,7 +103,8 @@ i_valid_labels <- function(x){
 #' @export
 i_valid_labels.default <- function(x){
   y <- attr(x, "labels", TRUE)
-  is_valid <- !"try-error" %in% class(try(.valid_labels(y), silent = TRUE))
+  # is_valid <- !"try-error" %in% class(try(.valid_labels(y), silent = TRUE))
+  is_valid <- .valid_labels(y)
   (!is.null(y) && is_valid) && all(unique(x[!is.na(x)]) %in% y)
 }
 
@@ -133,7 +143,7 @@ i_sort_labels.default <- function(x, by = "values", decreasing = FALSE){
   }
   labels <- attr(x, "labels", TRUE)
   if(!is.null(labels)){
-    .valid_labels(labels)
+    if(!.valid_labels(labels)) stop("invalid labels attribute")
     if(by == "values"){
       labels <- labels[order(labels, decreasing = decreasing)]
     }else{

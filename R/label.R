@@ -25,17 +25,17 @@ i_label <- function(x, label){
 #' @param x vector
 .valid_label <- function(x){
   if(is.null(x)){
-    T
+    TRUE
   }else if(!is.character(x)){
-    F
+    FALSE
   }else if(is.logical(x)){
-    F
+    FALSE
   }else if(any(is.na(x))){
-    F
+    FALSE
   }else if(!length(x) == 1){
-    F
+    FALSE
   }else{
-    T
+    TRUE
   }
 }
 

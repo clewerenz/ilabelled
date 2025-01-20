@@ -96,7 +96,7 @@ i_recode <- function(x, ..., label = NULL, na_values = NULL, na_range = NULL, sc
   if(length(new_labels) > 0){
     new_labels <- new_labels[order(new_labels, decreasing = FALSE)]
     if(keep_labels && !is.null(old_labels)){
-      new_labels <- .merge_labels(old_labs = as.list(old_labels), new_labs = as.list(new_labels))
+      new_labels <- .merge_labels(old_labs = old_labels, new_labs = new_labels)
     }
   }else{
     new_labels <- NULL

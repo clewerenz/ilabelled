@@ -7,7 +7,7 @@
 .valid_labels(x)
 }
 \arguments{
-\item{x}{named vector (label = value)}
+\item{x}{named vector c(label = value)}
 }
 \value{
 No return value. Aborts process when run-time-tests fail.
