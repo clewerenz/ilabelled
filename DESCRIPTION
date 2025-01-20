@@ -1,7 +1,7 @@
 Package: ilabelled
 Type: Package
 Title: Simple Handling of Labelled Data
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(person("Christof", "Lewerenz", role = c("aut", "cre"), email = "christof.lewerenz@gmx.net"))
 Author: Christof Lewerenz [aut, cre]
 Maintainer: Christof Lewerenz <christof.lewerenz@gmx.net>
